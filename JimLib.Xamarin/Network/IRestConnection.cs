@@ -9,6 +9,6 @@ namespace JimBobBennett.JimLib.Xamarin.Network
             string resource = "/", string username = null, string password = null, int timeout = 5000,
             Dictionary<string, string> headers = null, TData postData = null)
             where T : class, new()
-            where TData : class, new();
+            where TData : class;
     }
 }

@@ -20,7 +20,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
             string resource = "/", string username = null, string password = null, int timeout = 5000,
             Dictionary<string, string> headers = null, TData postData = null)
             where T : class, new()
-            where TData : class, new()
+            where TData : class
         {
             using (var clientHandler = new HttpClientHandler{UseCookies = false})
             {
@@ -66,7 +66,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
         }
 
         private static HttpContent SerializePostData<T>(T postData, ResponseType responseType)
-            where T : class, new()
+            where T : class
         {
             if (postData == null)
                 return new StringContent(string.Empty);
