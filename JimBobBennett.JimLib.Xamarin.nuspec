@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<package >
+  <metadata minClientVersion="2.7.2">
+    <id>JimBobBennett.JimLib.Xamarin</id>
+    <version>$version$</version>
+    <title>JimBobBennett.JimLib.Xamarin Utility Library for Xamarin development</title>
+    <authors>Jim Bennett</authors>
+    <owners>Jim Bennett</owners>
+    <licenseUrl>https://github.com/jimbobbennett/JimLib/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jimbobbennett/JimLib</projectUrl>
+    <iconUrl>https://github.com/jimbobbennett/JimLib/blob/master/JimLib/Jim-32x32.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A Xamarin utility class library containing a set of handy utility classes</description>
+    <releaseNotes>Initial version - ios and some WinPhone only.</releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>utility,pcl,xamarin</tags>
+    <dependencies>
+      <group targetFramework="net45">
+        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
+      </group>
+      <group targetFramework="win">
+        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
+      </group>
+      <group targetFramework="wp80">
+        <dependency id="Microsoft.Net.Http" version="2.2.22" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
+      </group>
+      <group>
+        <dependency id="JimBobBennett.JimLib" version="1.0.38" />
+        <dependency id="Xamarin.Forms" version="1.2.2.6243" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <!-- portable -->
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.Xamarin.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.Xamarin.pdb" />
+    <file src="JimLib.Xamarin\**\*.cs" target="src\JimLib.Xamarin" />
+    
+    <!-- ios -->
+    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\Xamarin.Mobile.dll" target="lib\MonoTouch10\Xamarin.Mobile.dll" />
+    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\NewtonSoft.Json.dll" target="lib\MonoTouch10\NewtonSoft.Json.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.pdb" />
+    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\JimBobBennett.JimLib.Xamarin.ios.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.ios.dll" />
+    <file src="JimLib.Xamarin.ios\**\*.cs" target="src\JimLib.Xamarin.ios" />
+
+    <!-- Win -->
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.pdb" />
+    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.Win.dll" />
+    <file src="JimLib.Xamarin.Win\**\*.cs" target="src\JimLib.Xamarin.Win" />
+  </files>
+</package>
