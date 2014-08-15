@@ -6,9 +6,9 @@
     <title>JimBobBennett.JimLib.Xamarin Utility Library for Xamarin development</title>
     <authors>Jim Bennett</authors>
     <owners>Jim Bennett</owners>
-    <licenseUrl>https://github.com/jimbobbennett/JimLib/blob/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/jimbobbennett/JimLib</projectUrl>
-    <iconUrl>https://github.com/jimbobbennett/JimLib/blob/master/JimLib/Jim-32x32.png</iconUrl>
+    <licenseUrl>http://github.com/jimbobbennett/JimLib.Xamarin/blob/master/LICENSE</licenseUrl>
+    <projectUrl>http://github.com/jimbobbennett/JimLib.Xamarin</projectUrl>
+    <iconUrl>http://github.com/jimbobbennett/JimLib/blob/master/JimLib/Jim-32x32.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A Xamarin utility class library containing a set of handy utility classes</description>
     <releaseNotes>Initial version - ios and some WinPhone only.</releaseNotes>
