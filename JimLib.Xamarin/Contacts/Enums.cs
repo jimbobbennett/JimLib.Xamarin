@@ -17,4 +17,12 @@
         Mobile,
         Other,
     }
+
+    public enum AuthorizationStatus
+    {
+        NotDetermined,
+        Restricted,
+        Denied,
+        Authorized,
+    }
 }

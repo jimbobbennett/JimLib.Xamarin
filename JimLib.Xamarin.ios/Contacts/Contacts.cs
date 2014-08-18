@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
+using MonoTouch.AddressBook;
 using MonoTouch.Foundation;
 using Newtonsoft.Json;
 using Xamarin.Contacts;
@@ -16,6 +17,26 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
         public async Task<bool> AuthoriseContacts()
         {
             return await GetAddressBookAsync() != null;
+        }
+
+        public AuthorizationStatus AuthorizationStatus
+        {
+            get
+            {
+                var status = ABAddressBook.GetAuthorizationStatus();
+
+                switch (status)
+                {
+                    case ABAuthorizationStatus.Authorized:
+                        return AuthorizationStatus.Authorized;
+                    case ABAuthorizationStatus.Restricted:
+                        return AuthorizationStatus.Restricted;
+                    case ABAuthorizationStatus.NotDetermined:
+                        return AuthorizationStatus.NotDetermined;
+                    default:
+                        return AuthorizationStatus.Denied;
+                }
+            }
         }
 
         public async Task<IEnumerable<ContactOverview>> GetContactOverviewsAsync()
@@ -32,7 +53,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                 });
         }
-        
+
         public ContactOverview Deserialize(string contact)
         {
             return JsonConvert.DeserializeObject<ContactOverview>(contact);
@@ -68,7 +89,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             return new Xamarin.Contacts.Phone
             {
                 Number = arg.Number,
-                Type = (Xamarin.Contacts.PhoneType)arg.Type,
+                Type = (Xamarin.Contacts.PhoneType) arg.Type,
                 Label = arg.Label
             };
         }
@@ -78,11 +99,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             return new Xamarin.Contacts.Email
             {
                 Address = arg.Address,
-                AddressType = (Xamarin.Contacts.AddressType)arg.Type,
+                AddressType = (Xamarin.Contacts.AddressType) arg.Type,
                 Label = arg.Label
             };
         }
-        
+
         private static async Task<AddressBook> GetAddressBookAsync()
         {
             var addressBook = new AddressBook();

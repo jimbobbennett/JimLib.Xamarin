@@ -10,5 +10,6 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
 
         string Serialize(ContactOverview contact);
         ContactOverview Deserialize(string contact);
+        AuthorizationStatus AuthorizationStatus { get; }
     }
 }
