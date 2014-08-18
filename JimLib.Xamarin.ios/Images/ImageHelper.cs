@@ -37,5 +37,36 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             UIGraphics.EndImageContext();
             return resultImage;
         }
+
+        internal static UIImage CropToCircle(UIImage sourceImage)
+        {
+            if (sourceImage == null) return null;
+
+            var imageWidth = sourceImage.Size.Width;
+            var imageHeight = sourceImage.Size.Height;
+
+            UIGraphics.BeginImageContextWithOptions(new SizeF(imageWidth, imageHeight), false, 1f);
+            var context = UIGraphics.GetCurrentContext();
+            
+            //Calculate the centre of the circle
+            var imageCentreX = imageWidth/2;
+            var imageCentreY = imageHeight/2;
+
+            // Create and CLIP to a CIRCULAR Path
+            // (This could be replaced with any closed path if you want a different shaped clip)
+            var radius = imageWidth/2;
+            context.BeginPath();
+            context.AddArc(imageCentreX, imageCentreY, radius, 0, Convert.ToSingle(2*Math.PI), false);
+            context.ClosePath();
+            context.Clip();
+            
+            // Draw the IMAGE
+            sourceImage.Draw(new RectangleF(0, 0, imageWidth, imageHeight));
+
+            var newImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+
+            return newImage;
+        }
     }
 }

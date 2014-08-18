@@ -70,7 +70,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             var scaled = ImageHelper.MaxResizeImage(thumb, 128, 128);
 
             var contactOverview = new ContactOverview(c.DisplayName,
-                ImageHelper.GetImageSourceFromUIImage(scaled));
+                ImageHelper.GetImageSourceFromUIImage(ImageHelper.CropToCircle(scaled)));
 
             if (scaled != null)
             {

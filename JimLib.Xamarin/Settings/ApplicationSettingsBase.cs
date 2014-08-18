@@ -14,19 +14,19 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
         
         protected string GetSetting(string key, string defaultValue = default(string))
         {
-            return _settings.GetValueOrDefault(key, default(string));
+            return _settings.GetValueOrDefault(key, defaultValue);
         }
 
         protected T GetEnumSetting<T>(string key, T defaultValue = default(T)) where T : struct
         {
             var setting = _settings.GetValueOrDefault(key, default(string));
             T value;
-            return Enum.TryParse(setting, true, out value) ? value : default(T);
+            return Enum.TryParse(setting, true, out value) ? value : defaultValue;
         }
 
         protected bool GetBoolSetting(string key, bool defaultValue = default(bool))
         {
-            return _settings.GetValueOrDefault(key, false);
+            return _settings.GetValueOrDefault(key, defaultValue);
         }
 
         protected void SetSetting(string key, string value)

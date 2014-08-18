@@ -40,7 +40,6 @@
     <Compile Include="..\JimLib.Xamarin.ios\Network\RestConnectionBase.cs">
       <Link>Network\RestConnectionBase.cs</Link>
     </Compile>
-    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\RestConnection.cs" />
   </ItemGroup>
