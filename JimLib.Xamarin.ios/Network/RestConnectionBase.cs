@@ -16,7 +16,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
     /// </summary>
     public class RestConnectionBase : IRestConnection
     {
-        public async Task<T> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, string baseUrl,
+        public async Task<RestResponse<T>> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, string baseUrl,
             string resource = "/", string username = null, string password = null, int timeout = 5000,
             Dictionary<string, string> headers = null, TData postData = null)
             where T : class, new()
@@ -42,24 +42,42 @@ namespace JimBobBennett.JimLib.Xamarin.Network
 
                         var requestUri = new Uri(resource, UriKind.Relative);
 
+                        T responseObject = null;
+                        var statusCode = -1;
+                        string message = null;
+
                         switch (method)
                         {
                             case Method.Get:
-                                var responseBody = await client.GetStringAsync(requestUri);
-                                return DeserializeResponse<T>(responseBody, responseType);
+                                var getResponse = await client.GetAsync(requestUri);
+                                statusCode = (int)getResponse.StatusCode;
+                                message = getResponse.ReasonPhrase;
+
+                                if (getResponse.IsSuccessStatusCode)
+                                {
+                                    var getResponseBody = await getResponse.Content.ReadAsStringAsync();
+                                    responseObject = DeserializeResponse<T>(getResponseBody, responseType);
+                                }
+                                break;
 
                             case Method.Post:
-                                var response = await client.PostAsync(requestUri, SerializePostData(postData, responseType));
-                                response.EnsureSuccessStatusCode();
-                                var postResponseBody = await response.Content.ReadAsStringAsync();
-                                return DeserializeResponse<T>(postResponseBody, responseType);
+                                var postResponse = await client.PostAsync(requestUri, SerializePostData(postData, responseType));
+                                statusCode = (int)postResponse.StatusCode;
+                                message = postResponse.ReasonPhrase;
+
+                                if (postResponse.IsSuccessStatusCode)
+                                {
+                                    var postResponseBody = await postResponse.Content.ReadAsStringAsync();
+                                    responseObject = DeserializeResponse<T>(postResponseBody, responseType);
+                                }
+                                break;
                         }
 
-                        return null;
+                        return new RestResponse<T>(message, statusCode, responseObject);
                     }
                     catch (Exception ex)
                     {
-                        return null;
+                        return new RestResponse<T>(ex.Message, -1,  null);
                     }
                 }
             }

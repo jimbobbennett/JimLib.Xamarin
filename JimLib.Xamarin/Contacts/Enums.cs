@@ -25,4 +25,20 @@
         Denied,
         Authorized,
     }
+
+    public enum OrganizationType
+    {
+        Work,
+        Other,
+    }
+
+    public enum InstantMessagingService
+    {
+        Aim,
+        Msn,
+        Yahoo,
+        Icq,
+        Jabber,
+        Other,
+    }
 }

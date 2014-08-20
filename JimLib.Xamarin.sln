@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin.nuspec", "Ji
 		{967808C0-3D82-4BA0-90B9-A0211379B2AD} = {967808C0-3D82-4BA0-90B9-A0211379B2AD}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin.Test", "JimLib.Xamarin.Test\JimLib.Xamarin.Test.csproj", "{B1296E59-4C18-4FFD-98D3-BBF4A03BF482}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{CFE55F6B-2194-45D2-8333-34EB7B6EF761}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,8 +49,15 @@ Global
 		{BB908EEF-79B9-4291-B053-5BDE94BFC500}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB908EEF-79B9-4291-B053-5BDE94BFC500}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB908EEF-79B9-4291-B053-5BDE94BFC500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1296E59-4C18-4FFD-98D3-BBF4A03BF482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1296E59-4C18-4FFD-98D3-BBF4A03BF482}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1296E59-4C18-4FFD-98D3-BBF4A03BF482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1296E59-4C18-4FFD-98D3-BBF4A03BF482}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B1296E59-4C18-4FFD-98D3-BBF4A03BF482} = {CFE55F6B-2194-45D2-8333-34EB7B6EF761}
 	EndGlobalSection
 EndGlobal

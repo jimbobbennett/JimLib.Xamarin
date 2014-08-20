@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Images;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -11,9 +12,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
     {
         public ImageSource GetImageSource(string base64)
         {
+            if (base64.IsNullOrEmpty()) return null;
+            return GetImageSourceFromUIImage(GetUIImageFromBase64(base64));
+        }
+
+        internal static UIImage GetUIImageFromBase64(string base64)
+        {
             var data = new NSData(base64, NSDataBase64DecodingOptions.None);
-            var image = UIImage.LoadFromData(data);
-            return GetImageSourceFromUIImage(image);
+            return UIImage.LoadFromData(data);
         }
 
         internal static ImageSource GetImageSourceFromUIImage(UIImage uiImage)

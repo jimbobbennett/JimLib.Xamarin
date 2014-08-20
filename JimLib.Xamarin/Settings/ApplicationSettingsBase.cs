@@ -1,4 +1,6 @@
 ﻿using System;
+using JimBobBennett.JimLib.Extensions;
+using Org.BouncyCastle.Security;
 using Refractored.Xam.Settings.Abstractions;
 
 namespace JimBobBennett.JimLib.Xamarin.Settings
@@ -6,15 +8,30 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
     public class ApplicationSettingsBase
     {
         private readonly ISettings _settings;
+        private readonly string _password;
 
-        protected ApplicationSettingsBase(ISettings settings)
+        protected ApplicationSettingsBase(ISettings settings, string password = null)
         {
             _settings = settings;
+            _password = password;
         }
-        
+
         protected string GetSetting(string key, string defaultValue = default(string))
         {
             return _settings.GetValueOrDefault(key, defaultValue);
+        }
+
+        protected string GetEncryptedSetting(string key, string defaultValue = default(string))
+        {
+            if (_password.IsNullOrEmpty())
+                throw new PasswordException("Password cannot be null");
+
+            var setting = _settings.GetValueOrDefault(key, defaultValue);
+
+            if (!Equals(setting, defaultValue))
+                setting = setting.Decrypt(_password);
+
+            return setting;
         }
 
         protected T GetEnumSetting<T>(string key, T defaultValue = default(T)) where T : struct
@@ -31,6 +48,17 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
 
         protected void SetSetting(string key, string value)
         {
+            _settings.AddOrUpdateValue(key, value ?? string.Empty);
+        }
+
+        protected void SetEncryptedSetting(string key, string value)
+        {
+            if (_password.IsNullOrEmpty())
+                throw new PasswordException("Password cannot be null");
+
+            if (!value.IsNullOrEmpty())
+                value = value.Encrypt(_password);
+
             _settings.AddOrUpdateValue(key, value ?? string.Empty);
         }
 

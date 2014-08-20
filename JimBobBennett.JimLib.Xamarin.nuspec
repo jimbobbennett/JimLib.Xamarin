@@ -17,21 +17,19 @@
     <dependencies>
       <group targetFramework="net45">
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
       <group targetFramework="win">
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
       <group targetFramework="wp80">
         <dependency id="Microsoft.Net.Http" version="2.2.22" />
-        <dependency id="Newtonsoft.Json" version="6.0.4" />
       </group>
       <group targetFramework="MonoTouch10">
         <dependency id="xamstore-xamarin.mobile" version="0.7.1"/>
       </group>
       <group>
-        <dependency id="JimBobBennett.JimLib" version="1.0.43" />
+        <dependency id="Newtonsoft.Json" version="6.0.4" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.44" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
       </group>
     </dependencies>
@@ -43,7 +41,6 @@
     <file src="JimLib.Xamarin\**\*.cs" target="src\JimLib.Xamarin" />
     
     <!-- ios -->
-    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\NewtonSoft.Json.dll" target="lib\MonoTouch10\NewtonSoft.Json.dll" />
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.dll" />
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.pdb" />
     <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\JimBobBennett.JimLib.Xamarin.ios.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.ios.dll" />

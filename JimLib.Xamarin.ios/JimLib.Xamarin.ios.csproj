@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Contacts\Contacts.cs" />
     <Compile Include="Images\ImageHelper.cs" />
+    <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Network\LocalServerDiscovery.cs" />
     <Compile Include="Network\UriHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,12 +55,12 @@
     <Reference Include="crypto">
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0\lib\portable-net4+sl5+wp8+win8\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.43.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.44.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.43\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.44\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Components\json.net-4.5.11\lib\ios\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Refractored.Xam.Settings">
       <HintPath>..\packages\Xam.Plugins.Settings.1.3.0.0\lib\MonoTouch10\Refractored.Xam.Settings.dll</HintPath>
@@ -84,12 +85,6 @@
     <Reference Include="Xamarin.Mobile">
       <HintPath>..\Components\xamarin.mobile-0.7.1\lib\ios\Xamarin.Mobile.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <XamarinComponentReference Include="json.net">
-      <Visible>False</Visible>
-      <Version>4.5.11</Version>
-    </XamarinComponentReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JimLib.Xamarin\JimLib.Xamarin.csproj">

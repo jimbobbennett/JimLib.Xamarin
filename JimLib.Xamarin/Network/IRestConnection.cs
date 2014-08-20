@@ -3,9 +3,23 @@ using System.Threading.Tasks;
 
 namespace JimBobBennett.JimLib.Xamarin.Network
 {
+    public class RestResponse<T>
+    {
+        public RestResponse(string message, int statusCode, T responseObject)
+        {
+            Message = message;
+            StatusCode = statusCode;
+            ResponseObject = responseObject;
+        }
+
+        public string Message { get; private set; }
+        public int StatusCode { get; private set; }
+        public T ResponseObject { get; private set; }
+    }
+
     public interface IRestConnection
     {
-        Task<T> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, string baseUrl,
+        Task<RestResponse<T>> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, string baseUrl,
             string resource = "/", string username = null, string password = null, int timeout = 5000,
             Dictionary<string, string> headers = null, TData postData = null)
             where T : class, new()
