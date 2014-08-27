@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using JimBobBennett.JimLib.Collections;
 using JimBobBennett.JimLib.Mvvm;
 using Xamarin.Forms;
 
@@ -13,15 +14,16 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         private string _lastName;
         private string _middleName;
         private string _firstName;
+        private string _thumbBase64;
 
         public ContactOverview()
         {
-            Emails = new ObservableCollection<Email>();
-            Phones = new ObservableCollection<Phone>();
-            Websites = new ObservableCollection<Website>();
-            Organizations = new ObservableCollection<Organization>();
-            Addresses = new ObservableCollection<Address>();
-            InstantMessagingAccounts = new ObservableCollection<InstantMessagingAccount>();
+            Emails = new ObservableCollectionEx<Email>();
+            Phones = new ObservableCollectionEx<Phone>();
+            Websites = new ObservableCollectionEx<Website>();
+            Organizations = new ObservableCollectionEx<Organization>();
+            Addresses = new ObservableCollectionEx<Address>();
+            InstantMessagingAccounts = new ObservableCollectionEx<InstantMessagingAccount>();
         }
         
         public string DisplayName { get; set; }
@@ -36,14 +38,23 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
            _thumbImageSource = imageSource;
         }
 
-        public string ThumbBase64 { get; set; }
+        public string ThumbBase64
+        {
+            get { return _thumbBase64; }
+            set
+            {
+                if (value == _thumbBase64) return;
+                _thumbBase64 = value;
+                RaisePropertyChanged();
+            }
+        }
 
-        public ObservableCollection<Email> Emails { get; set; }
-        public ObservableCollection<Phone> Phones { get; set; }
-        public ObservableCollection<Website> Websites { get; set; }
-        public ObservableCollection<Organization> Organizations { get; set; }
-        public ObservableCollection<Address> Addresses { get; set; }
-        public ObservableCollection<InstantMessagingAccount> InstantMessagingAccounts { get; set; }
+        public ObservableCollectionEx<Email> Emails { get; set; }
+        public ObservableCollectionEx<Phone> Phones { get; set; }
+        public ObservableCollectionEx<Website> Websites { get; set; }
+        public ObservableCollectionEx<Organization> Organizations { get; set; }
+        public ObservableCollectionEx<Address> Addresses { get; set; }
+        public ObservableCollectionEx<InstantMessagingAccount> InstantMessagingAccounts { get; set; }
 
         public string FirstName
         {

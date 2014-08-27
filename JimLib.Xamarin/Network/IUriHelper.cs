@@ -2,6 +2,6 @@
 {
     public interface IUriHelper
     {
-        void OpenSchemeUri(System.Uri schemeUri, System.Uri fallbackUri);
+        void OpenSchemeUri(System.Uri schemeUri, System.Uri fallbackUri = null);
     }
 }

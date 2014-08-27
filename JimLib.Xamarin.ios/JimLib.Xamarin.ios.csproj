@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Contacts\Contacts.cs" />
+    <Compile Include="Controls\ExtendedEntryRenderer.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Network\LocalServerDiscovery.cs" />
@@ -52,12 +53,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="crypto">
-      <HintPath>..\packages\Portable.BouncyCastle.1.7.0\lib\portable-net4+sl5+wp8+win8\crypto.dll</HintPath>
-    </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.44.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="crypto, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.44\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.56.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.56\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>

@@ -14,11 +14,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Network
             _app = app;
         }
 
-        public void OpenSchemeUri(System.Uri schemeUri, System.Uri fallbackUri)
+        public void OpenSchemeUri(System.Uri schemeUri, System.Uri fallbackUri = null)
         {
             if (schemeUri != null && _app.CanOpenUrl(NSUrl.FromString(schemeUri.AbsoluteUri)))
                 Device.OpenUri(schemeUri);
-            else
+            else if (fallbackUri != null)
                 Device.OpenUri(fallbackUri);
         }
     }
