@@ -14,5 +14,7 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         AuthorizationStatus AuthorizationStatus { get; }
 
         void AddContact(ContactOverview contactOverview);
+
+        event EventHandler AuthorizationStatusChanged;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,10 +25,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
     public class Contacts : IContacts
     {
         private readonly INavigation _navigation;
+        private AuthorizationStatus _authorizationStatus;
 
         public Contacts(INavigation navigation)
         {
             _navigation = navigation;
+            AuthorizationStatus = GetStatus();
         }
 
         public async Task<bool> AuthoriseContactsAsync()
@@ -39,19 +42,33 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
         {
             get
             {
-                var status = ABAddressBook.GetAuthorizationStatus();
+                AuthorizationStatus = GetStatus();
+                return _authorizationStatus;
+            }
+            private set
+            {
+                if (_authorizationStatus == value) return;
 
-                switch (status)
-                {
-                    case ABAuthorizationStatus.Authorized:
-                        return AuthorizationStatus.Authorized;
-                    case ABAuthorizationStatus.Restricted:
-                        return AuthorizationStatus.Restricted;
-                    case ABAuthorizationStatus.NotDetermined:
-                        return AuthorizationStatus.NotDetermined;
-                    default:
-                        return AuthorizationStatus.Denied;
-                }
+                _authorizationStatus = value;
+
+                OnAuthorizationStatusChanged();
+            }
+        }
+
+        private static AuthorizationStatus GetStatus()
+        {
+            var status = ABAddressBook.GetAuthorizationStatus();
+
+            switch (status)
+            {
+                case ABAuthorizationStatus.Authorized:
+                    return AuthorizationStatus.Authorized;
+                case ABAuthorizationStatus.Restricted:
+                    return AuthorizationStatus.Restricted;
+                case ABAuthorizationStatus.NotDetermined:
+                    return AuthorizationStatus.NotDetermined;
+                default:
+                    return AuthorizationStatus.Denied;
             }
         }
 
@@ -81,6 +98,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 (s, e) => nc.DismissViewController(true, null));
             
             rootController.PresentViewController(nc, true, null);
+        }
+
+        public event EventHandler AuthorizationStatusChanged;
+
+        public void OnAuthorizationStatusChanged()
+        {
+            var handler = AuthorizationStatusChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
         }
 
         private static void AddAddresses(ContactOverview contactOverview, ABPerson person)
@@ -244,13 +269,15 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             };
         }
 
-        private static async Task<AddressBook> GetAddressBookAsync()
+        private async Task<AddressBook> GetAddressBookAsync()
         {
             var addressBook = new AddressBook();
 
             var t = addressBook.RequestPermission();
 
             await t;
+
+            AuthorizationStatus = GetStatus();
 
             return !t.Result ? null : addressBook;
         }
