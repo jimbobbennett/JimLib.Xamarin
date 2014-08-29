@@ -31,6 +31,23 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             }
         }
 
+        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null)
+        {
+// ReSharper disable once AccessToStaticMemberViaDerivedType
+            return await Task<Tuple<string, ImageSource>>.Run(() =>
+                {
+                    try
+                    {
+                        var image = UIImage.LoadFromData(NSData.FromUrl(new NSUrl(url)));
+                        return image != null ? ProcessImage(options, image) : new Tuple<string, ImageSource>(null, null);
+                    }
+                    catch
+                    {
+                        return new Tuple<string, ImageSource>(null, null);
+                    }
+                });
+        }
+
         public PhotoSource AvailablePhotoSources
         {
             get
@@ -93,6 +110,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 
             var image = UIImage.FromFile(file.Path);
 
+            return ProcessImage(options, image);
+        }
+
+        private static Tuple<string, ImageSource> ProcessImage(ImageOptions options, UIImage image)
+        {
             if (options != null)
             {
                 if (options.HasSizeSet)

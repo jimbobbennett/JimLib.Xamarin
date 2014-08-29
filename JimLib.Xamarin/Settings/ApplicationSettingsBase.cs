@@ -49,6 +49,7 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
         protected void SetSetting(string key, string value)
         {
             _settings.AddOrUpdateValue(key, value ?? string.Empty);
+            _settings.Save();
         }
 
         protected void SetEncryptedSetting(string key, string value)
@@ -59,17 +60,19 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
             if (!value.IsNullOrEmpty())
                 value = value.Encrypt(_password);
 
-            _settings.AddOrUpdateValue(key, value ?? string.Empty);
+            SetSetting(key, value ?? string.Empty);
         }
 
         protected void SetSetting(string key, bool value)
         {
             _settings.AddOrUpdateValue(key, value);
+            _settings.Save();
         }
 
         protected void SetEnumSetting<T>(string key, T value) where T : struct
         {
             _settings.AddOrUpdateValue(key, value.ToString());
+            _settings.Save();
         }
     }
 }

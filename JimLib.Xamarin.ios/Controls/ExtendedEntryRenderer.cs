@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
@@ -20,6 +21,32 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             SetFont(view);
             SetTextAlignment(view);
+            SetBorder(view);
+
+            ResizeHeight();
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+
+            var view = (ExtendedEntry)Element;
+
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "Font")
+                SetFont(view);
+
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "XAlign")
+                SetTextAlignment(view);
+
+            if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == "HasBorder")
+                SetBorder(view);
+
+            ResizeHeight();
+        }
+
+        private void SetBorder(ExtendedEntry view)
+        {
+            Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
         }
 
         private void SetTextAlignment(ExtendedEntry view)
@@ -47,17 +74,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 Control.Font = UIFont.SystemFontOfSize(17f);
         }
 
-        public override void Draw(RectangleF rect)
+        private void ResizeHeight()
         {
-            base.Draw(rect);
-
-            if (Control == null) return;
             if (Element.HeightRequest >= 0) return;
 
             var height = Math.Max(Bounds.Height,
                 new UITextField {Font = Control.Font}.IntrinsicContentSize.Height);
-            
-            Control.Frame = new RectangleF(0.0f, 0.0f, (float)Element.Width, height);
+
+            Control.Frame = new RectangleF(0.0f, 0.0f, (float) Element.Width, height);
 
             Element.HeightRequest = height;
         }

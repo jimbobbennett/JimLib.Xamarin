@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using JimBobBennett.JimLib.Collections;
+﻿using JimBobBennett.JimLib.Collections;
 using JimBobBennett.JimLib.Mvvm;
+using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Contacts
@@ -24,6 +24,7 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
             Organizations = new ObservableCollectionEx<Organization>();
             Addresses = new ObservableCollectionEx<Address>();
             InstantMessagingAccounts = new ObservableCollectionEx<InstantMessagingAccount>();
+            SocialMediaUsers = new ObservableCollectionEx<BaseUser>();
         }
         
         public string DisplayName { get; set; }
@@ -55,6 +56,7 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         public ObservableCollectionEx<Organization> Organizations { get; set; }
         public ObservableCollectionEx<Address> Addresses { get; set; }
         public ObservableCollectionEx<InstantMessagingAccount> InstantMessagingAccounts { get; set; }
+        public ObservableCollectionEx<BaseUser> SocialMediaUsers { get; set; }
 
         public string FirstName
         {

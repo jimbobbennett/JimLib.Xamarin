@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using JimBobBennett.JimLib.Xamarin.Contacts;
+using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -34,7 +35,21 @@ namespace JimLib.Xamarin.Test.Contacts
                 Type = AddressType.Other
             });
 
-            var newCo = JsonConvert.DeserializeObject<ContactOverview>(JsonConvert.SerializeObject(co));
+            co.SocialMediaUsers.Add(new FacebookUser
+            {
+                Name = "Name",
+                UserId = "UserId"
+            });
+
+            co.SocialMediaUsers.Add(new TwitterUser
+            {
+                Name = "Name",
+                Handle = "Handle"
+            });
+
+            var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
+            var serializeObject = JsonConvert.SerializeObject(co, settings);
+            var newCo = JsonConvert.DeserializeObject<ContactOverview>(serializeObject, settings);
 
             newCo.Should().NotBe(co);
 
@@ -55,6 +70,14 @@ namespace JimLib.Xamarin.Test.Contacts
                 a.Region == "Region" &&
                 a.StreetAddress == "StreetAddress" &&
                 a.Type == AddressType.Other);
+
+            newCo.SocialMediaUsers.Should().Contain(b => b.Name == "Name" &&
+                                                         b is FacebookUser &&
+                                                         ((FacebookUser)b).UserId == "UserId");
+
+            newCo.SocialMediaUsers.Should().Contain(b => b.Name == "Name" &&
+                                                         b is TwitterUser &&
+                                                         ((TwitterUser)b).Handle == "Handle");
         }
     }
 }
