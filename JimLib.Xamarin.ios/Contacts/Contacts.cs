@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Navigation;
+using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using MonoTouch.AddressBook;
 using MonoTouch.AddressBookUI;
 using MonoTouch.Foundation;
@@ -87,7 +88,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             AddPhones(contactOverview, person);
             AddEmails(contactOverview, person);
             AddAddresses(contactOverview, person);
-
+            AddWebsites(contactOverview, person);
+            AddSocialPrpfiles(contactOverview, person);
+            
             var vc = new ABUnknownPersonViewController {DisplayedPerson = person};
             var rootController = _navigation.NavigationController.VisibleViewController;
             var nc = new UINavigationController(vc);
@@ -97,6 +100,44 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 (s, e) => nc.DismissViewController(true, null));
             
             rootController.PresentViewController(nc, true, null);
+        }
+
+        private static void AddWebsites(ContactOverview contactOverview, ABPerson person)
+        {
+            var websites = new ABMutableStringMultiValue();
+
+            foreach (var website in contactOverview.Websites)
+                websites.Add(website.Address, ABPersonUrlLabel.HomePage);
+
+            person.SetUrls(websites);
+        }
+
+        private static void AddSocialPrpfiles(ContactOverview contactOverview, ABPerson person)
+        {
+            var profiles = new ABMutableDictionaryMultiValue();
+
+            foreach (var socialMediaUser in contactOverview.SocialMediaUsers)
+            {
+                var socialProfile = new SocialProfile
+                {
+                    UserIdentifier = socialMediaUser.UserId, 
+                    Username = socialMediaUser.Name
+                };
+
+                switch (socialMediaUser.Type)
+                {
+                    case Account.Twitter:
+                        socialProfile.Service = ABPersonSocialProfileService.Twitter;
+                        break;
+                    case Account.Facebook:
+                        socialProfile.Service = ABPersonSocialProfileService.Facebook;
+                        break;
+                }
+
+                profiles.Add(socialProfile.Dictionary, new NSString(socialProfile.ServiceName));
+            }
+
+            person.SetSocialProfile(profiles);
         }
 
         public event EventHandler AuthorizationStatusChanged;

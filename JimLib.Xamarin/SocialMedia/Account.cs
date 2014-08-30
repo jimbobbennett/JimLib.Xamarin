@@ -5,9 +5,11 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
 {
     public class Account : NotificationObject, IEquatable<Account>
     {
+        public const string Twitter = "Twitter";
+        public const string Facebook = "Facebook";
+
         private string _name;
         private string _type;
-        private string _displayName;
         private string _userId;
         private bool _canEditUserId;
 
@@ -20,6 +22,7 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
 
                 _name = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => DisplayName);
             }
         }
 
@@ -32,18 +35,23 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
 
                 _type = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => DisplayName);
             }
         }
 
         public string DisplayName
         {
-            get { return _displayName; }
-            set
+            get
             {
-                if (_displayName == value) return;
-
-                _displayName = value;
-                RaisePropertyChanged();
+                switch (Type)
+                {
+                    case Twitter:
+                        return UserId;
+                    case Facebook:
+                        return Name;
+                    default:
+                        return null;
+                }
             }
         }
 
@@ -54,7 +62,12 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
             {
                 if (_userId == value) return;
                 _userId = value;
+
+                if (_userId != null && Type == Twitter && !_userId.StartsWith("@"))
+                    _userId = "@" + _userId;
+
                 RaisePropertyChanged();
+                RaisePropertyChanged(() => DisplayName);
             }
         }
 
