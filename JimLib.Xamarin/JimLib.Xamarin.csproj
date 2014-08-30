@@ -43,12 +43,12 @@
     <Compile Include="Contacts\Enums.cs" />
     <Compile Include="Contacts\IContacts.cs" />
     <Compile Include="Contacts\InstantMessagingAccount.cs" />
-    <Compile Include="Contacts\Organization.cs" />
     <Compile Include="Contacts\Phone.cs" />
     <Compile Include="Contacts\Website.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedImage.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
+    <Compile Include="Controls\IKeyboardHelper.cs" />
     <Compile Include="Images\Enums.cs" />
     <Compile Include="Images\IImageHelper.cs" />
     <Compile Include="Images\ImageOptions.cs" />
@@ -59,11 +59,9 @@
     <Compile Include="Network\IRestConnection.cs" />
     <Compile Include="Network\IUriHelper.cs" />
     <Compile Include="Settings\ApplicationSettingsBase.cs" />
-    <Compile Include="SocialMedia\BaseUser.cs" />
+    <Compile Include="SocialMedia\Account.cs" />
     <Compile Include="SocialMedia\Enums.cs" />
     <Compile Include="SocialMedia\ISocialMediaConnections.cs" />
-    <Compile Include="SocialMedia\TwitterUser.cs" />
-    <Compile Include="SocialMedia\FacebookUser.cs" />
     <Compile Include="ValueConverters\BooleanToObjectValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanValueConverter.cs" />
   </ItemGroup>

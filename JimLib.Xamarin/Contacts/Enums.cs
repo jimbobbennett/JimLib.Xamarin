@@ -26,12 +26,6 @@
         Authorized,
     }
 
-    public enum OrganizationType
-    {
-        Work,
-        Other,
-    }
-
     public enum InstantMessagingService
     {
         Aim,

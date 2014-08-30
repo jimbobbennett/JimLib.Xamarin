@@ -21,7 +21,8 @@ namespace JimLib.Xamarin.Test.Contacts
                 NickName = "NickName",
                 Prefix = "Prefix",
                 Suffix = "Suffix",
-                ThumbBase64 = "ThumbBase64"
+                ThumbBase64 = "ThumbBase64",
+                Organization = "Organization"
             };
 
             co.Addresses.Add(new Address
@@ -35,16 +36,16 @@ namespace JimLib.Xamarin.Test.Contacts
                 Type = AddressType.Other
             });
 
-            co.SocialMediaUsers.Add(new FacebookUser
+            co.SocialMediaUsers.Add(new Account
             {
                 Name = "Name",
                 UserId = "UserId"
             });
 
-            co.SocialMediaUsers.Add(new TwitterUser
+            co.SocialMediaUsers.Add(new Account
             {
                 Name = "Name",
-                Handle = "Handle"
+                UserId = "Handle"
             });
 
             var settings = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.All};
@@ -61,6 +62,7 @@ namespace JimLib.Xamarin.Test.Contacts
             newCo.Prefix.Should().Be("Prefix");
             newCo.Suffix.Should().Be("Suffix");
             newCo.ThumbBase64.Should().Be("ThumbBase64");
+            newCo.Organization.Should().Be("Organization");
 
             newCo.Addresses.Should().OnlyContain(a =>
                 a.City == "City" &&
@@ -72,12 +74,10 @@ namespace JimLib.Xamarin.Test.Contacts
                 a.Type == AddressType.Other);
 
             newCo.SocialMediaUsers.Should().Contain(b => b.Name == "Name" &&
-                                                         b is FacebookUser &&
-                                                         ((FacebookUser)b).UserId == "UserId");
+                                                         b.UserId == "UserId");
 
             newCo.SocialMediaUsers.Should().Contain(b => b.Name == "Name" &&
-                                                         b is TwitterUser &&
-                                                         ((TwitterUser)b).Handle == "Handle");
+                                                         b.UserId == "Handle");
         }
     }
 }

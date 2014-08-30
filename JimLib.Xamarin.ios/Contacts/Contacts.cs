@@ -15,8 +15,6 @@ using Address = Xamarin.Contacts.Address;
 using Email = Xamarin.Contacts.Email;
 using InstantMessagingAccount = Xamarin.Contacts.InstantMessagingAccount;
 using InstantMessagingService = JimBobBennett.JimLib.Xamarin.Contacts.InstantMessagingService;
-using Organization = Xamarin.Contacts.Organization;
-using OrganizationType = JimBobBennett.JimLib.Xamarin.Contacts.OrganizationType;
 using Phone = Xamarin.Contacts.Phone;
 using Website = Xamarin.Contacts.Website;
 
@@ -82,7 +80,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 Image = new NSData(contactOverview.ThumbBase64, NSDataBase64DecodingOptions.None),
                 Nickname = contactOverview.NickName,
                 Prefix = contactOverview.Prefix,
-                Suffix = contactOverview.Suffix
+                Suffix = contactOverview.Suffix,
+                Organization = contactOverview.Organization
             };
 
             AddPhones(contactOverview, person);
@@ -188,6 +187,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 Suffix = c.Suffix
             };
 
+            var organization = c.Organizations.FirstOrDefault();
+            if (organization != null)
+                contactOverview.Organization = organization.Name;
+
             contactOverview.SetThumbImageSource(ImageHelper.GetImageSourceFromUIImage(scaled));
 
             if (scaled != null)
@@ -200,21 +203,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             contactOverview.Phones.AddRange(c.Phones.Select(CreatePhone));
             contactOverview.Addresses.AddRange(c.Addresses.Select(CreateAddress));
             contactOverview.InstantMessagingAccounts.AddRange(c.InstantMessagingAccounts.Select(CreateInstantMessagingAccount));
-            contactOverview.Organizations.AddRange(c.Organizations.Select(CreateOrganization));
             contactOverview.Websites.AddRange(c.Websites.Select(CreateWebsites));
             
             return contactOverview;
-        }
-
-        private static Xamarin.Contacts.Organization CreateOrganization(Organization arg)
-        {
-            return new Xamarin.Contacts.Organization
-            {
-                ContactTitle = arg.ContactTitle,
-                Label = arg.Label,
-                Name = arg.Name,
-                Type = (OrganizationType) arg.Type
-            };
         }
 
         private static Xamarin.Contacts.InstantMessagingAccount CreateInstantMessagingAccount(InstantMessagingAccount arg)

@@ -15,16 +15,16 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         private string _middleName;
         private string _firstName;
         private string _thumbBase64;
+        private string _organization;
 
         public ContactOverview()
         {
             Emails = new ObservableCollectionEx<Email>();
             Phones = new ObservableCollectionEx<Phone>();
             Websites = new ObservableCollectionEx<Website>();
-            Organizations = new ObservableCollectionEx<Organization>();
             Addresses = new ObservableCollectionEx<Address>();
             InstantMessagingAccounts = new ObservableCollectionEx<InstantMessagingAccount>();
-            SocialMediaUsers = new ObservableCollectionEx<BaseUser>();
+            SocialMediaUsers = new ObservableCollectionEx<Account>();
         }
         
         public string DisplayName { get; set; }
@@ -53,10 +53,9 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         public ObservableCollectionEx<Email> Emails { get; set; }
         public ObservableCollectionEx<Phone> Phones { get; set; }
         public ObservableCollectionEx<Website> Websites { get; set; }
-        public ObservableCollectionEx<Organization> Organizations { get; set; }
         public ObservableCollectionEx<Address> Addresses { get; set; }
         public ObservableCollectionEx<InstantMessagingAccount> InstantMessagingAccounts { get; set; }
-        public ObservableCollectionEx<BaseUser> SocialMediaUsers { get; set; }
+        public ObservableCollectionEx<Account> SocialMediaUsers { get; set; }
 
         public string FirstName
         {
@@ -98,6 +97,17 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
             {
                 if (value == _nickName) return;
                 _nickName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string Organization
+        {
+            get { return _organization; }
+            set
+            {
+                if (value == _organization) return;
+                _organization = value;
                 RaisePropertyChanged();
             }
         }
