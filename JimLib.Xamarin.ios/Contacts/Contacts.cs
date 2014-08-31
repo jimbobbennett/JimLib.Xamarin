@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.Contacts;
@@ -92,9 +93,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             AddEmails(contactOverview, person);
             AddAddresses(contactOverview, person);
             AddWebsites(contactOverview, person);
-            AddSocialPrpfiles(contactOverview, person);
+            AddSocialProfiles(contactOverview, person);
             
             var vc = new ABUnknownPersonViewController {DisplayedPerson = person};
+            vc.PersonCreated += (s, e) =>
+                {
+                    if (e.Person != null)
+                        contactOverview.AddressBookId = e.Person.Id.ToString(CultureInfo.InvariantCulture);
+                };
             var rootController = _navigation.NavigationController.VisibleViewController;
             var nc = new UINavigationController(vc);
 
@@ -112,14 +118,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             foreach (var website in contactOverview.Websites)
                 websites.Add(website.Address, ABPersonUrlLabel.HomePage);
 
-            person.SetUrls(websites);
+            if (websites.Any())
+                person.SetUrls(websites);
         }
 
-        private static void AddSocialPrpfiles(ContactOverview contactOverview, ABPerson person)
+        private static void AddSocialProfiles(ContactOverview contactOverview, ABPerson person)
         {
             var profiles = new ABMutableDictionaryMultiValue();
 
-            foreach (var socialMediaUser in contactOverview.SocialMediaUsers)
+            foreach (var socialMediaUser in contactOverview.SocialMediaUsers
+                .Where(c => c.Type == Account.Twitter || c.Type == Account.Facebook))
             {
                 var socialProfile = new SocialProfile
                 {
@@ -140,7 +148,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 profiles.Add(socialProfile.Dictionary, new NSString(socialProfile.ServiceName));
             }
 
-            person.SetSocialProfile(profiles);
+            if (profiles.Any())
+                person.SetSocialProfile(profiles);
         }
 
         public event EventHandler AuthorizationStatusChanged;
@@ -169,7 +178,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 addresses.Add(a, new NSString(address.Label));
             }
 
-            person.SetAddresses(addresses);
+            if (addresses.Any())
+                person.SetAddresses(addresses);
         }
 
         private static void AddPhones(ContactOverview contactOverview, ABPerson person)
@@ -178,7 +188,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             foreach (var phone in contactOverview.Phones)
                 phones.Add(phone.Number, new NSString(phone.Label));
 
-            person.SetPhones(phones);
+            if (phones.Any())
+                person.SetPhones(phones);
         }
 
         private static void AddEmails(ContactOverview contactOverview, ABPerson person)
@@ -187,7 +198,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             foreach (var email in contactOverview.Emails)
                 emails.Add(email.Address, new NSString(email.Label));
 
-            person.SetEmails(emails);
+            if (emails.Any())
+                person.SetEmails(emails);
         }
 
         public async Task<IEnumerable<ContactOverview>> GetContactOverviewsAsync()
@@ -228,7 +240,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 LastName = c.LastName, 
                 NickName = c.Nickname, 
                 Prefix = c.Prefix, 
-                Suffix = c.Suffix
+                Suffix = c.Suffix,
+                AddressBookId = c.Id
             };
 
             var organization = c.Organizations.FirstOrDefault();

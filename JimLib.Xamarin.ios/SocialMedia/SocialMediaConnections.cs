@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Extensions;
+using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using MonoTouch.Accounts;
@@ -64,17 +65,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
             else
                 FBSession.OpenActiveSession(false);
 
-            if (FBSession.ActiveSession.IsOpen)
-            {
-                var me = await FBRequestConnection.GetMeAsync();
-                
-                if (me == null || me.Result == null)
-                    throw new Exception("Failed to connect to facebook");
+            if (!FBSession.ActiveSession.IsOpen) return new List<Account>();
 
-                return CreateFacebokUser((FBGraphObject) me.Result).AsList();
-            }
-            
-            return new List<Account>();
+            var me = await FBRequestConnection.GetMeAsync();
+                
+            if (me == null || me.Result == null)
+                throw new Exception("Failed to connect to facebook");
+
+            return CreateFacebokUser((FBGraphObject) me.Result).AsList();
         }
 
         private static Account CreateFacebokUser(FBGraphObject graphObject)
@@ -99,16 +97,15 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
         public void ViewOnFacebook(Account facebookUser)
         {
-            if (facebookUser.Type == Account.Facebook)
-            {
-                try
-                {
-                    _uriHelper.OpenSchemeUri(new System.Uri("http://facebook.com/" + facebookUser.UserId));
-                }
-                catch (Exception)
-                {
+            if (facebookUser.Type != Account.Facebook) return;
 
-                }
+            try
+            {
+                _uriHelper.OpenSchemeUri(new System.Uri("http://facebook.com/" + facebookUser.UserId));
+            }
+            catch
+            {
+
             }
         }
 
@@ -133,20 +130,34 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
         public void ViewOnTwitter(Account twitterUser)
         {
-            if (twitterUser.Type == Account.Twitter)
+            if (twitterUser.Type != Account.Twitter) return;
+
+            try
             {
-                try
-                {
-                    var userId = twitterUser.UserId.Replace("@", "");
-                    var schemeUri = new System.Uri("twitter://user?screen_name=" + userId);
-                    var fallbackUri = new System.Uri("https://twitter.com/" + userId);
+                var userId = twitterUser.UserId.Replace("@", "");
+                var schemeUri = new System.Uri("twitter://user?screen_name=" + userId);
+                var fallbackUri = new System.Uri("https://twitter.com/" + userId);
 
-                    _uriHelper.OpenSchemeUri(schemeUri, fallbackUri);
-                }
-                catch (Exception)
-                {
+                _uriHelper.OpenSchemeUri(schemeUri, fallbackUri);
+            }
+            catch
+            {
 
-                }
+            }
+        }
+
+        public void ChatOnWhatsApp(Account whatsAppUser, ContactOverview contact)
+        {
+            if (whatsAppUser.Type != Account.WhatsApp) return;
+            if (contact.AddressBookId.IsNullOrEmpty()) return;
+
+            try
+            {
+                _uriHelper.OpenSchemeUri(new System.Uri("whatsapp://send?abid=" + contact.AddressBookId));
+            }
+            catch 
+            {
+
             }
         }
     }

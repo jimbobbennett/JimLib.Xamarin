@@ -7,6 +7,7 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
     {
         public const string Twitter = "Twitter";
         public const string Facebook = "Facebook";
+        public const string WhatsApp = "WhatsApp";
 
         private string _name;
         private string _type;
@@ -48,6 +49,7 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
                     case Twitter:
                         return UserId;
                     case Facebook:
+                    case WhatsApp:
                         return Name;
                     default:
                         return null;

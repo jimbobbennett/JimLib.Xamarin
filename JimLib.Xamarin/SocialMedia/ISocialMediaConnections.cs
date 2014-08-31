@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Xamarin.Contacts;
 
 namespace JimBobBennett.JimLib.Xamarin.SocialMedia
 {
@@ -10,5 +11,7 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
 
         Task<IEnumerable<Account>> GetTwitterHandleAsync();
         void ViewOnTwitter(Account twitterUser);
+
+        void ChatOnWhatsApp(Account whatsAppUser, ContactOverview contact);
     }
 }

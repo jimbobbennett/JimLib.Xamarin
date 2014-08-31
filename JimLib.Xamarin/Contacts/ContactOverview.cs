@@ -16,6 +16,7 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         private string _firstName;
         private string _thumbBase64;
         private string _organization;
+        private string _addressBookId;
 
         public ContactOverview()
         {
@@ -130,6 +131,17 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
             {
                 if (value == _suffix) return;
                 _suffix = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string AddressBookId
+        {
+            get { return _addressBookId; }
+            set
+            {
+                if (value == _addressBookId) return;
+                _addressBookId = value;
                 RaisePropertyChanged();
             }
         }
