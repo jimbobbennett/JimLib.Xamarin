@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Navigation;
+using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using MonoTouch.AddressBook;
 using MonoTouch.AddressBookUI;
@@ -24,11 +25,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
     public class Contacts : IContacts
     {
         private readonly INavigation _navigation;
+        private readonly IUriHelper _uriHelper;
         private AuthorizationStatus _authorizationStatus;
 
-        public Contacts(INavigation navigation)
+        public Contacts(INavigation navigation, IUriHelper uriHelper)
         {
             _navigation = navigation;
+            _uriHelper = uriHelper;
             AuthorizationStatus = GetStatus();
         }
 
@@ -312,6 +315,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             AuthorizationStatus = GetStatus();
 
             return !t.Result ? null : addressBook;
+        }
+
+        public void MakePhoneCall(Xamarin.Contacts.Phone phone)
+        {
+            _uriHelper.OpenSchemeUri(new System.Uri("tel:" + phone.Number));
+        }
+
+        public void SendEmail(Xamarin.Contacts.Email email)
+        {
+            _uriHelper.OpenSchemeUri(new System.Uri("mailto:" + email.Address));
         }
     }
 }

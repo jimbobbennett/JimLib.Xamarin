@@ -16,5 +16,8 @@ namespace JimBobBennett.JimLib.Xamarin.Contacts
         void AddContact(ContactOverview contactOverview);
 
         event EventHandler AuthorizationStatusChanged;
+
+        void MakePhoneCall(Phone phone);
+        void SendEmail(Email email);
     }
 }
