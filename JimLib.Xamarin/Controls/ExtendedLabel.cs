@@ -54,6 +54,9 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             ((RelayCommand)((ExtendedLabel)bindable)._tapGestureRecognizer.Command).RaiseCanExecuteChanged();
         }
 
+        public static readonly BindableProperty AdjustFontSizeToFitWidthProperty =
+            BindableProperty.Create("AdjustFontSizeToFitWidth", typeof(bool), typeof(ExtendedEntry), true);
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -64,6 +67,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        public bool AdjustFontSizeToFitWidth
+        {
+            get { return (bool)GetValue(AdjustFontSizeToFitWidthProperty); }
+            set { SetValue(AdjustFontSizeToFitWidthProperty, value); }
         }
 
         public event EventHandler Clicked;
