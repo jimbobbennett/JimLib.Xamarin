@@ -43,11 +43,13 @@
     <Compile Include="Controls\KeyboardHelper.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
+    <Compile Include="Navigation\Navigation.cs" />
     <Compile Include="Network\LocalServerDiscovery.cs" />
     <Compile Include="Network\UriHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\RestConnection.cs" />
     <Compile Include="Network\RestConnectionBase.cs" />
+    <Compile Include="SocialMedia\SocialMediaConnections.cs" />
     <Compile Include="Uri\UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,9 +60,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.61.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.61\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+    <Reference Include="JimBobBennett.JimLib">
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.63\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MonoTouch.FacebookConnect">
+      <HintPath>..\Components\facebookios-3.17.1\lib\ios\MonoTouch.FacebookConnect.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
@@ -94,6 +99,12 @@
       <Project>{395a6831-de72-4b65-b3c2-72a4cc248726}</Project>
       <Name>JimLib.Xamarin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="facebookios">
+      <Visible>False</Visible>
+      <Version>3.17.1</Version>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

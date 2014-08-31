@@ -6,9 +6,9 @@ namespace JimBobBennett.JimLib.Xamarin.SocialMedia
     public interface ISocialMediaConnections
     {
         Task<IEnumerable<Account>> GetFacebookUserAsync();
-        Task SendFacebookFriendRequestAsync(Account facebookUser);
+        void ViewOnFacebook(Account facebookUser);
 
         Task<IEnumerable<Account>> GetTwitterHandleAsync();
-        Task FollowOnTwitterAsync(Account handle);
+        void ViewOnTwitter(Account twitterUser);
     }
 }

@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xml;
 using Newtonsoft.Json;
 
@@ -56,7 +57,9 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                                 if (getResponse.IsSuccessStatusCode)
                                 {
                                     var getResponseBody = await getResponse.Content.ReadAsStringAsync();
-                                    responseObject = DeserializeResponse<T>(getResponseBody, responseType);
+
+                                    if (!getResponseBody.IsNullOrEmpty())
+                                        responseObject = DeserializeResponse<T>(getResponseBody, responseType);
                                 }
                                 break;
 
@@ -68,7 +71,9 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                                 if (postResponse.IsSuccessStatusCode)
                                 {
                                     var postResponseBody = await postResponse.Content.ReadAsStringAsync();
-                                    responseObject = DeserializeResponse<T>(postResponseBody, responseType);
+
+                                    if (!postResponseBody.IsNullOrEmpty())
+                                        responseObject = DeserializeResponse<T>(postResponseBody, responseType);
                                 }
                                 break;
                         }
