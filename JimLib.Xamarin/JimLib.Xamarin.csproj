@@ -52,6 +52,8 @@
     <Compile Include="Images\Enums.cs" />
     <Compile Include="Images\IImageHelper.cs" />
     <Compile Include="Images\ImageOptions.cs" />
+    <Compile Include="Navigation\INavigationStackManager.cs" />
+    <Compile Include="Navigation\NavigationStackManager.cs" />
     <Compile Include="Network\ILocalServerDiscovery.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
