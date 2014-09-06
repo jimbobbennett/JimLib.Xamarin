@@ -50,6 +50,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\RestConnection.cs" />
     <Compile Include="Network\RestConnectionBase.cs" />
+    <Compile Include="Purchases\InAppPurchase.cs" />
+    <Compile Include="Purchases\PurchasableProduct.cs" />
+    <Compile Include="Purchases\SKProductExtension.cs" />
+    <Compile Include="Purchases\TransactionObserver.cs" />
     <Compile Include="SocialMedia\SocialMediaConnections.cs" />
     <Compile Include="Uri\UriHelper.cs" />
   </ItemGroup>

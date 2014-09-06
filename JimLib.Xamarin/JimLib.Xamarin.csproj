@@ -61,6 +61,9 @@
     <Compile Include="Network\Enums.cs" />
     <Compile Include="Network\IRestConnection.cs" />
     <Compile Include="Network\IUriHelper.cs" />
+    <Compile Include="Purchases\IInAppPurchase.cs" />
+    <Compile Include="Purchases\InAppPurchaseException.cs" />
+    <Compile Include="Purchases\IPurchasableProduct.cs" />
     <Compile Include="Settings\ApplicationSettingsBase.cs" />
     <Compile Include="SocialMedia\Account.cs" />
     <Compile Include="SocialMedia\Enums.cs" />
