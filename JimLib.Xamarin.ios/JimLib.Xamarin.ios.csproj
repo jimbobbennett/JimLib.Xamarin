@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Contacts\Contacts.cs" />
     <Compile Include="Controls\ExtendedEntryRenderer.cs" />
+    <Compile Include="Controls\ExtendedImageRenderer.cs" />
     <Compile Include="Controls\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\KeyboardHelper.cs" />
     <Compile Include="Images\ImageHelper.cs" />
@@ -55,7 +56,6 @@
     <Compile Include="Purchases\SKProductExtension.cs" />
     <Compile Include="Purchases\TransactionObserver.cs" />
     <Compile Include="SocialMedia\SocialMediaConnections.cs" />
-    <Compile Include="Uri\UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -65,15 +65,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.66.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.72.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.66\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.72\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
     </Reference>
     <Reference Include="MonoTouch.FacebookConnect">
       <HintPath>..\Components\facebookios-3.17.1\lib\ios\MonoTouch.FacebookConnect.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Refractored.Xam.Settings">
       <HintPath>..\packages\Xam.Plugins.Settings.1.3.0.0\lib\MonoTouch10\Refractored.Xam.Settings.dll</HintPath>
@@ -108,7 +109,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="facebookios">
       <Visible>False</Visible>
-      <Version>3.17.1</Version>
+      <Version>3.18.0</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

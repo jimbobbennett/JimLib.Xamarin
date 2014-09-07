@@ -36,26 +36,40 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
             OnProductPurchaseFailed(_purchasableProducts[eventArgs.Value.Payment.ProductIdentifier]);
         }
 
-        public event EventHandler<EventArgs<IEnumerable<IPurchasableProduct>>> LoadedAvailablePurchasableProducts;
-        public event EventHandler<EventArgs<IPurchasableProduct>> ProductPurchased;
-        public event EventHandler<EventArgs<IPurchasableProduct>> ProductPurchaseFailed;
+        public event EventHandler<EventArgs<IEnumerable<IPurchasableProduct>>> LoadedAvailablePurchasableProducts
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("LoadedAvailablePurchasableProducts", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("LoadedAvailablePurchasableProducts", value); }
+        }
+
+        public event EventHandler<EventArgs<IPurchasableProduct>> ProductPurchased
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("ProductPurchased", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("ProductPurchased", value); }
+        }
+
+        public event EventHandler<EventArgs<IPurchasableProduct>> ProductPurchaseFailed
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("ProductPurchaseFailed", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("ProductPurchaseFailed", value); }
+        }
 
         private void OnLoadedAvailablePurchasableProducts(IEnumerable<IPurchasableProduct> e)
         {
-            var handler = LoadedAvailablePurchasableProducts;
-            if (handler != null) handler(this, new EventArgs<IEnumerable<IPurchasableProduct>>(e));
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+                new EventArgs<IEnumerable<IPurchasableProduct>>(e), "LoadedAvailablePurchasableProducts");
         }
         
         private void OnProductPurchased(IPurchasableProduct e)
         {
-            var handler = ProductPurchased;
-            if (handler != null) handler(this, new EventArgs<IPurchasableProduct>(e));
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+                new EventArgs<IPurchasableProduct>(e), "ProductPurchased");
         }
         
         private void OnProductPurchaseFailed(IPurchasableProduct e)
         {
-            var handler = ProductPurchaseFailed;
-            if (handler != null) handler(this, new EventArgs<IPurchasableProduct>(e));
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+                new EventArgs<IPurchasableProduct>(e), "ProductPurchaseFailed");
         }
        
         public bool IsPurchasing { get; private set; }

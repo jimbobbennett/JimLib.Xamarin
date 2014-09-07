@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Navigation;
@@ -152,12 +153,15 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 person.SetSocialProfile(profiles);
         }
 
-        public event EventHandler AuthorizationStatusChanged;
+        public event EventHandler AuthorizationStatusChanged
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("AuthorizationStatusChanged", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("AuthorizationStatusChanged", value); }
+        }
 
         public void OnAuthorizationStatusChanged()
         {
-            var handler = AuthorizationStatusChanged;
-            if (handler != null) handler(this, EventArgs.Empty);
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, EventArgs.Empty, "AuthorizationStatusChanged");
         }
 
         private static void AddAddresses(ContactOverview contactOverview, ABPerson person)

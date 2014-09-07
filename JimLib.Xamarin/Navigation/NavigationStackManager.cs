@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Events;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Navigation
@@ -22,11 +23,33 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             navigationPage.Popped += (s, e) =>
             {
                 if (_pages.Peek().Item1 == e.Page)
-                    _pages.Pop();
+                    OnPagePopped(_pages.Pop().Item1);
             };
 
             _pages = new Stack<Tuple<Page, PageState>>();
             _pages.Push(Tuple.Create(rootPage, PageState.Root));
+        }
+
+        public event EventHandler<EventArgs<Page>> PagePushed
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("PagePushed", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("PagePushed", value); }
+        }
+
+        public event EventHandler<EventArgs<Page>> PagePopped
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("PagePopped", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("PagePopped", value); }
+        }
+
+        private void OnPagePushed(Page page)
+        {
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, new EventArgs<Page>(page), "PagePushed");
+        }
+
+        private void OnPagePopped(Page page)
+        {
+            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, new EventArgs<Page>(page), "PagePopped");
         }
 
         public async Task PushModalAsync(Page page)
@@ -37,20 +60,8 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             _pages.Push(Tuple.Create(page, PageState.Modal));
 
             await top.Item1.Navigation.PushModalAsync(page);
-        }
 
-        public async Task PopModalAsync()
-        {
-            if (_pages == null) throw new NavigationException("Not set up");
-
-            var top = _pages.Peek();
-            if (top.Item2 == PageState.Modal)
-            {
-                _pages.Pop();
-                await top.Item1.Navigation.PopModalAsync();
-            }
-            else
-                throw new NavigationException("Cannot pop modal - the top page is not modal");
+            OnPagePushed(page);
         }
 
         public async Task PushAsync(Page page)
@@ -61,6 +72,8 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             _pages.Push(Tuple.Create(page, PageState.Normal));
 
             await top.Item1.Navigation.PushAsync(page);
+
+            OnPagePushed(page);
         }
 
         public async Task PopAsync()
@@ -68,13 +81,20 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             if (_pages == null) throw new NavigationException("Not set up");
 
             var top = _pages.Peek();
-            if (top.Item2 == PageState.Normal)
+
+            switch (top.Item2)
             {
-                _pages.Pop();
-                await top.Item1.Navigation.PopAsync();
+                case PageState.Normal:
+                    _pages.Pop();
+                    await top.Item1.Navigation.PopAsync();
+                    OnPagePopped(top.Item1);
+                    break;
+                case PageState.Modal:
+                    _pages.Pop();
+                    await top.Item1.Navigation.PopModalAsync();
+                    OnPagePopped(top.Item1);
+                    break;
             }
-            else
-                throw new NavigationException("Cannot pop - the top page is shown modal");
         }
 
         public async Task RollbackToRootAsync()
@@ -97,14 +117,6 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
                         break;
                 }
             }
-        }
-    }
-
-    public class NavigationException : Exception
-    {
-        public NavigationException(string message)
-            : base(message)
-        {
         }
     }
 }

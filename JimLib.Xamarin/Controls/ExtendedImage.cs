@@ -54,6 +54,9 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             ((RelayCommand)((ExtendedImage)bindable)._tapGestureRecognizer.Command).RaiseCanExecuteChanged();
         }
 
+        public static readonly BindableProperty TintColorProperty =
+            BindableProperty.Create("TintColor", typeof(Color), typeof(ExtendedImage), Color.Default);
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -64,6 +67,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        public Color TintColor
+        {
+            get { return (Color)GetValue(TintColorProperty); }
+            set { SetValue(TintColorProperty, value); }
         }
 
         public event EventHandler Clicked;
