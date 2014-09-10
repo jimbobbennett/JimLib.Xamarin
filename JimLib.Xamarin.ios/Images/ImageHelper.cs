@@ -131,7 +131,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                     image = FixOrientation(image);
             }
 
-            var data = image.AsPNG().GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+            var data = image.AsJPEG(0.75f).GetBase64EncodedString(NSDataBase64EncodingOptions.None);
 
             return Tuple.Create(data, GetImageSourceFromUIImage(image));
         }
@@ -155,7 +155,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 
         internal static ImageSource GetImageSourceFromUIImage(UIImage uiImage)
         {
-            return uiImage == null ? null : ImageSource.FromStream(() => uiImage.AsPNG().AsStream());
+            return uiImage == null ? null : ImageSource.FromStream(() => uiImage.AsJPEG(0.75f).AsStream());
         }
         
         // resize the image to be contained within a maximum width and height, keeping aspect ratio
@@ -169,11 +169,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             var width = maxResizeFactor * sourceSize.Width;
             var height = maxResizeFactor * sourceSize.Height;
 
-            UIGraphics.BeginImageContext(new SizeF(maxWidth, maxHeight));
+            UIGraphics.BeginImageContext(new SizeF(width, height));
 
-            var heightOffSet = (maxHeight - height) / 2;
-            var widthOffSet = (maxWidth - width) / 2;
-            sourceImage.Draw(new RectangleF(widthOffSet, heightOffSet, width, height));
+            sourceImage.Draw(new RectangleF(0, 0, width, height));
 
             var resultImage = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();
