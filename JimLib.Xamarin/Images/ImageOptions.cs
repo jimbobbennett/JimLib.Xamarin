@@ -14,5 +14,6 @@
         public float MaxHeight { get; set; }
 
         internal bool HasSizeSet { get { return MaxHeight > -1 && MaxWidth > -1; } }
+        internal bool FixOrientation { get; set; }
     }
 }

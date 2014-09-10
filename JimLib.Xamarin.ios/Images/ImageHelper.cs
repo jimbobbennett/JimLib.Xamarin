@@ -73,6 +73,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                 try
                 {
                     var file = await mediaPicker.TakePhotoAsync(new StoreCameraMediaOptions());
+
+                    options = options ?? new ImageOptions();
+                    options.FixOrientation = true;
+
                     return ProcessImageFile(options, file);
                 }
                 catch (Exception)
@@ -122,11 +126,25 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 
                 if (options.Circle)
                     image = CropToCircle(image);
+
+                if (options.FixOrientation)
+                    image = FixOrientation(image);
             }
 
             var data = image.AsPNG().GetBase64EncodedString(NSDataBase64EncodingOptions.None);
 
             return Tuple.Create(data, GetImageSourceFromUIImage(image));
+        }
+
+        private static UIImage FixOrientation(UIImage image)
+        {
+            if (image.Orientation == UIImageOrientation.Up) return image;
+
+            UIGraphics.BeginImageContextWithOptions(image.Size, false, image.CurrentScale);
+            image.Draw(new RectangleF(new PointF(0, 0), image.Size));
+            var normalizedImage = UIGraphics.GetImageFromCurrentImageContext();
+            UIGraphics.EndImageContext();
+            return normalizedImage;
         }
 
         internal static UIImage GetUIImageFromBase64(string base64)
