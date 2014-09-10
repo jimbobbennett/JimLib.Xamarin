@@ -57,6 +57,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public static readonly BindableProperty TintColorProperty =
             BindableProperty.Create("TintColor", typeof(Color), typeof(ExtendedImage), Color.Default);
 
+        public static readonly BindableProperty IsSharableProperty =
+            BindableProperty.Create("IsSharable", typeof(bool), typeof(ExtendedImage), false);
+
+        public static readonly BindableProperty ShareTextProperty =
+            BindableProperty.Create("ShareText", typeof(string), typeof(ExtendedImage), string.Empty);
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -73,6 +79,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (Color)GetValue(TintColorProperty); }
             set { SetValue(TintColorProperty, value); }
+        }
+
+        public bool IsSharable
+        {
+            get { return (bool)GetValue(IsSharableProperty); }
+            set { SetValue(IsSharableProperty, value); }
+        }
+
+        public string ShareText
+        {
+            get { return (string)GetValue(ShareTextProperty); }
+            set { SetValue(ShareTextProperty, value); }
         }
 
         public event EventHandler Clicked;

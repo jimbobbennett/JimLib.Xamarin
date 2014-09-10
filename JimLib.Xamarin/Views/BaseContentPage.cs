@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Mvvm;
+using JimBobBennett.JimLib.Xamarin.Extensions;
 using JimBobBennett.JimLib.Xamarin.Mvvm;
 using JimBobBennett.JimLib.Xamarin.Navigation;
 using Xamarin.Forms;
@@ -33,9 +34,9 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 VerticalOptions = LayoutOptions.Fill,
             };
 
-            activityGrid.RowDefinitions.Add(new RowDefinition {Height = GridLength.Auto});
-            activityGrid.RowDefinitions.Add(new RowDefinition {Height = GridLength.Auto});
-            activityGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            activityGrid.AddAutoRowDefinition();
+            activityGrid.AddAutoRowDefinition();
+            activityGrid.AddStarColumnDefinition();
             
             _activityIndicator = new ActivityIndicator
             {
@@ -72,8 +73,8 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 VerticalOptions = LayoutOptions.Fill
             };
 
-            _mainGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            _mainGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            _mainGrid.AddStarColumnDefinition();
+            _mainGrid.AddStarRowDefinition();
 
             _mainGrid.Children.Add(_contentGrid);
             _mainGrid.Children.Add(_opacityGrid);

@@ -17,7 +17,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>96d34d33</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>4306c6f5</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="App.cs" />
     <Compile Include="Contacts\Address.cs" />
     <Compile Include="Contacts\ContactOverview.cs" />
     <Compile Include="Contacts\Email.cs" />
@@ -49,6 +50,7 @@
     <Compile Include="Controls\ExtendedImage.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\IKeyboardHelper.cs" />
+    <Compile Include="Extensions\GridExtensions.cs" />
     <Compile Include="Images\Enums.cs" />
     <Compile Include="Images\IImageHelper.cs" />
     <Compile Include="Images\ImageOptions.cs" />
@@ -72,10 +74,15 @@
     <Compile Include="SocialMedia\ISocialMediaConnections.cs" />
     <Compile Include="ValueConverters\BooleanToObjectValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanValueConverter.cs" />
+    <Compile Include="ViewModels\ImageViewerViewModel.cs" />
     <Compile Include="Views\BaseContentPage.cs" />
+    <Compile Include="Views\ImageViewerPage.cs" />
     <Compile Include="Views\IView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="crypto">
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
     </Reference>
