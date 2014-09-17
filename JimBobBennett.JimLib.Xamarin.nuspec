@@ -66,7 +66,8 @@
     <!-- Win -->
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.dll" />
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.pdb" />
-    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.Win.dll" />
+    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.Win.dll" />
+    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.pdb" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.Win.pdb" />
     <file src="JimLib.Xamarin.Win\**\*.cs" target="src\JimLib.Xamarin.Win" />
   </files>
 </package>

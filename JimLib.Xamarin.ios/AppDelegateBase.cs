@@ -41,6 +41,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
             appBase.InitializeContainer(builder =>
             {
                 builder.RegisterType<RestConnection>().As<IRestConnection>();
+                builder.RegisterType<LocalServerDiscovery>().As<ILocalServerDiscovery>();
                 builder.RegisterType<Contacts.Contacts>().As<IContacts>();
                 builder.RegisterType<ImageHelper>().As<IImageHelper>();
                 builder.RegisterType<KeyboardHelper>().As<IKeyboardHelper>();
