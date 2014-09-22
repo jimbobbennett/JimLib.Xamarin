@@ -57,7 +57,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             
             var label = new Label
             {
-                HorizontalOptions = LayoutOptions.End,
+                HorizontalOptions = LayoutOptions.Center,
                 TextColor = Color.White,
                 XAlign = TextAlignment.Center
             };

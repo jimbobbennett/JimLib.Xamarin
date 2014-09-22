@@ -113,7 +113,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="facebookios">
       <Visible>False</Visible>
-      <Version>3.18.0</Version>
+      <Version>3.18.0.1</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

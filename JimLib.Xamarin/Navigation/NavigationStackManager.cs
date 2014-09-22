@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Autofac;
 using JimBobBennett.JimLib.Events;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Navigation
 {
+// ReSharper disable once ClassNeverInstantiated.Global
     public class NavigationStackManager : INavigationStackManager
     {
         enum PageState
@@ -16,6 +18,12 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
         }
 
         private Stack<Tuple<Page, PageState>> _pages;
+        private readonly IComponentContext _componentContext;
+
+        public NavigationStackManager(IComponentContext componentContext)
+        {
+            _componentContext = componentContext;
+        }
 
         public void SetPages(Page rootPage, NavigationPage navigationPage)
         {
@@ -41,6 +49,8 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("PagePopped", value); }
             remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("PagePopped", value); }
         }
+
+        public Page TopPage { get { return _pages.Peek().Item1; } }
 
         private void OnPagePushed(Page page)
         {
@@ -74,6 +84,26 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             await top.Item1.Navigation.PushAsync(page);
 
             OnPagePushed(page);
+        }
+
+        public async Task PushModalAsync<TPage>(Action<TPage> startupAction = null) where TPage : Page
+        {
+            var page = _componentContext.Resolve<TPage>();
+
+            if (startupAction != null)
+                startupAction(page);
+
+            await PushModalAsync(page);
+        }
+
+        public async Task PushAsync<TPage>(Action<TPage> startupAction = null) where TPage : Page
+        {
+            var page = _componentContext.Resolve<TPage>();
+
+            if (startupAction != null)
+                startupAction(page);
+
+            await PushAsync(page);
         }
 
         public async Task PopAsync()

@@ -11,6 +11,8 @@ namespace JimBobBennett.JimLib.Xamarin
     {
         protected static IContainer Container { get; private set; }
 
+        public IComponentContext ComponentContext { get { return Container.Resolve<IComponentContext>(); } }
+
         public void InitializeContainer(Action<ContainerBuilder> customRegistration)
         {
             var builder = new ContainerBuilder();

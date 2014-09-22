@@ -21,6 +21,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios
         // class-level declarations
         UIWindow _window;
 
+        protected AppBase AppBase { get; private set; }
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -36,9 +38,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios
 
             var navigation = new Navigation.Navigation();
 
-            var appBase = CreateApp();
+            AppBase = CreateApp();
 
-            appBase.InitializeContainer(builder =>
+            AppBase.InitializeContainer(builder =>
             {
                 builder.RegisterType<RestConnection>().As<IRestConnection>();
                 builder.RegisterType<LocalServerDiscovery>().As<ILocalServerDiscovery>();
@@ -51,7 +53,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
                 builder.RegisterInstance(navigation).As<Navigation.INavigation>();
             });
 
-            _window.RootViewController = appBase.GetMainPage().CreateViewController();
+            _window.RootViewController = AppBase.GetMainPage().CreateViewController();
             navigation.RootViewController = _window.RootViewController;
 
             _window.MakeKeyAndVisible();
