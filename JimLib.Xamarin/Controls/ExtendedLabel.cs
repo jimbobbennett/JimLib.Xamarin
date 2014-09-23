@@ -7,18 +7,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 {
     public class ExtendedLabel : Label
     {
-        private readonly TapGestureRecognizer _tapGestureRecognizer;
-
-        public ExtendedLabel()
+        private TapGestureRecognizer _tapGestureRecognizer;
+        
+        private void CreateTapGestureRecognizer()
         {
+            if (_tapGestureRecognizer != null) return;
+
             _tapGestureRecognizer = new TapGestureRecognizer
             {
                 Command = new RelayCommand(p =>
                     {
                         if (Command != null)
                             Command.Execute(CommandParameter ?? p);
-
-                        OnClicked();
                     }, p => Command == null || Command.CanExecute(CommandParameter ?? p))
             };
 
@@ -37,7 +37,10 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 
             command = newvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged += ((ExtendedLabel)bindable).CommandOnCanExecuteChanged;
+            {
+                ((ExtendedLabel)bindable).CreateTapGestureRecognizer();
+                command.CanExecuteChanged += ((ExtendedLabel) bindable).CommandOnCanExecuteChanged;
+            }
         }
 
         private void CommandOnCanExecuteChanged(object sender, EventArgs eventArgs)
@@ -73,14 +76,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (bool)GetValue(AdjustFontSizeToFitWidthProperty); }
             set { SetValue(AdjustFontSizeToFitWidthProperty, value); }
-        }
-
-        public event EventHandler Clicked;
-
-        private void OnClicked()
-        {
-            var handler = Clicked;
-            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }

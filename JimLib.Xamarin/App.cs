@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using JimBobBennett.JimLib.Xamarin.Navigation;
+using JimBobBennett.JimLib.Xamarin.Timers;
 using JimBobBennett.JimLib.Xamarin.ViewModels;
 using JimBobBennett.JimLib.Xamarin.Views;
 using Xamarin.Forms;
@@ -18,8 +19,9 @@ namespace JimBobBennett.JimLib.Xamarin
             var builder = new ContainerBuilder();
             
             builder.RegisterType<NavigationStackManager>().As<INavigationStackManager>().SingleInstance();
-            
+
             builder.RegisterType<ImageViewerViewModel>();
+            builder.RegisterType<Timer>().As<ITimer>();
             builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel), typeof(INavigationStackManager));
             
             OnInitialize(builder);

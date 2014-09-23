@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using JimBobBennett.JimLib.Commands;
 using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Mvvm;
@@ -20,10 +21,10 @@ namespace JimBobBennett.JimLib.Xamarin.Mvvm
 
         private void SetupCommands()
         {
-            CloseCommand = new RelayCommand(o => OnNeedClose());
+            CloseCommand = new AsyncCommand(async () => await OnNeedClose());
         }
 
-        public RelayCommand CloseCommand { get; private set; }
+        public IAsyncCommand CloseCommand { get; private set; }
 
         public IView View { get; set; }
 
@@ -32,8 +33,10 @@ namespace JimBobBennett.JimLib.Xamarin.Mvvm
             add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("NeedClose", value); }
             remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("NeedClose", value); }
         }
-
-        protected virtual void OnNeedClose()
+        
+#pragma warning disable 1998
+        protected virtual async Task OnNeedClose()
+#pragma warning restore 1998
         {
             WeakEventManager.GetWeakEventManager(this).HandleEvent(this, EventArgs.Empty, "NeedClose");
         }

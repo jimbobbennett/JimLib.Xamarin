@@ -43,11 +43,13 @@
     <Compile Include="Controls\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedImageRenderer.cs" />
     <Compile Include="Controls\ExtendedLabelRenderer.cs" />
+    <Compile Include="Controls\ExtendedViewCellRenderer.cs" />
     <Compile Include="Controls\KeyboardHelper.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Navigation\Navigation.cs" />
     <Compile Include="Network\LocalServerDiscovery.cs" />
+    <Compile Include="Network\ServerDiscovery.cs" />
     <Compile Include="Network\UriHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Network\RestConnection.cs" />

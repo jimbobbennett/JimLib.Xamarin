@@ -1,110 +1,48 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Events;
+using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Network;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Network
 {
     public class LocalServerDiscovery : ILocalServerDiscovery
     {
-        private const int ReceiveTimeout = 10000;
-        private const int SleepTime = 100;
+        private readonly Dictionary<int, ServerDiscovery> _serverDiscoveries = new Dictionary<int, ServerDiscovery>();
+        private readonly Dictionary<int, string> _foundServer = new Dictionary<int, string>();
 
-        private UdpClient _udp;
-        private readonly HashSet<string> _listeners = new HashSet<string>();
-        private bool _listening;
-
-        public int Port { get; set; }
-
-        public async Task<IEnumerable<string>> DiscoverLocalServersAsync(string ipAddress)
+        public async Task<string> DiscoverLocalServersAsync(string ipAddress, int port)
         {
-            return await GetListeners(ipAddress);
+            ServerDiscovery serverDiscovery;
+            if (!_serverDiscoveries.TryGetValue(port, out serverDiscovery))
+            {
+                serverDiscovery = new ServerDiscovery(ipAddress, port);
+                serverDiscovery.ServerDiscovered += ServerDiscoveryOnServerDiscovered;
+                _serverDiscoveries.Add(port, serverDiscovery);
+            }
+
+            _foundServer.Remove(port);
+            serverDiscovery.Discover();
+            string firstServer = null;
+
+            await this.WaitForAsync(() => _foundServer.TryGetValue(port, out firstServer), 10000);
+
+            return firstServer;
         }
 
-        private async Task<IEnumerable<string>> GetListeners(string ipAddress)
+        public event EventHandler<EventArgs<string>> ServerDiscovered;
+
+        private void OnServerDiscovered(string server)
         {
-            try
-            {
-                var result = StartListening();
-
-                var client = new UdpClient();
-                var ip = new IPEndPoint(IPAddress.Parse(ipAddress), Port);
-                var bytes = Encoding.ASCII.GetBytes("M-SEARCH * HTTP/1.0");
-                client.Send(bytes, bytes.Length, ip);
-                client.Close();
-
-                var totalWaitTime = 0;
-
-                while (_listening)
-                {
-                    await Task.Delay(TimeSpan.FromMilliseconds(SleepTime));
-                    totalWaitTime += SleepTime;
-
-                    if (totalWaitTime > ReceiveTimeout)
-                    {
-                        if (!result.IsCompleted)
-                        {
-                            CleanUp();
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                CleanUp();
-            }
-
-            return _listeners;
+            var handler = ServerDiscovered;
+            if (handler != null) handler(this, new EventArgs<string>(server));
         }
 
-        private void CleanUp()
+        private void ServerDiscoveryOnServerDiscovered(object sender, EventArgs<string> eventArgs)
         {
-            try
-            {
-                _udp.Close();
-            }
-            catch
-            {
-            }
-
-            _listening = false;
-            _listeners.Clear();
-        }
-
-        private IAsyncResult StartListening()
-        {
-            _listening = true;
-            _udp = new UdpClient(32414)
-            {
-                Client =
-                {
-                    ReceiveTimeout = ReceiveTimeout,
-                    SendTimeout = ReceiveTimeout
-                }
-            };
-            return _udp.BeginReceive(Receive, new object());
-        }
-
-        private void Receive(IAsyncResult ar)
-        {
-            var ip = new IPEndPoint(IPAddress.Any, Port);
-
-            try
-            {
-                _udp.EndReceive(ar, ref ip);
-
-                if (_listeners.Add(ip.Address.ToString()))
-                    StartListening();
-                else
-                    _listening = false;
-            }
-            catch (Exception)
-            {
-                _listening = false;
-            }
+            _foundServer[((ServerDiscovery)sender).Port] = eventArgs.Value;
+            OnServerDiscovered(eventArgs.Value);
         }
     }
 }

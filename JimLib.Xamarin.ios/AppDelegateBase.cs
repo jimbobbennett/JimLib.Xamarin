@@ -42,15 +42,17 @@ namespace JimBobBennett.JimLib.Xamarin.ios
 
             AppBase.InitializeContainer(builder =>
             {
-                builder.RegisterType<RestConnection>().As<IRestConnection>();
-                builder.RegisterType<LocalServerDiscovery>().As<ILocalServerDiscovery>();
-                builder.RegisterType<Contacts.Contacts>().As<IContacts>();
-                builder.RegisterType<ImageHelper>().As<IImageHelper>();
-                builder.RegisterType<KeyboardHelper>().As<IKeyboardHelper>();
-                builder.RegisterType<SocialMediaConnections>().As<ISocialMediaConnections>();
+                builder.RegisterType<RestConnection>().As<IRestConnection>().SingleInstance();
+                builder.RegisterType<LocalServerDiscovery>().As<ILocalServerDiscovery>().SingleInstance();
+                builder.RegisterType<Contacts.Contacts>().As<IContacts>().SingleInstance();
+                builder.RegisterType<ImageHelper>().As<IImageHelper>().SingleInstance();
+                builder.RegisterType<KeyboardHelper>().As<IKeyboardHelper>().SingleInstance();
+                builder.RegisterType<SocialMediaConnections>().As<ISocialMediaConnections>().SingleInstance();
                 builder.RegisterType<InAppPurchase>().As<IInAppPurchase>().SingleInstance();
-                builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>();
-                builder.RegisterInstance(navigation).As<Navigation.INavigation>();
+                builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>().SingleInstance();
+                builder.RegisterInstance(navigation).As<Navigation.INavigation>().SingleInstance();
+
+                OnInitializeContainer(builder);
             });
 
             _window.RootViewController = AppBase.GetMainPage().CreateViewController();
@@ -59,6 +61,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios
             _window.MakeKeyAndVisible();
 
             return true;
+        }
+
+        protected virtual void OnInitializeContainer(ContainerBuilder builder)
+        {
         }
 
         protected abstract AppBase CreateApp();

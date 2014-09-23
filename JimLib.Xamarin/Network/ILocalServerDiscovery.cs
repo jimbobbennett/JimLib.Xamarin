@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Events;
 
 namespace JimBobBennett.JimLib.Xamarin.Network
 {
     public interface ILocalServerDiscovery
     {
-        int Port { get; set; }
-        Task<IEnumerable<string>> DiscoverLocalServersAsync(string ipAddress);
+        Task<string> DiscoverLocalServersAsync(string ipAddress, int port);
+        event EventHandler<EventArgs<string>> ServerDiscovered;
     }
 }

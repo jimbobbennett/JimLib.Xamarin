@@ -49,6 +49,7 @@
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedImage.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
+    <Compile Include="Controls\ExtendedViewCell.cs" />
     <Compile Include="Controls\IKeyboardHelper.cs" />
     <Compile Include="Extensions\GridExtensions.cs" />
     <Compile Include="Images\Enums.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="SocialMedia\Account.cs" />
     <Compile Include="SocialMedia\Enums.cs" />
     <Compile Include="SocialMedia\ISocialMediaConnections.cs" />
+    <Compile Include="Timers\ITimer.cs" />
+    <Compile Include="Timers\Timer.cs" />
     <Compile Include="ValueConverters\BooleanToObjectValueConverter.cs" />
     <Compile Include="ValueConverters\InvertBooleanValueConverter.cs" />
     <Compile Include="ViewModels\ImageViewerViewModel.cs" />
