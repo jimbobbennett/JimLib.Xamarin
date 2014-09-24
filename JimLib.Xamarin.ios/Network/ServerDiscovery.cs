@@ -19,10 +19,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Network
         {
             _ipAddress = ipAddress;
             Port = port;
-            CreateUdpClient(timeout);
 
             Task.Factory.StartNew(async () =>
             {
+                await CreateUdpClient(timeout);
+
                 while (true)
                 {
                     try
@@ -47,22 +48,39 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Network
                             Debug.WriteLine("Exception when listening for UDP: " + ex.Message);
                         }
 
-                        CreateUdpClient(timeout);
+                        await CreateUdpClient(timeout);
                     }
                 }
             });
         }
 
-        private void CreateUdpClient(int timeout)
+        private async Task CreateUdpClient(int timeout)
         {
-            _udp = new UdpClient(Port)
+            var created = false;
+
+            while (!created)
             {
-                Client =
+                try
                 {
-                    ReceiveTimeout = timeout,
-                    SendTimeout = timeout
+                    _udp = new UdpClient(Port)
+                    {
+                        Client =
+                        {
+                            ReceiveTimeout = timeout,
+                            SendTimeout = timeout
+                        }
+                    };
+
+                    created = true;
                 }
-            };
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Exception when creating UDP client: " + ex.Message);
+                }
+
+                if (!created)
+                    await Task.Delay(10000);
+            }
         }
 
         public void Discover()
