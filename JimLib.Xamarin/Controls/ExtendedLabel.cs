@@ -8,21 +8,31 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
     public class ExtendedLabel : Label
     {
         private TapGestureRecognizer _tapGestureRecognizer;
-        
-        private void CreateTapGestureRecognizer()
-        {
-            if (_tapGestureRecognizer != null) return;
 
-            _tapGestureRecognizer = new TapGestureRecognizer
+        private void CreateOrRemoveGestureRecognizer()
+        {
+            if (Command == null)
             {
-                Command = new RelayCommand(p =>
+                if (_tapGestureRecognizer == null) return;
+
+                GestureRecognizers.Remove(_tapGestureRecognizer);
+                _tapGestureRecognizer = null;
+            }
+            else
+            {
+                if (_tapGestureRecognizer != null) return;
+
+                _tapGestureRecognizer = new TapGestureRecognizer
+                {
+                    Command = new RelayCommand(p =>
                     {
                         if (Command != null)
                             Command.Execute(CommandParameter ?? p);
                     }, p => Command == null || Command.CanExecute(CommandParameter ?? p))
-            };
+                };
 
-            GestureRecognizers.Add(_tapGestureRecognizer);
+                GestureRecognizers.Add(_tapGestureRecognizer);
+            }
         }
 
         public static readonly BindableProperty CommandProperty =
@@ -33,14 +43,13 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             var command = oldvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged -= ((ExtendedLabel)bindable).CommandOnCanExecuteChanged;
+                command.CanExecuteChanged -= ((ExtendedLabel) bindable).CommandOnCanExecuteChanged;
 
             command = newvalue as ICommand;
             if (command != null)
-            {
-                ((ExtendedLabel)bindable).CreateTapGestureRecognizer();
                 command.CanExecuteChanged += ((ExtendedLabel) bindable).CommandOnCanExecuteChanged;
-            }
+
+            ((ExtendedLabel) bindable).CreateOrRemoveGestureRecognizer();
         }
 
         private void CommandOnCanExecuteChanged(object sender, EventArgs eventArgs)

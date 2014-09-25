@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -6,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.Images;
+using JimBobBennett.JimLib.Xamarin.Network;
 using Xamarin.Forms;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
@@ -14,6 +17,15 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
 {
     public class ImageHelper : IImageHelper
     {
+        private readonly Dictionary<string, Tuple<string, ImageSource>> _cachedImages = new Dictionary<string, Tuple<string, ImageSource>>();
+ 
+        private readonly IRestConnection _restConnection;
+
+        public ImageHelper(IRestConnection restConnection)
+        {
+            _restConnection = restConnection;
+        }
+
         public ImageSource GetImageSource(string base64)
         {
             var bytes = Convert.FromBase64String(base64);
@@ -27,46 +39,80 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             return null;
         }
 
-#pragma warning disable 1998
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null)
-#pragma warning restore 1998
+        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
+            Tuple<string, ImageSource> retVal;
+            if (canCache && _cachedImages.TryGetValue(url, out retVal))
+                return retVal;
 
-            using (var response = (HttpWebResponse)request.GetResponse())
-            {
-                using (var stream = response.GetResponseStream())
+            return await Task.Run(() =>
                 {
-                    if (stream != null)
+                    try
                     {
-                        var bitmap = Image.FromStream(stream);
+                        var request = (HttpWebRequest) WebRequest.Create(url);
 
-                        if (options != null)
+                        using (var response = (HttpWebResponse) request.GetResponse())
                         {
-                            if (options.HasSizeSet)
-                                bitmap = MaxResizeImage(bitmap, options.MaxWidth, options.MaxHeight);
-
-                            if (options.Circle)
-                                bitmap = ClipToCircle(bitmap);
-                        }
-
-                        using (var ms = new MemoryStream())
-                        {
-                            bitmap.Save(ms, ImageFormat.Jpeg);
-                            ms.Seek(0, SeekOrigin.Begin);
-
-                            var numBytesToRead = (int)ms.Length;
-                            var bytes = new byte[numBytesToRead];
-                            ms.Read(bytes, 0, numBytesToRead);
-
-                            return Tuple.Create(Convert.ToBase64String(bytes),
-                                ImageSource.FromStream(() => new MemoryStream(bytes)));
+                            using (var stream = response.GetResponseStream())
+                            {
+                                if (stream != null)
+                                    return ProcessImageStream(options, stream);
+                            }
                         }
                     }
-                }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Failed to get image: " + ex.Message);
+                    }
+
+                    return Tuple.Create((string) null, (ImageSource) null);
+                });
+        }
+
+        public async Task<Tuple<string, ImageSource>> GetImageAsync(string baseUrl, string resource = "/", 
+            string username = null, string password = null, int timeout = 10000,
+            Dictionary<string, string> headers = null, ImageOptions options = null, bool canCache = false)
+        {
+            Tuple<string, ImageSource> retVal;
+            var uriBuilder = new UriBuilder(baseUrl) {Fragment = resource};
+            if (canCache && _cachedImages.TryGetValue(uriBuilder.Uri.ToString(), out retVal))
+                return retVal;
+
+            var bytes = await _restConnection.MakeRawGetRequestAsync(baseUrl, resource, username, password, timeout,
+                headers);
+
+            if (bytes == null)
+                return Tuple.Create((string)null, (ImageSource)null);
+
+            using (var ms = new MemoryStream(bytes))
+                return ProcessImageStream(options, ms);
+        }
+
+        private Tuple<string, ImageSource> ProcessImageStream(ImageOptions options, Stream stream)
+        {
+            var bitmap = Image.FromStream(stream);
+
+            if (options != null)
+            {
+                if (options.HasSizeSet)
+                    bitmap = MaxResizeImage(bitmap, options.MaxWidth, options.MaxHeight);
+
+                if (options.Circle)
+                    bitmap = ClipToCircle(bitmap);
             }
 
-            return Tuple.Create((string)null, (ImageSource)null);
+            using (var ms = new MemoryStream())
+            {
+                bitmap.Save(ms, ImageFormat.Jpeg);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                var numBytesToRead = (int)ms.Length;
+                var bytes = new byte[numBytesToRead];
+                ms.Read(bytes, 0, numBytesToRead);
+
+                return Tuple.Create(Convert.ToBase64String(bytes),
+                    ImageSource.FromStream(() => new MemoryStream(bytes)));
+            }
         }
 
         private static Image MaxResizeImage(Image sourceImage, float maxWidth, float maxHeight)
@@ -82,7 +128,7 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             return new Bitmap(sourceImage, new System.Drawing.Size(width, height));
         }
 
-        private Bitmap ClipToCircle(Image original)
+        private static Bitmap ClipToCircle(Image original)
         {
             var copy = new Bitmap(original);
 

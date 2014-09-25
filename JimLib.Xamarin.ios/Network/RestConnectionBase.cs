@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -17,9 +18,50 @@ namespace JimBobBennett.JimLib.Xamarin.Network
     /// </summary>
     public class RestConnectionBase : IRestConnection
     {
-        public async Task<RestResponse<T>> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, string baseUrl,
-            string resource = "/", string username = null, string password = null, int timeout = 5000,
-            Dictionary<string, string> headers = null, TData postData = null)
+        public async Task<byte[]> MakeRawGetRequestAsync(string baseUrl, string resource = "/",
+            string username = null, string password = null, int timeout = 10000,
+            Dictionary<string, string> headers = null)
+        {
+            using (var clientHandler = new HttpClientHandler {UseCookies = false})
+            {
+                if (!string.IsNullOrEmpty(username))
+                    clientHandler.Credentials = new NetworkCredential(username, password);
+
+                using (var client = new HttpClient(clientHandler))
+                {
+                    try
+                    {
+                        client.BaseAddress = new Uri(baseUrl);
+                        client.Timeout = new TimeSpan(0, 0, 0, 0, timeout);
+
+                        if (headers != null)
+                        {
+                            foreach (var h in headers)
+                                client.DefaultRequestHeaders.Add(h.Key, h.Value);
+                        }
+
+                        var requestUri = new Uri(resource, UriKind.Relative);
+
+                        var getResponse = await client.GetAsync(requestUri);
+
+                        if (getResponse.IsSuccessStatusCode)
+                        {
+                            return await getResponse.Content.ReadAsByteArrayAsync();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine("Failed to make network request: " + ex.Message);
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public async Task<RestResponse<T>> MakeRequestAsync<T, TData>(Method method, ResponseType responseType, 
+            string baseUrl, string resource = "/", string username = null, string password = null,
+            int timeout = 10000, Dictionary<string, string> headers = null, TData postData = null)
             where T : class, new()
             where TData : class
         {

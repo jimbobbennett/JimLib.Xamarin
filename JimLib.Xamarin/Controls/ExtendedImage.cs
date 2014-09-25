@@ -7,22 +7,34 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 {
     public class ExtendedImage : Image
     {
-        private readonly TapGestureRecognizer _tapGestureRecognizer;
+        private TapGestureRecognizer _tapGestureRecognizer;
 
-        public ExtendedImage()
+        private void CreateOrRemoveGestureRecognizer()
         {
-            _tapGestureRecognizer = new TapGestureRecognizer
+            if (!IsSharable && Command == null)
             {
-                Command = new RelayCommand(p =>
+                if (_tapGestureRecognizer == null) return;
+
+                GestureRecognizers.Remove(_tapGestureRecognizer);
+                _tapGestureRecognizer = null;
+            }
+            else
+            {
+                if (_tapGestureRecognizer != null) return;
+
+                _tapGestureRecognizer = new TapGestureRecognizer
                 {
-                    if (Command != null)
-                        Command.Execute(CommandParameter ?? p);
+                    Command = new RelayCommand(p =>
+                    {
+                        if (Command != null)
+                            Command.Execute(CommandParameter ?? p);
 
-                    OnClicked();
-                }, p => Command == null || Command.CanExecute(CommandParameter ?? p))
-            };
+                        OnClicked();
+                    }, p => Command == null || Command.CanExecute(CommandParameter ?? p))
+                };
 
-            GestureRecognizers.Add(_tapGestureRecognizer);
+                GestureRecognizers.Add(_tapGestureRecognizer);
+            }
         }
 
         public static readonly BindableProperty CommandProperty =
@@ -33,11 +45,13 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             var command = oldvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged -= ((ExtendedImage)bindable).CommandOnCanExecuteChanged;
+                command.CanExecuteChanged -= ((ExtendedImage) bindable).CommandOnCanExecuteChanged;
 
             command = newvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged += ((ExtendedImage)bindable).CommandOnCanExecuteChanged;
+                command.CanExecuteChanged += ((ExtendedImage) bindable).CommandOnCanExecuteChanged;
+
+            ((ExtendedImage) bindable).CreateOrRemoveGestureRecognizer();
         }
 
         private void CommandOnCanExecuteChanged(object sender, EventArgs eventArgs)
@@ -58,7 +72,13 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             BindableProperty.Create("TintColor", typeof(Color), typeof(ExtendedImage), Color.Default);
 
         public static readonly BindableProperty IsSharableProperty =
-            BindableProperty.Create("IsSharable", typeof(bool), typeof(ExtendedImage), false);
+            BindableProperty.Create("IsSharable", typeof(bool), typeof(ExtendedImage), false,
+            propertyChanged: IsSharablePropertyChanged);
+
+        private static void IsSharablePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        {
+            ((ExtendedImage)bindable).CreateOrRemoveGestureRecognizer();
+        }
 
         public static readonly BindableProperty ShareTextProperty =
             BindableProperty.Create("ShareText", typeof(string), typeof(ExtendedImage), string.Empty);

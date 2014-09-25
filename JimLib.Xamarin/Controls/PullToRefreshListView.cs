@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Controls
 {
@@ -15,12 +16,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty RefreshCommandProperty =
-            BindableProperty.Create<PullToRefreshListView, Command>(
+            BindableProperty.Create<PullToRefreshListView, ICommand>(
                 p => p.RefreshCommand, null);
 
-        public Command RefreshCommand
+        public ICommand RefreshCommand
         {
-            get { return (Command) GetValue(RefreshCommandProperty); }
+            get { return (ICommand)GetValue(RefreshCommandProperty); }
             set { SetValue(RefreshCommandProperty, value); }
         }
         

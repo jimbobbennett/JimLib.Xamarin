@@ -1,6 +1,5 @@
-﻿using System;
+﻿using System.Windows.Input;
 using MonoTouch.UIKit;
-using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
@@ -8,7 +7,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 	{
 		public FormsUIRefreshControl()
 		{
-			this.ValueChanged += (object sender, EventArgs e) => 
+			ValueChanged += (sender, e) => 
 			{
 				var command = RefreshCommand;
 				if(command  == null)
@@ -18,37 +17,37 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 			};
 		}
 
-		private string message;
+		private string _message;
 		/// <summary>
 		/// Gets or sets the message to display
 		/// </summary>
 		/// <value>The message.</value>
 		public string Message 
 		{ 
-			get { return message;}
+			get { return _message;}
 			set 
 			{ 
-				message = value;
-				if (string.IsNullOrWhiteSpace (message))
+				_message = value;
+				if (string.IsNullOrWhiteSpace (_message))
 					return;
 
-				this.AttributedTitle = new MonoTouch.Foundation.NSAttributedString(message);
+				AttributedTitle = new MonoTouch.Foundation.NSAttributedString(_message);
 			}
 		}
 
 
-		private bool isRefreshing;
+		private bool _isRefreshing;
 		/// <summary>
 		/// Gets or sets a value indicating whether this instance is refreshing.
 		/// </summary>
 		/// <value><c>true</c> if this instance is refreshing; otherwise, <c>false</c>.</value>
 		public bool IsRefreshing
 		{
-			get { return isRefreshing;}
+			get { return _isRefreshing;}
 			set
 			{ 
-				isRefreshing = value; 
-				if (isRefreshing)
+				_isRefreshing = value; 
+				if (_isRefreshing)
 					BeginRefreshing();
 				else
 					EndRefreshing();
@@ -59,7 +58,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 		/// Gets or sets the refresh command.
 		/// </summary>
 		/// <value>The refresh command.</value>
-		public Command RefreshCommand { get; set;}
+        public ICommand RefreshCommand { get; set; }
 	}
 }
 

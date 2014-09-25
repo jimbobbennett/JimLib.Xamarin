@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Images;
+using JimBobBennett.JimLib.Xamarin.Network;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
@@ -13,6 +15,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 {
     public class ImageHelper : IImageHelper
     {
+        private readonly Dictionary<string, Tuple<string, ImageSource>> _cachedImages = new Dictionary<string, Tuple<string, ImageSource>>();
+        private readonly IRestConnection _restConnection;
+
+        public ImageHelper(IRestConnection restConnection)
+        {
+            _restConnection = restConnection;
+        }
+
         public ImageSource GetImageSource(string base64)
         {
             if (base64.IsNullOrEmpty()) return null;
@@ -31,10 +41,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             }
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null)
+        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
         {
-// ReSharper disable once AccessToStaticMemberViaDerivedType
-            return await Task<Tuple<string, ImageSource>>.Run(() =>
+            Tuple<string, ImageSource> retVal;
+            if (canCache && _cachedImages.TryGetValue(url, out retVal))
+                return retVal;
+
+            return await Task.Run(() =>
                 {
                     try
                     {
@@ -46,6 +59,25 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                         return new Tuple<string, ImageSource>(null, null);
                     }
                 });
+        }
+
+        public async Task<Tuple<string, ImageSource>> GetImageAsync(string baseUrl, string resource = "/",
+            string username = null, string password = null, int timeout = 10000,
+            Dictionary<string, string> headers = null, ImageOptions options = null, bool canCache = false)
+        {
+            Tuple<string, ImageSource> retVal;
+            var uriBuilder = new UriBuilder(baseUrl) { Fragment = resource };
+            if (canCache && _cachedImages.TryGetValue(uriBuilder.Uri.ToString(), out retVal))
+                return retVal;
+
+            var bytes = await _restConnection.MakeRawGetRequestAsync(baseUrl, resource, username, password, 
+                timeout, headers);
+
+            if (bytes == null)
+                return Tuple.Create((string)null, (ImageSource)null);
+
+            var image = GetUIImageFromBase64(Convert.ToBase64String(bytes)); 
+            return image != null ? ProcessImage(options, image) : new Tuple<string, ImageSource>(null, null);
         }
 
         public PhotoSource AvailablePhotoSources
@@ -147,7 +179,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return normalizedImage;
         }
 
-        internal static UIImage GetUIImageFromBase64(string base64)
+        private static UIImage GetUIImageFromBase64(string base64)
         {
             var data = new NSData(base64, NSDataBase64DecodingOptions.None);
             return UIImage.LoadFromData(data);
