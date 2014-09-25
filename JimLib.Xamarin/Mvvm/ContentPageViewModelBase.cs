@@ -38,7 +38,7 @@ namespace JimBobBennett.JimLib.Xamarin.Mvvm
         protected virtual async Task OnNeedClose()
 #pragma warning restore 1998
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, EventArgs.Empty, "NeedClose");
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, EventArgs.Empty, "NeedClose");
         }
     }
 

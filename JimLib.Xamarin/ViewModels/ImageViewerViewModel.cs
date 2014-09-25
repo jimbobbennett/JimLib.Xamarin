@@ -9,6 +9,7 @@ namespace JimBobBennett.JimLib.Xamarin.ViewModels
     {
         private ImageSource _imageSource;
         private string _imageText;
+        private string _imageTitleText;
 
         public ImageSource ImageSource
         {
@@ -37,12 +38,27 @@ namespace JimBobBennett.JimLib.Xamarin.ViewModels
             }
         }
 
+        [NotifyPropertyChangeDependency("ShowImageTitleText")]
+        public string ImageTitleText
+        {
+            get { return _imageTitleText; }
+            private set
+            {
+                if (_imageTitleText == value) return;
+
+                _imageTitleText = value;
+
+                RaisePropertyChanged();
+            }
+        }
+
         public bool ShowImageText { get { return !ImageText.IsNullOrEmpty(); } }
 
-        public void SetImage(ImageSource imageSource, string imageText = null)
+        public void SetImage(ImageSource imageSource, string imageTitleText = null, string imageText = null)
         {
             ImageSource = imageSource;
             ImageText = imageText;
+            ImageTitleText = imageTitleText;
         }
     }
 }

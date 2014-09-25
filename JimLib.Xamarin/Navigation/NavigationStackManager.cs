@@ -54,12 +54,12 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
 
         private void OnPagePushed(Page page)
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, new EventArgs<Page>(page), "PagePushed");
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, new EventArgs<Page>(page), "PagePushed");
         }
 
         private void OnPagePopped(Page page)
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, new EventArgs<Page>(page), "PagePopped");
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, new EventArgs<Page>(page), "PagePopped");
         }
 
         public async Task PushModalAsync(Page page)

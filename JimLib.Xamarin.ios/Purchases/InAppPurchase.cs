@@ -56,19 +56,19 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
 
         private void OnLoadedAvailablePurchasableProducts(IEnumerable<IPurchasableProduct> e)
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this,
                 new EventArgs<IEnumerable<IPurchasableProduct>>(e), "LoadedAvailablePurchasableProducts");
         }
         
         private void OnProductPurchased(IPurchasableProduct e)
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this,
                 new EventArgs<IPurchasableProduct>(e), "ProductPurchased");
         }
         
         private void OnProductPurchaseFailed(IPurchasableProduct e)
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this,
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this,
                 new EventArgs<IPurchasableProduct>(e), "ProductPurchaseFailed");
         }
        

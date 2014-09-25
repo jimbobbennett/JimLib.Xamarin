@@ -35,6 +35,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             grid.AddAutoRowDefinition();
             grid.AddStarRowDefinition();
             grid.AddAutoRowDefinition();
+            grid.AddAutoRowDefinition();
             grid.AddStarColumnDefinition();
 
             var doneButton = new Button
@@ -54,30 +55,45 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             };
 
             image.SetBinding(Image.SourceProperty, new Binding("ImageSource"));
-            
-            var label = new Label
+
+            var titleLabel = new ExtendedLabel
             {
                 HorizontalOptions = LayoutOptions.Center,
                 TextColor = Color.White,
-                XAlign = TextAlignment.Center
+                XAlign = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.NoWrap,
+                AdjustFontSizeToFitWidth = true
             };
 
-            label.SetBinding(Label.TextProperty, new Binding("ImageText"));
+            titleLabel.SetBinding(Label.TextProperty, new Binding("ImageTitleText"));
+
+            var textLabel = new ExtendedLabel
+            {
+                HorizontalOptions = LayoutOptions.Center,
+                TextColor = Color.White,
+                XAlign = TextAlignment.Center,
+                LineBreakMode = LineBreakMode.WordWrap,
+                Font = Font.SystemFontOfSize(NamedSize.Small)
+            };
+
+            textLabel.SetBinding(Label.TextProperty, new Binding("ImageText"));
 
             Grid.SetRow(doneButton, 0);
             Grid.SetRow(image, 1);
-            Grid.SetRow(label, 2);
+            Grid.SetRow(titleLabel, 2);
+            Grid.SetRow(textLabel, 3);
 
             grid.Children.Add(doneButton);
             grid.Children.Add(image);
-            grid.Children.Add(label);
+            grid.Children.Add(titleLabel);
+            grid.Children.Add(textLabel);
             
             Content = grid;
         }
 
-        public void SetImage(ImageSource imageSource, string imageText = null)
+        public void SetImage(ImageSource imageSource, string imageTextTitle = null, string imageText = null)
         {
-            _viewModel.SetImage(imageSource, imageText);
+            _viewModel.SetImage(imageSource, imageTextTitle, imageText);
         }
     }
 }

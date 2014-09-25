@@ -29,3 +29,5 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.ios")]
+[assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.Win")]
+[assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.Net45")]

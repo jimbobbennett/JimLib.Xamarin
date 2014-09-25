@@ -161,7 +161,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
 
         public void OnAuthorizationStatusChanged()
         {
-            WeakEventManager.GetWeakEventManager(this).HandleEvent(this, EventArgs.Empty, "AuthorizationStatusChanged");
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, EventArgs.Empty, "AuthorizationStatusChanged");
         }
 
         private static void AddAddresses(ContactOverview contactOverview, ABPerson person)

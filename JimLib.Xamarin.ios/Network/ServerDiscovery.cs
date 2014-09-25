@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Events;
 
-namespace JimBobBennett.JimLib.Xamarin.ios.Network
+// ReSharper disable once CheckNamespace
+namespace JimBobBennett.JimLib.Xamarin.Network
 {
     class ServerDiscovery
     {

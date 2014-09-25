@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Extensions;
-using JimBobBennett.JimLib.Xamarin.Network;
 
-namespace JimBobBennett.JimLib.Xamarin.ios.Network
+namespace JimBobBennett.JimLib.Xamarin.Network
 {
     public class LocalServerDiscovery : ILocalServerDiscovery
     {

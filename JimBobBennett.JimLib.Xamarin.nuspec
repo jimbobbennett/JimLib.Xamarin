@@ -18,34 +18,34 @@
       <group targetFramework="net45">
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Newtonsoft.Json" version="6.0.5" />
-        <dependency id="JimBobBennett.JimLib" version="1.0.72" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.74" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="win">
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Newtonsoft.Json" version="6.0.5" />
-        <dependency id="JimBobBennett.JimLib" version="1.0.72" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.74" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="wp80">
         <dependency id="Microsoft.Net.Http" version="2.2.28" />
         <dependency id="Newtonsoft.Json" version="6.0.5" />
-        <dependency id="JimBobBennett.JimLib" version="1.0.72" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.74" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="MonoTouch10">
         <dependency id="xamstore-xamarin.mobile" version="0.7.1"/>
         <dependency id="Newtonsoft.Json" version="6.0.5" />
-        <dependency id="JimBobBennett.JimLib" version="1.0.72" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.74" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group>
         <dependency id="Newtonsoft.Json" version="6.0.5" />
-        <dependency id="JimBobBennett.JimLib" version="1.0.72" />
+        <dependency id="JimBobBennett.JimLib" version="1.0.74" />
         <dependency id="Xamarin.Forms" version="1.2.2.6243" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
@@ -68,6 +68,18 @@
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.pdb" />
     <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.Win.dll" />
     <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.pdb" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.Win.pdb" />
+    <file src="JimLib.Xamarin\**\*.cs" target="src\JimLib.Xamarin" />
     <file src="JimLib.Xamarin.Win\**\*.cs" target="src\JimLib.Xamarin.Win" />
+
+    <!-- Win -->
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\net45\JimBobBennett.JimLib.Xamarin.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\net45\JimBobBennett.JimLib.Xamarin.pdb" />
+    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.dll" target="lib\net45\JimBobBennett.JimLib.Xamarin.Win.dll" />
+    <file src="JimLib.Xamarin.Win\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Win.pdb" target="lib\net45\JimBobBennett.JimLib.Xamarin.Win.pdb" />
+    <file src="JimLib.Xamarin.Net45\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Net45.dll" target="lib\net45\JimBobBennett.JimLib.Xamarin.Net45.dll" />
+    <file src="JimLib.Xamarin.Net45\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.Net45.pdb" target="lib\net45\JimBobBennett.JimLib.Xamarin.Net45.pdb" />
+    <file src="JimLib.Xamarin\**\*.cs" target="src\JimLib.Xamarin" />
+    <file src="JimLib.Xamarin.Win\**\*.cs" target="src\JimLib.Xamarin.Win" />
+    <file src="JimLib.Xamarin.Net45\**\*.cs" target="src\JimLib.Xamarin.Net45" />
   </files>
 </package>
