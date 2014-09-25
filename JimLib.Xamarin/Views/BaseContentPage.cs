@@ -163,10 +163,10 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 vm.View = this;
 
                 if (NavigationStackManager != null)
-                    vm.NeedClose += async (s, e) =>
+                    vm.NeedClose += (s, e) =>
                         {
                             if (NavigationStackManager != null)
-                                await NavigationStackManager.PopAsync();
+                                Device.BeginInvokeOnMainThread(async () => await NavigationStackManager.PopAsync());
                         };
             }
         }
