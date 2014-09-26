@@ -46,6 +46,7 @@
     <Compile Include="Contacts\InstantMessagingAccount.cs" />
     <Compile Include="Contacts\Phone.cs" />
     <Compile Include="Contacts\Website.cs" />
+    <Compile Include="Controls\Enums.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedImage.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
