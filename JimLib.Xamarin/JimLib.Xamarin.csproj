@@ -53,6 +53,7 @@
     <Compile Include="Controls\ExtendedViewCell.cs" />
     <Compile Include="Controls\IKeyboardHelper.cs" />
     <Compile Include="Controls\PullToRefreshListView.cs" />
+    <Compile Include="Controls\TappableGrid.cs" />
     <Compile Include="Extensions\GridExtensions.cs" />
     <Compile Include="Images\Enums.cs" />
     <Compile Include="Images\IImageHelper.cs" />
@@ -60,8 +61,10 @@
     <Compile Include="Mvvm\ContentPageViewModelBase.cs" />
     <Compile Include="Mvvm\IContentPageViewModelBase.cs" />
     <Compile Include="Navigation\INavigationStackManager.cs" />
+    <Compile Include="Navigation\IUtilityViewNavigation.cs" />
     <Compile Include="Navigation\NavigationException.cs" />
     <Compile Include="Navigation\NavigationStackManager.cs" />
+    <Compile Include="Navigation\UtilityViewNavigation.cs" />
     <Compile Include="Network\ILocalServerDiscovery.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

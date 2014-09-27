@@ -22,6 +22,7 @@ namespace JimBobBennett.JimLib.Xamarin
 
             builder.RegisterInstance(CrossSettings.Current).As<ISettings>();
             builder.RegisterType<NavigationStackManager>().As<INavigationStackManager>().SingleInstance();
+            builder.RegisterType<UtilityViewNavigation>().As<IUtilityViewNavigation>().SingleInstance();
             builder.RegisterType<ImageViewerViewModel>();
             builder.RegisterType<Timer>().As<ITimer>();
             builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel), typeof(INavigationStackManager));

@@ -5,13 +5,13 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Controls
 {
-    public class ExtendedImage : Image
+    public class TappableGrid : Grid
     {
         private TapGestureRecognizer _tapGestureRecognizer;
 
         private void CreateOrRemoveGestureRecognizer()
         {
-            if (!IsSharable && Command == null)
+            if (Command == null)
             {
                 if (_tapGestureRecognizer == null) return;
 
@@ -28,8 +28,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
                     {
                         if (Command != null)
                             Command.Execute(CommandParameter ?? p);
-
-                        OnClicked();
                     }, p => Command == null || Command.CanExecute(CommandParameter ?? p))
                 };
 
@@ -38,54 +36,39 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(ExtendedImage), null,
+            BindableProperty.Create("Command", typeof(ICommand), typeof(TappableGrid), null,
             propertyChanged: CommandPropertyChanged);
 
         private static void CommandPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var command = oldvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged -= ((ExtendedImage) bindable).CommandOnCanExecuteChanged;
+                command.CanExecuteChanged -= ((TappableGrid)bindable).CommandOnCanExecuteChanged;
 
             command = newvalue as ICommand;
             if (command != null)
-                command.CanExecuteChanged += ((ExtendedImage) bindable).CommandOnCanExecuteChanged;
+                command.CanExecuteChanged += ((TappableGrid)bindable).CommandOnCanExecuteChanged;
 
-            ((ExtendedImage) bindable).CreateOrRemoveGestureRecognizer();
+            ((TappableGrid)bindable).CreateOrRemoveGestureRecognizer();
         }
 
         private void CommandOnCanExecuteChanged(object sender, EventArgs eventArgs)
         {
             if (_tapGestureRecognizer != null && _tapGestureRecognizer.Command != null)
-                ((RelayCommand) _tapGestureRecognizer.Command).RaiseCanExecuteChanged();
+                ((RelayCommand)_tapGestureRecognizer.Command).RaiseCanExecuteChanged();
         }
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create("CommandParameter", typeof(object), typeof(ExtendedImage), null,
+            BindableProperty.Create("CommandParameter", typeof(object), typeof(TappableGrid), null,
              propertyChanged: CommandParameterPropertyChanged);
-        
+
         private static void CommandParameterPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
-            var gesture = ((ExtendedImage) bindable)._tapGestureRecognizer;
+            var gesture = ((TappableGrid)bindable)._tapGestureRecognizer;
 
             if (gesture != null && gesture.Command != null)
                 ((RelayCommand)gesture.Command).RaiseCanExecuteChanged();
         }
-
-        public static readonly BindableProperty TintColorProperty =
-            BindableProperty.Create("TintColor", typeof(Color), typeof(ExtendedImage), Color.Default);
-
-        public static readonly BindableProperty IsSharableProperty =
-            BindableProperty.Create("IsSharable", typeof(bool), typeof(ExtendedImage), false,
-            propertyChanged: IsSharablePropertyChanged);
-
-        private static void IsSharablePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
-        {
-            ((ExtendedImage)bindable).CreateOrRemoveGestureRecognizer();
-        }
-
-        public static readonly BindableProperty ShareTextProperty =
-            BindableProperty.Create("ShareText", typeof(string), typeof(ExtendedImage), string.Empty);
 
         public ICommand Command
         {
@@ -97,32 +80,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
-        }
-
-        public Color TintColor
-        {
-            get { return (Color)GetValue(TintColorProperty); }
-            set { SetValue(TintColorProperty, value); }
-        }
-
-        public bool IsSharable
-        {
-            get { return (bool)GetValue(IsSharableProperty); }
-            set { SetValue(IsSharableProperty, value); }
-        }
-
-        public string ShareText
-        {
-            get { return (string)GetValue(ShareTextProperty); }
-            set { SetValue(ShareTextProperty, value); }
-        }
-
-        public event EventHandler Clicked;
-
-        private void OnClicked()
-        {
-            var handler = Clicked;
-            if (handler != null) handler(this, EventArgs.Empty);
         }
     }
 }
