@@ -6,18 +6,28 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 {
     public class EntryAccessoryButton : BindableObject
     {
+        public static readonly BindableProperty ImageSourceProperty =
+            BindableProperty.Create<EntryAccessoryButton, ImageSource>(p => p.ImageSource, null);
+
+        [TypeConverter(typeof(ImageSourceConverter))]
+        public ImageSource ImageSource
+        {
+            get { return (ImageSource)GetValue(ImageSourceProperty); }
+            set { SetValue(ImageSourceProperty, value); }
+        }
+
         public static readonly BindableProperty TextProperty =
-           BindableProperty.Create("Text", typeof(string), typeof(EntryAccessoryButton), string.Empty);
+            BindableProperty.Create<EntryAccessoryButton, string>(p => p.Text, string.Empty);
 
         public static readonly BindableProperty EntryAccessoryButtonItemProperty =
-           BindableProperty.Create("EntryAccessoryButtonItem", typeof(EntryAccessoryButtonItem), typeof(EntryAccessoryButton), 
-           EntryAccessoryButtonItem.None);
-
+            BindableProperty.Create<EntryAccessoryButton, EntryAccessoryButtonItem>(p => p.EntryAccessoryButtonItem, 
+            EntryAccessoryButtonItem.None);
+        
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(EntryAccessoryButton), null);
+            BindableProperty.Create<EntryAccessoryButton, ICommand>(p => p.Command, null);
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create("CommandParameter", typeof(object), typeof(EntryAccessoryButton), null);
+            BindableProperty.Create<EntryAccessoryButton, object>(p => p.CommandParameter, null);
 
         public string Text
         {

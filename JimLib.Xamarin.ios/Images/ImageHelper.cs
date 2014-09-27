@@ -210,6 +210,26 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return resultImage;
         }
 
+        internal static UIImage AdjustOpacity(UIImage image, float opacity)
+        {
+            UIGraphics.BeginImageContextWithOptions(image.Size, false, 0.0f);
+
+            var ctx = UIGraphics.GetCurrentContext();
+            var area = new RectangleF(0, 0, image.Size.Width, image.Size.Height);
+
+            ctx.ScaleCTM(1, -1);
+            ctx.TranslateCTM(0, -area.Height);
+            ctx.SetBlendMode(CGBlendMode.Multiply);
+            ctx.SetAlpha(opacity);
+            ctx.DrawImage(area, image.CGImage);
+
+            var newImage = UIGraphics.GetImageFromCurrentImageContext();
+
+            UIGraphics.EndImageContext();
+
+            return newImage;
+        }
+
         internal static UIImage CropToCircle(UIImage sourceImage)
         {
             if (sourceImage == null) return null;

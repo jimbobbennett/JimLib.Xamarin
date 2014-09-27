@@ -52,6 +52,7 @@
     <Compile Include="Controls\ExtendedLabel.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
     <Compile Include="Controls\IKeyboardHelper.cs" />
+    <Compile Include="Controls\ImageSourceConverter.cs" />
     <Compile Include="Controls\PullToRefreshListView.cs" />
     <Compile Include="Controls\TappableGrid.cs" />
     <Compile Include="Extensions\GridExtensions.cs" />

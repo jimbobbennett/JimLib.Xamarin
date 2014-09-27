@@ -5,6 +5,7 @@ using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
+using JimBobBennett.JimLib.Xamarin.ios.Images;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -15,6 +16,18 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
     public class ExtendedEntryRenderer : EntryRenderer
     {
+        private static IImageSourceHandler GetHandler(ImageSource source)
+        {
+            IImageSourceHandler returnValue = null;
+            if (source is UriImageSource)
+                returnValue = new ImageLoaderSourceHandler();
+            else if (source is FileImageSource)
+                returnValue = new FileImageSourceHandler();
+            else if (source is StreamImageSource)
+                returnValue = new StreamImagesourceHandler();
+            return returnValue;
+        }
+
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
@@ -72,8 +85,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             UIBarButtonItem uiButton;
 
             if (button.EntryAccessoryButtonItem == EntryAccessoryButtonItem.None)
+            {
                 uiButton = new UIBarButtonItem(button.Text, UIBarButtonItemStyle.Plain,
                     (s, e) => HandleButtonClick(button));
+
+                if (button.ImageSource != null)
+                    SetImage(uiButton, button.ImageSource);
+            }
             else
             {
                 uiButton = new UIBarButtonItem(ConvertToSystemItem(button.EntryAccessoryButtonItem),
@@ -88,18 +106,47 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             return uiButton;
         }
 
+        private static async void SetImage(UIBarItem uiButton, ImageSource source)
+        {
+            var handler = GetHandler(source);
+            using (var image = await handler.LoadImageAsync(source))
+            {
+                UIGraphics.BeginImageContext(image.Size);
+                image.Draw(new RectangleF(0, 0, image.Size.Width, image.Size.Height));
+                using (var resultImage = UIGraphics.GetImageFromCurrentImageContext())
+                {
+                    UIGraphics.EndImageContext();
+                    using (var resizableImage = resultImage.CreateResizableImage(new UIEdgeInsets(0, 0, image.Size.Width, image.Size.Height)))
+                        uiButton.Image = resizableImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
+                }
+            }
+        }
+
         private static void HandleButtonClick(EntryAccessoryButton button)
         {
             if (button.Command != null && button.Command.CanExecute(button.CommandParameter))
                 button.Command.Execute(button.CommandParameter);
         }
 
-        private static void WireUpEnabledToCanExecute(EntryAccessoryButton button, UIBarButtonItem uiButton)
+        private static void WireUpEnabledToCanExecute(EntryAccessoryButton button, UIBarItem uiButton)
         {
             if (button.Command != null)
-                button.Command.CanExecuteChanged += (s, e) => { uiButton.Enabled = button.Command.CanExecute(button.CommandParameter); };
+                button.Command.CanExecuteChanged += (s, e) =>
+                    {
+                        var enabled = button.Command.CanExecute(button.CommandParameter);
+
+                        if (uiButton.Enabled == enabled) return;
+
+                        uiButton.Enabled = enabled;
+
+                        if (uiButton.Image != null)
+                            uiButton.Image = ImageHelper.AdjustOpacity(uiButton.Image, enabled ? 1 : 0.5f);
+                    };
 
             uiButton.Enabled = button.Command == null || button.Command.CanExecute(button.CommandParameter);
+
+            if (!uiButton.Enabled && uiButton.Image != null)
+                uiButton.Image = ImageHelper.AdjustOpacity(uiButton.Image, 0.5f);
         }
 
         private static UIBarButtonSystemItem ConvertToSystemItem(EntryAccessoryButtonItem item)
