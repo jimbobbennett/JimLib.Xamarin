@@ -26,7 +26,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             _opacityGrid = CreateFillGrid();
             _opacityGrid.IsVisible = false;
             _opacityGrid.Opacity = 0.75;
-            _opacityGrid.BackgroundColor = Color.White;
+            _opacityGrid.BackgroundColor = OpacityBackgroundColor;
 
             var activityGrid = new Grid
             {
@@ -60,7 +60,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             _activityFrame = new Frame
             {
-                BackgroundColor = Color.FromRgba(0, 0, 0, 0.5),
+                BackgroundColor = BusyIndicatorBackgroundColor,
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
                 Content = activityGrid,
@@ -91,10 +91,24 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             SetViewModel(viewModel);
         }
 
+        public static readonly BindableProperty OpacityBackgroundColorProperty =
+            BindableProperty.Create<BaseContentPage, Color>(p => p.OpacityBackgroundColor, Color.White,
+            propertyChanged:(s, o, n) => ((BaseContentPage)s)._opacityGrid.BackgroundColor = n);
+
         public Color OpacityBackgroundColor
         {
-            get { return _opacityGrid.BackgroundColor; }
-            set { _opacityGrid.BackgroundColor = value; }
+            get { return (Color)GetValue(OpacityBackgroundColorProperty); }
+            set { SetValue(OpacityBackgroundColorProperty, value); }
+        }
+
+        public static readonly BindableProperty BusyIndicatorBackgroundColorProperty =
+            BindableProperty.Create<BaseContentPage, Color>(p => p.BusyIndicatorBackgroundColor, Color.FromRgba(0, 0, 0, 0.5),
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._activityFrame.BackgroundColor = n);
+
+        public Color BusyIndicatorBackgroundColor
+        {
+            get { return (Color)GetValue(BusyIndicatorBackgroundColorProperty); }
+            set { SetValue(BusyIndicatorBackgroundColorProperty, value); }
         }
 
         private static Grid CreateFillGrid()

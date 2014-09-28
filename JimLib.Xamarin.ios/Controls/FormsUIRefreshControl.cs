@@ -18,10 +18,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 		}
 
 		private string _message;
-		/// <summary>
-		/// Gets or sets the message to display
-		/// </summary>
-		/// <value>The message.</value>
+
 		public string Message 
 		{ 
 			get { return _message;}
@@ -35,12 +32,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 			}
 		}
 
-
 		private bool _isRefreshing;
-		/// <summary>
-		/// Gets or sets a value indicating whether this instance is refreshing.
-		/// </summary>
-		/// <value><c>true</c> if this instance is refreshing; otherwise, <c>false</c>.</value>
+
 		public bool IsRefreshing
 		{
 			get { return _isRefreshing;}
@@ -54,10 +47,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the refresh command.
-		/// </summary>
-		/// <value>The refresh command.</value>
         public ICommand RefreshCommand { get; set; }
 	}
 }

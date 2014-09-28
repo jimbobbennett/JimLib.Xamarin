@@ -9,25 +9,25 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             BindableProperty.Create<PullToRefreshListView, bool>(
                 p => p.IsRefreshing, false);
 
-        public bool IsRefreshing
-        {
-            get { return (bool) GetValue(IsRefreshingProperty); }
-            set { SetValue(IsRefreshingProperty, value); }
-        }
-
         public static readonly BindableProperty RefreshCommandProperty =
             BindableProperty.Create<PullToRefreshListView, ICommand>(
                 p => p.RefreshCommand, null);
+        
+        public static readonly BindableProperty MessageProperty =
+            BindableProperty.Create<PullToRefreshListView, string>(
+                p => p.Message, string.Empty);
+
+        public bool IsRefreshing
+        {
+            get { return (bool)GetValue(IsRefreshingProperty); }
+            set { SetValue(IsRefreshingProperty, value); }
+        }
 
         public ICommand RefreshCommand
         {
             get { return (ICommand)GetValue(RefreshCommandProperty); }
             set { SetValue(RefreshCommandProperty, value); }
         }
-        
-        public static readonly BindableProperty MessageProperty =
-            BindableProperty.Create<PullToRefreshListView, string>(
-                p => p.Message, string.Empty);
 
         public string Message
         {

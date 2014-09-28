@@ -46,6 +46,7 @@
     <Compile Include="Controls\FormsUIRefreshControl.cs" />
     <Compile Include="Controls\KeyboardHelper.cs" />
     <Compile Include="Controls\PullToRefreshListViewRenderer.cs" />
+    <Compile Include="Controls\PullToRefreshScrollViewRenderer.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Navigation\Navigation.cs" />
@@ -72,9 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.74.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.74\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+    <Reference Include="JimBobBennett.JimLib">
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.75\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MonoTouch.FacebookConnect">
       <HintPath>..\Components\facebookios-3.17.1\lib\ios\MonoTouch.FacebookConnect.dll</HintPath>
