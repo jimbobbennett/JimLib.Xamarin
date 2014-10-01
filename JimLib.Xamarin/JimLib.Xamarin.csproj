@@ -51,13 +51,17 @@
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedImage.cs" />
     <Compile Include="Controls\ExtendedLabel.cs" />
+    <Compile Include="Controls\ExtendedListView.cs" />
     <Compile Include="Controls\ExtendedViewCell.cs" />
+    <Compile Include="Controls\GridView.cs" />
     <Compile Include="Controls\IKeyboardHelper.cs" />
     <Compile Include="Controls\ImageSourceConverter.cs" />
+    <Compile Include="Controls\PullToRefreshGridView.cs" />
     <Compile Include="Controls\PullToRefreshListView.cs" />
     <Compile Include="Controls\PullToRefreshScrollView.cs" />
     <Compile Include="Controls\TappableGrid.cs" />
     <Compile Include="Extensions\GridExtensions.cs" />
+    <Compile Include="Extensions\PropertyChangingEventArgsExtension.cs" />
     <Compile Include="Images\Enums.cs" />
     <Compile Include="Images\IImageHelper.cs" />
     <Compile Include="Images\ImageOptions.cs" />

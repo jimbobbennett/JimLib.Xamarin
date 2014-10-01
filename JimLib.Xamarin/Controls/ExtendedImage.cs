@@ -87,6 +87,15 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public static readonly BindableProperty ShareTextProperty =
             BindableProperty.Create("ShareText", typeof(string), typeof(ExtendedImage), string.Empty);
 
+        public static readonly BindableProperty ImageLabelTextProperty =
+            BindableProperty.Create<ExtendedImage, string>(p => p.ImageLabelText, string.Empty);
+
+        public static readonly BindableProperty LabelBackgroundColorProperty =
+            BindableProperty.Create<ExtendedImage, Color>(p => p.LabelBackgroundColor, new Color(0, 0, 0, 0.75));
+
+        public static readonly BindableProperty LabelColorProperty =
+            BindableProperty.Create<ExtendedImage, Color>(p => p.LabelColor, Color.Black);
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -115,6 +124,24 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (string)GetValue(ShareTextProperty); }
             set { SetValue(ShareTextProperty, value); }
+        }
+
+        public string ImageLabelText
+        {
+            get { return (string)GetValue(ImageLabelTextProperty); }
+            set { SetValue(ImageLabelTextProperty, value); }
+        }
+
+        public Color LabelBackgroundColor
+        {
+            get { return (Color)GetValue(LabelBackgroundColorProperty); }
+            set { SetValue(LabelBackgroundColorProperty, value); }
+        }
+
+        public Color LabelColor
+        {
+            get { return (Color)GetValue(LabelColorProperty); }
+            set { SetValue(LabelColorProperty, value); }
         }
 
         public event EventHandler Clicked;

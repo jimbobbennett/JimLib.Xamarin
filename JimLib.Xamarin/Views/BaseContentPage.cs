@@ -10,6 +10,36 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 {
     public class BaseContentPage : ContentPage, IView
     {
+        public static readonly BindableProperty OpacityBackgroundColorProperty =
+            BindableProperty.Create<BaseContentPage, Color>(p => p.OpacityBackgroundColor, Color.White,
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._opacityGrid.BackgroundColor = n);
+
+        public static readonly BindableProperty BusyIndicatorBackgroundColorProperty =
+            BindableProperty.Create<BaseContentPage, Color>(p => p.BusyIndicatorBackgroundColor, Color.FromRgba(0, 0, 0, 0.5),
+                propertyChanged: (s, o, n) => ((BaseContentPage) s)._activityFrame.BackgroundColor = n);
+
+        public static readonly BindableProperty ShowSeperatorProperty =
+            BindableProperty.Create<BaseContentPage, bool>(p => p.ShowSeperator, false,
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._seperator.IsVisible = n);
+
+        public Color OpacityBackgroundColor
+        {
+            get { return (Color)GetValue(OpacityBackgroundColorProperty); }
+            set { SetValue(OpacityBackgroundColorProperty, value); }
+        }
+
+        public Color BusyIndicatorBackgroundColor
+        {
+            get { return (Color)GetValue(BusyIndicatorBackgroundColorProperty); }
+            set { SetValue(BusyIndicatorBackgroundColorProperty, value); }
+        }
+
+        public bool ShowSeperator
+        {
+            get { return (bool)GetValue(ShowSeperatorProperty); }
+            set { SetValue(ShowSeperatorProperty, value); }
+        }
+
         public INavigationStackManager NavigationStackManager { get; protected set; }
 
         private readonly Grid _contentGrid;
@@ -18,6 +48,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
         private readonly ActivityIndicator _activityIndicator;
         private readonly Label _activityLabel;
         private readonly Frame _activityFrame;
+        private readonly ProgressBar _seperator;
 
         protected BaseContentPage()
         {
@@ -67,6 +98,12 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 IsVisible = false
             };
 
+            _seperator = new ProgressBar
+            {
+                VerticalOptions = LayoutOptions.Fill,
+                IsVisible = ShowSeperator
+            };
+
             _mainGrid = new Grid
             {
                 HorizontalOptions = LayoutOptions.Fill,
@@ -74,11 +111,18 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             };
 
             _mainGrid.AddStarColumnDefinition();
+            _mainGrid.AddAutoRowDefinition();
             _mainGrid.AddStarRowDefinition();
 
             _mainGrid.Children.Add(_contentGrid);
             _mainGrid.Children.Add(_opacityGrid);
             _mainGrid.Children.Add(_activityFrame);
+            _mainGrid.Children.Add(_seperator);
+            
+            Grid.SetRow(_contentGrid, 1);
+            Grid.SetRow(_opacityGrid, 1);
+            Grid.SetRow(_activityFrame, 1);
+            Grid.SetRow(_seperator, 0);
             
             Content = _mainGrid;
             Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
@@ -89,26 +133,6 @@ namespace JimBobBennett.JimLib.Xamarin.Views
         {
             NavigationStackManager = navigationStackManager;
             SetViewModel(viewModel);
-        }
-
-        public static readonly BindableProperty OpacityBackgroundColorProperty =
-            BindableProperty.Create<BaseContentPage, Color>(p => p.OpacityBackgroundColor, Color.White,
-            propertyChanged:(s, o, n) => ((BaseContentPage)s)._opacityGrid.BackgroundColor = n);
-
-        public Color OpacityBackgroundColor
-        {
-            get { return (Color)GetValue(OpacityBackgroundColorProperty); }
-            set { SetValue(OpacityBackgroundColorProperty, value); }
-        }
-
-        public static readonly BindableProperty BusyIndicatorBackgroundColorProperty =
-            BindableProperty.Create<BaseContentPage, Color>(p => p.BusyIndicatorBackgroundColor, Color.FromRgba(0, 0, 0, 0.5),
-            propertyChanged: (s, o, n) => ((BaseContentPage)s)._activityFrame.BackgroundColor = n);
-
-        public Color BusyIndicatorBackgroundColor
-        {
-            get { return (Color)GetValue(BusyIndicatorBackgroundColorProperty); }
-            set { SetValue(BusyIndicatorBackgroundColorProperty, value); }
         }
 
         private static Grid CreateFillGrid()

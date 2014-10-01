@@ -1,4 +1,6 @@
-﻿using JimBobBennett.JimLib.Xamarin.Controls;
+﻿using System.ComponentModel;
+using JimBobBennett.JimLib.Extensions;
+using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -7,7 +9,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
-	public class PullToRefreshListViewRenderer : ListViewRenderer
+	public class PullToRefreshListViewRenderer : ExtendedListViewRenderer
 	{
 	    private FormsUIRefreshControl _refreshControl;
 	
@@ -25,6 +27,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 			    RefreshCommand = pullToRefreshListView.RefreshCommand, 
                 Message = pullToRefreshListView.Message
 			};
+
 		    Control.AddSubview (_refreshControl);
 		}
 
@@ -33,19 +36,22 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 	    /// </summary>
 	    /// <param name="sender">Sender.</param>
 	    /// <param name="e">E.</param>
-	    protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+	    protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 	    {
 	        base.OnElementPropertyChanged(sender, e);
+
 	        var pullToRefreshListView = Element as PullToRefreshListView;
 	        if (pullToRefreshListView == null)
 	            return;
 
-	        if (e.PropertyName == PullToRefreshListView.IsRefreshingProperty.PropertyName)
+	        if (e.PropertyNameMatches(() => pullToRefreshListView.IsRefreshing))
 	            _refreshControl.IsRefreshing = pullToRefreshListView.IsRefreshing;
-	        else if (e.PropertyName == PullToRefreshListView.MessageProperty.PropertyName)
-	            _refreshControl.Message = pullToRefreshListView.Message;
-	        else if (e.PropertyName == PullToRefreshListView.RefreshCommandProperty.PropertyName)
-	            _refreshControl.RefreshCommand = pullToRefreshListView.RefreshCommand;
+
+	        if (e.PropertyNameMatches(() => pullToRefreshListView.Message))
+                _refreshControl.Message = pullToRefreshListView.Message;
+
+	        if (e.PropertyNameMatches(() => pullToRefreshListView.RefreshCommand))
+                _refreshControl.RefreshCommand = pullToRefreshListView.RefreshCommand;
 	    }
 	}
 }

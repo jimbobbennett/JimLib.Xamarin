@@ -3,19 +3,16 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Controls
 {
-    public class PullToRefreshListView : ListView
+    public class PullToRefreshListView : ExtendedListView
     {
         public static readonly BindableProperty IsRefreshingProperty =
-            BindableProperty.Create<PullToRefreshListView, bool>(
-                p => p.IsRefreshing, false);
+            BindableProperty.Create<PullToRefreshListView, bool>(p => p.IsRefreshing, false);
 
         public static readonly BindableProperty RefreshCommandProperty =
-            BindableProperty.Create<PullToRefreshListView, ICommand>(
-                p => p.RefreshCommand, null);
+            BindableProperty.Create<PullToRefreshListView, ICommand>(p => p.RefreshCommand, null);
         
         public static readonly BindableProperty MessageProperty =
-            BindableProperty.Create<PullToRefreshListView, string>(
-                p => p.Message, string.Empty);
+            BindableProperty.Create<PullToRefreshListView, string>(p => p.Message, string.Empty);
 
         public bool IsRefreshing
         {

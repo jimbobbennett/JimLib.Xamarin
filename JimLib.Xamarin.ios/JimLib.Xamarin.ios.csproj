@@ -44,7 +44,14 @@
     <Compile Include="Controls\ExtendedLabelRenderer.cs" />
     <Compile Include="Controls\ExtendedViewCellRenderer.cs" />
     <Compile Include="Controls\FormsUIRefreshControl.cs" />
+    <Compile Include="Controls\GridCollectionView.cs" />
+    <Compile Include="Controls\GridDataSource.cs" />
+    <Compile Include="Controls\GridViewCell.cs" />
+    <Compile Include="Controls\GridViewDelegate.cs" />
+    <Compile Include="Controls\GridViewRenderer.cs" />
     <Compile Include="Controls\KeyboardHelper.cs" />
+    <Compile Include="Controls\ExtendedListViewRenderer.cs" />
+    <Compile Include="Controls\PullToRefreshGridViewRenderer.cs" />
     <Compile Include="Controls\PullToRefreshListViewRenderer.cs" />
     <Compile Include="Controls\PullToRefreshScrollViewRenderer.cs" />
     <Compile Include="Images\ImageHelper.cs" />
@@ -121,7 +128,7 @@
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.mobile">
       <Visible>False</Visible>
-      <Version>0.7.3</Version>
+      <Version>0.7.4</Version>
     </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />

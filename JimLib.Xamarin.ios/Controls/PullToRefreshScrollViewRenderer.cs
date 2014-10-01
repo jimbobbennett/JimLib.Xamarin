@@ -40,9 +40,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             if (e.PropertyName == PullToRefreshScrollView.IsRefreshingProperty.PropertyName)
                 _refreshControl.IsRefreshing = pullToRefreshScrollView.IsRefreshing;
-            else if (e.PropertyName == PullToRefreshScrollView.MessageProperty.PropertyName)
+
+            if (e.PropertyName == PullToRefreshScrollView.MessageProperty.PropertyName)
                 _refreshControl.Message = pullToRefreshScrollView.Message;
-            else if (e.PropertyName == PullToRefreshScrollView.RefreshCommandProperty.PropertyName)
+
+            if (e.PropertyName == PullToRefreshScrollView.RefreshCommandProperty.PropertyName)
                 _refreshControl.RefreshCommand = pullToRefreshScrollView.RefreshCommand;
         }
     }
