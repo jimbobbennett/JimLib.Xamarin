@@ -1,14 +1,26 @@
 ﻿using System;
+using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Extensions;
 using Org.BouncyCastle.Security;
 using Refractored.Xam.Settings.Abstractions;
 
 namespace JimBobBennett.JimLib.Xamarin.Settings
 {
-    public class ApplicationSettingsBase
+    public class ApplicationSettingsBase : IApplicationSettingsBase
     {
         private readonly ISettings _settings;
         private readonly string _password;
+
+        public event EventHandler<EventArgs<string>> SettingChanged
+        {
+            add { WeakEventManager.GetWeakEventManager(this).AddEventHandler("SettingChanged", value); }
+            remove { WeakEventManager.GetWeakEventManager(this).RemoveEventHandler("SettingChanged", value); }
+        }
+
+        protected void OnSettingChanged(string settingKey)
+        {
+            WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, new EventArgs<string>(settingKey), "SettingChanged");
+        }
 
         protected ApplicationSettingsBase(ISettings settings, string password = null)
         {
@@ -50,6 +62,7 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
         {
             _settings.AddOrUpdateValue(key, value ?? string.Empty);
             _settings.Save();
+            OnSettingChanged(key);
         }
 
         protected void SetEncryptedSetting(string key, string value)
@@ -67,12 +80,14 @@ namespace JimBobBennett.JimLib.Xamarin.Settings
         {
             _settings.AddOrUpdateValue(key, value);
             _settings.Save();
+            OnSettingChanged(key);
         }
 
         protected void SetEnumSetting<T>(string key, T value) where T : struct
         {
             _settings.AddOrUpdateValue(key, value.ToString());
             _settings.Save();
+            OnSettingChanged(key);
         }
     }
 }

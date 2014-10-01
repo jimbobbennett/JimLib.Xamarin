@@ -23,7 +23,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
 		    SetShowEmptyCells(extendedListView);
 
-		    extendedListView.ItemSelected += (s, e1) => Control.DeselectRow(Control.IndexPathForSelectedRow, false);
+		    extendedListView.ItemSelected += (s, e1) =>
+		        {
+                    if (Control.IndexPathForSelectedRow != null)
+		                Control.DeselectRow(Control.IndexPathForSelectedRow, false);
+		        };
 		}
        
 	    private void SetShowEmptyCells(ExtendedListView pullToRefreshListView)
