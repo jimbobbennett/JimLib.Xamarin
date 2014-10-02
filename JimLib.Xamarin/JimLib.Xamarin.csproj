@@ -47,6 +47,7 @@
     <Compile Include="Contacts\Phone.cs" />
     <Compile Include="Contacts\Website.cs" />
     <Compile Include="Controls\CardView.cs" />
+    <Compile Include="Controls\EntryAccessoryButton.cs" />
     <Compile Include="Controls\Enums.cs" />
     <Compile Include="Controls\ExtendedEntry.cs" />
     <Compile Include="Controls\ExtendedImage.cs" />

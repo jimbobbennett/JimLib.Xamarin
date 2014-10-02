@@ -6,6 +6,7 @@ using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
+using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -38,6 +39,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             SetTextAlignment(view);
             SetBorder(view);
             SetButtons(view);
+            SetPlaceholderTextColor(view);
 
             ResizeHeight();
         }
@@ -54,13 +56,28 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             if (e.PropertyNameMatches(() => view.XAlign))
                 SetTextAlignment(view);
 
-            if (e.PropertyNameMatches(() => view.HasBorder))
+            if (e.PropertyNameMatches(() => view.HasBorder) ||
+                e.PropertyNameMatches(() => view.BorderColor) ||
+                e.PropertyNameMatches(() => view.BorderWidth))
                 SetBorder(view);
 
             if (e.PropertyNameMatches(() => view.AccessoryButtons))
                 SetButtons(view);
 
+            if (e.PropertyNameMatches(() => view.PlaceholderColor))
+                SetPlaceholderTextColor(view);
+
             ResizeHeight();
+        }
+
+        private void SetPlaceholderTextColor(ExtendedEntry view)
+        {
+            if (string.IsNullOrEmpty(view.Placeholder) == false && view.PlaceholderColor != Color.Default)
+            {
+                var placeholderString = new NSAttributedString(view.Placeholder, 
+                    new UIStringAttributes { ForegroundColor = view.PlaceholderColor.ToUIColor() });
+                Control.AttributedPlaceholder = placeholderString;
+            }
         }
 
         private void SetButtons(ExtendedEntry view)
@@ -207,6 +224,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         private void SetBorder(ExtendedEntry view)
         {
             Control.BorderStyle = view.HasBorder ? UITextBorderStyle.RoundedRect : UITextBorderStyle.None;
+            Control.Layer.CornerRadius = Convert.ToSingle(view.BorderCornerRadius);
+            Control.Layer.BorderWidth = Convert.ToSingle(view.BorderWidth);
+            Control.Layer.BorderColor = view.BorderColor.ToCGColor();
         }
 
         private void SetTextAlignment(ExtendedEntry view)

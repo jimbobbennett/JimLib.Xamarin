@@ -4,56 +4,6 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Controls
 {
-    public class EntryAccessoryButton : BindableObject
-    {
-        public static readonly BindableProperty ImageSourceProperty =
-            BindableProperty.Create<EntryAccessoryButton, ImageSource>(p => p.ImageSource, null);
-
-        [TypeConverter(typeof(ImageSourceConverter))]
-        public ImageSource ImageSource
-        {
-            get { return (ImageSource)GetValue(ImageSourceProperty); }
-            set { SetValue(ImageSourceProperty, value); }
-        }
-
-        public static readonly BindableProperty TextProperty =
-            BindableProperty.Create<EntryAccessoryButton, string>(p => p.Text, string.Empty);
-
-        public static readonly BindableProperty EntryAccessoryButtonItemProperty =
-            BindableProperty.Create<EntryAccessoryButton, EntryAccessoryButtonItem>(p => p.EntryAccessoryButtonItem, 
-            EntryAccessoryButtonItem.None);
-        
-        public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create<EntryAccessoryButton, ICommand>(p => p.Command, null);
-
-        public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create<EntryAccessoryButton, object>(p => p.CommandParameter, null);
-
-        public string Text
-        {
-            get { return (string)GetValue(TextProperty); }
-            set { SetValue(TextProperty, value); }
-        }
-
-        public ICommand Command
-        {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
-        }
-
-        public object CommandParameter
-        {
-            get { return GetValue(CommandParameterProperty); }
-            set { SetValue(CommandParameterProperty, value); }
-        }
-
-        public EntryAccessoryButtonItem EntryAccessoryButtonItem
-        {
-            get { return (EntryAccessoryButtonItem)GetValue(EntryAccessoryButtonItemProperty); }
-            set { SetValue(EntryAccessoryButtonItemProperty, value); }
-        }
-    }
-
     public class ExtendedEntry : Entry
     {
         public ExtendedEntry()
@@ -71,20 +21,31 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             BindableProperty.Create("Font", typeof(Font), typeof(ExtendedEntry), new Font());
 
         public static readonly BindableProperty XAlignProperty =
-            BindableProperty.Create("XAlign", typeof(TextAlignment), typeof(ExtendedEntry),
-            TextAlignment.Start);
+            BindableProperty.Create<ExtendedEntry, TextAlignment>(p => p.XAlign, TextAlignment.Start);
 
         public static readonly BindableProperty HasBorderProperty =
-            BindableProperty.Create("HasBorder", typeof(bool), typeof(ExtendedEntry), true);
+            BindableProperty.Create<ExtendedEntry, bool>(p => p.HasBorder, true);
+
+        public static readonly BindableProperty BorderWidthProperty =
+            BindableProperty.Create<ExtendedEntry, double>(p => p.BorderWidth, 0);
+
+        public static readonly BindableProperty BorderCornerRadiusProperty =
+            BindableProperty.Create<ExtendedEntry, double>(p => p.BorderCornerRadius, 0);
+
+        public static readonly BindableProperty BorderColorProperty =
+            BindableProperty.Create<ExtendedEntry, Color>(p => p.BorderColor, Color.Default);
+
+        public static readonly BindableProperty PlaceholderColorProperty =
+            BindableProperty.Create<ExtendedEntry, Color>(p => p.PlaceholderColor, Color.Default);
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(ExtendedEntry), null);
+            BindableProperty.Create<ExtendedEntry, ICommand>(p => p.Command, null);
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create("CommandParameter", typeof(object), typeof(ExtendedEntry), null);
+            BindableProperty.Create<ExtendedEntry, object>(p => p.CommandParameter, null);
 
         public static readonly BindableProperty AccessoryButtonsProperty =
-            BindableProperty.Create("AccessoryButtons", typeof(List<EntryAccessoryButton>), typeof(ExtendedEntry), null,
+            BindableProperty.Create<ExtendedEntry, List<EntryAccessoryButton>>(p => p.AccessoryButtons, null,
             propertyChanging: AccessoryButtonsPropertyChanging);
 
         private static void AccessoryButtonsPropertyChanging(BindableObject bindable, object oldvalue, 
@@ -136,6 +97,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             set { SetValue(HasBorderProperty, value); }
         }
 
+        public double BorderWidth
+        {
+            get { return (double)GetValue(BorderWidthProperty); }
+            set { SetValue(BorderWidthProperty, value); }
+        }
+
+        public double BorderCornerRadius
+        {
+            get { return (double)GetValue(BorderCornerRadiusProperty); }
+            set { SetValue(BorderCornerRadiusProperty, value); }
+        }
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -146,6 +119,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        public Color BorderColor
+        {
+            get { return (Color)GetValue(BorderColorProperty); }
+            set { SetValue(BorderColorProperty, value); }
+        }
+
+        public Color PlaceholderColor
+        {
+            get { return (Color)GetValue(PlaceholderColorProperty); }
+            set { SetValue(PlaceholderColorProperty, value); }
         }
 
         public List<EntryAccessoryButton> AccessoryButtons
