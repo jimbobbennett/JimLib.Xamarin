@@ -5,11 +5,11 @@ using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(PullToRefreshGridView), typeof(PullToRefreshGridViewGridViewRenderer))]
+[assembly: ExportRenderer(typeof(PullToRefreshGridView), typeof(PullToRefreshGridViewRenderer))]
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
-    public class PullToRefreshGridViewGridViewRenderer : GridViewRenderer
+    public class PullToRefreshGridViewRenderer : GridViewRenderer
     {
         private FormsUIRefreshControl _refreshControl;
 

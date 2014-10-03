@@ -40,6 +40,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             SetBorder(view);
             SetButtons(view);
             SetPlaceholderTextColor(view);
+            SetKeyboardStyle(view);
 
             ResizeHeight();
         }
@@ -67,7 +68,15 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             if (e.PropertyNameMatches(() => view.PlaceholderColor))
                 SetPlaceholderTextColor(view);
 
+            if (e.PropertyNameMatches(() => view.KeyboardStyle))
+                SetKeyboardStyle(view);
+
             ResizeHeight();
+        }
+
+        private void SetKeyboardStyle(ExtendedEntry view)
+        {
+            Control.KeyboardAppearance = view.KeyboardStyle == KeyboardStyle.Dark ? UIKeyboardAppearance.Dark : UIKeyboardAppearance.Light;
         }
 
         private void SetPlaceholderTextColor(ExtendedEntry view)

@@ -28,4 +28,10 @@
         Redo,
         PageCurl
     };
+
+    public enum KeyboardStyle
+    {
+        Light,
+        Dark
+    }
 }

@@ -23,6 +23,9 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public static readonly BindableProperty XAlignProperty =
             BindableProperty.Create<ExtendedEntry, TextAlignment>(p => p.XAlign, TextAlignment.Start);
 
+        public static readonly BindableProperty KeyboardStyleProperty =
+            BindableProperty.Create<ExtendedEntry, KeyboardStyle>(p => p.KeyboardStyle, KeyboardStyle.Light);
+
         public static readonly BindableProperty HasBorderProperty =
             BindableProperty.Create<ExtendedEntry, bool>(p => p.HasBorder, true);
 
@@ -89,6 +92,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (TextAlignment)GetValue(XAlignProperty); }
             set { SetValue(XAlignProperty, value); }
+        }
+
+        public KeyboardStyle KeyboardStyle
+        {
+            get { return (KeyboardStyle)GetValue(KeyboardStyleProperty); }
+            set { SetValue(KeyboardStyleProperty, value); }
         }
 
         public bool HasBorder

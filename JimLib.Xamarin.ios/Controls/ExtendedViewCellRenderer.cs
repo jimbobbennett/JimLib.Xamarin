@@ -19,6 +19,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             var cell = base.GetCell(item, tv);
             if (cell != null)
             {
+                cell.SelectionStyle = extendedCell.HighlightSelection ? UITableViewCellSelectionStyle.Default : UITableViewCellSelectionStyle.None;
+
                 cell.BackgroundColor = extendedCell.BackgroundColor.ToUIColor();
                 cell.SeparatorInset = new UIEdgeInsets((float) extendedCell.SeparatorPadding.Top, (float) extendedCell.SeparatorPadding.Left,
                     (float) extendedCell.SeparatorPadding.Bottom, (float) extendedCell.SeparatorPadding.Right);

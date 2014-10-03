@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
@@ -19,6 +20,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
     public class GridViewRenderer : ViewRenderer<GridView, GridCollectionView>
     {
+        private UILabel _label;
+
         protected override void OnElementChanged(ElementChangedEventArgs<GridView> e)
         {
             base.OnElementChanged(e);
@@ -29,7 +32,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 SelectionEnable = e.NewElement.SelectionEnabled,
                 ContentInset = new UIEdgeInsets((float) Element.Padding.Top, (float) Element.Padding.Left, (float) Element.Padding.Bottom, (float) Element.Padding.Right),
                 BackgroundColor = Element.BackgroundColor.ToUIColor(),
-                ItemSize = new System.Drawing.SizeF((float) Element.ItemWidth, (float) Element.ItemHeight),
+                ItemSize = new SizeF((float) Element.ItemWidth, (float) Element.ItemHeight),
                 RowSpacing = Element.RowSpacing,
                 ColumnSpacing = Element.ColumnSpacing
             };
@@ -40,6 +43,23 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             collectionView.Source = DataSource;
 
             SetNativeControl(collectionView);
+
+            if (_label == null)
+            {
+                _label = new UILabel
+                {
+                    AdjustsFontSizeToFitWidth = true,
+                    TextAlignment = UITextAlignment.Center,
+                    LineBreakMode = UILineBreakMode.WordWrap,
+                    Lines = 0
+                };
+
+                SetLabelDetails();
+                SetLabelSizeAndPosition();
+                Control.AddSubview(_label);
+            }
+
+            ShowOrHideLabel(Element);
         }
 
         private void Unbind(GridView oldElement)
@@ -82,7 +102,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
         }
 
-        private void DataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        protected virtual void DataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             try
             {
@@ -93,6 +113,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             {
 
             }
+            
+            ShowOrHideLabel(Element);
         }
 
         private GridDataSource _dataSource;
@@ -137,6 +159,57 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             collectionCell.ViewCell = item;
 
             return collectionCell;
+        }
+        
+        private void ShowOrHideLabel(GridView view)
+        {
+            _label.Hidden = view.ItemsSource != null && view.ItemsSource.OfType<object>().Any();
+        }
+
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            base.OnElementPropertyChanged(sender, e);
+            
+            if (e.PropertyNameMatches(() => Element.NoItemsText))
+            {
+                SetLabelDetails();
+                SetLabelSizeAndPosition();
+            }
+
+            if (e.PropertyNameMatches(() => Element.NoItemsTextColor))
+                SetLabelDetails();
+
+            if (e.PropertyNameMatches(() => Element.ItemsSource))
+                ShowOrHideLabel(Element);
+        }
+
+        private void SetLabelSizeAndPosition()
+        {
+            _label.Frame = new RectangleF(Control.Frame.Width / 10,
+                Control.Frame.Height / 10,
+                Control.Frame.Width * 0.8f,
+                _label.Frame.Height * 0.8f);
+
+            _label.SizeToFit();
+
+            var newFrame = new RectangleF((Control.Frame.Width - _label.Frame.Width) / 2,
+                (Control.Frame.Height - _label.Frame.Height) / 2,
+                _label.Frame.Width,
+                _label.Frame.Height);
+
+            _label.Frame = newFrame;
+        }
+
+        private void SetLabelDetails()
+        {
+            _label.Text = Element.NoItemsText;
+            _label.TextColor = Element.NoItemsTextColor.ToUIColor();
+        }
+
+        public override void LayoutSubviews()
+        {
+            base.LayoutSubviews();
+            SetLabelSizeAndPosition();
         }
     }
 }

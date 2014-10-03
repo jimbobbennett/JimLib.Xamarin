@@ -37,6 +37,12 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public static readonly BindableProperty CommandParameterProperty =
             BindableProperty.Create<GridView, object>(p => p.CommandParameter, null);
 
+        public static readonly BindableProperty NoItemsTextProperty =
+            BindableProperty.Create<GridView, string>(p => p.NoItemsText, string.Empty);
+
+        public static readonly BindableProperty NoItemsTextColorProperty =
+            BindableProperty.Create<GridView, Color>(p => p.NoItemsTextColor, Color.Black);
+
         public IEnumerable ItemsSource
         {
             get { return (IEnumerable) GetValue(ItemsSourceProperty); }
@@ -83,6 +89,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return GetValue(CommandParameterProperty); }
             set { SetValue(CommandParameterProperty, value); }
+        }
+
+        public string NoItemsText
+        {
+            get { return (string)GetValue(NoItemsTextProperty); }
+            set { SetValue(NoItemsTextProperty, value); }
+        }
+
+        public Color NoItemsTextColor
+        {
+            get { return (Color)GetValue(NoItemsTextColorProperty); }
+            set { SetValue(NoItemsTextColorProperty, value); }
         }
 
         public event EventHandler<EventArgs<object>> ItemSelected;
