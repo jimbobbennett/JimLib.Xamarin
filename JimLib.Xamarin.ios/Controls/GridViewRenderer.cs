@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using JimBobBennett.JimLib.Extensions;
@@ -89,7 +90,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             if (e.PropertyNameMatches(() => Element.ItemsSource))
             {
                 if (Element.ItemsSource is INotifyCollectionChanged)
-                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged -= DataCollectionChanged;
+                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged += DataCollectionChanged;
             }
         }
 
@@ -98,11 +99,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             if (e.PropertyNameMatches(() => Element.ItemsSource))
             {
                 if (Element.ItemsSource is INotifyCollectionChanged)
-                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged += DataCollectionChanged;
+                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged -= DataCollectionChanged;
             }
         }
 
         protected virtual void DataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            InvokeOnMainThread(UpdateFromCollectionChange);
+        }
+
+        private void UpdateFromCollectionChange()
         {
             try
             {
@@ -111,9 +117,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
             catch (Exception ex)
             {
-
+                Debug.WriteLine("Exception reloading data: " + ex.Message);
             }
-            
+
             ShowOrHideLabel(Element);
         }
 
@@ -139,15 +145,31 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         public void ItemSelected(UICollectionView tableView, NSIndexPath indexPath)
         {
-            var item = Element.ItemsSource.Cast<object>().ElementAt(indexPath.Row);
-            Element.InvokeItemSelectedEvent(this, item);
+            if (Element.ItemsSource.Cast<object>().Count() > indexPath.Row)
+            {
+                try
+                {
+                    var item = Element.ItemsSource.Cast<object>().ElementAt(indexPath.Row);
+                    Element.InvokeItemSelectedEvent(this, item);
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Failed to select item at path: " + indexPath.ToString());
+                }
+            }
         }
 
         public UICollectionViewCell GetCell(UICollectionView collectionView, NSIndexPath indexPath)
         {
-            var item = Element.ItemsSource.Cast<object>().ElementAt(indexPath.Row);
             var viewCellBinded = (ViewCell)Element.ItemTemplate.CreateContent();
-            viewCellBinded.BindingContext = item;
+            try
+            {
+                viewCellBinded.BindingContext = Element.ItemsSource.Cast<object>().ElementAt(indexPath.Row);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Failed to select item at path: " + indexPath.ToString());
+            }
 
             return GetCell(collectionView, viewCellBinded, indexPath);
         }
