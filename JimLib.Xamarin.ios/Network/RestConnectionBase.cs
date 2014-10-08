@@ -32,7 +32,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                     try
                     {
                         client.BaseAddress = new Uri(baseUrl);
-                        client.Timeout = new TimeSpan(0, 0, 0, 0, timeout);
+                        client.Timeout = TimeSpan.FromMilliseconds(timeout);
 
                         if (headers != null)
                         {
@@ -41,17 +41,15 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                         }
 
                         var requestUri = new Uri(resource, UriKind.Relative);
-
+                        
                         var getResponse = await client.GetAsync(requestUri);
-
+                        
                         if (getResponse.IsSuccessStatusCode)
-                        {
                             return await getResponse.Content.ReadAsByteArrayAsync();
-                        }
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine("Failed to make network request: " + ex.Message);
+                        Debug.WriteLine("Requesting " + baseUrl + " and resource " + resource + " - Failed to make network request: " + ex.Message);
                     }
                 }
             }
@@ -75,7 +73,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                     try
                     {
                         client.BaseAddress = new Uri(baseUrl);
-                        client.Timeout = new TimeSpan(0, 0, 0, 0, timeout);
+                        client.Timeout = TimeSpan.FromMilliseconds(timeout);
 
                         if (headers != null)
                         {
@@ -93,6 +91,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
                         {
                             case Method.Get:
                                 var getResponse = await client.GetAsync(requestUri);
+                                
                                 statusCode = (int)getResponse.StatusCode;
                                 message = getResponse.ReasonPhrase;
 
@@ -107,6 +106,7 @@ namespace JimBobBennett.JimLib.Xamarin.Network
 
                             case Method.Post:
                                 var postResponse = await client.PostAsync(requestUri, SerializePostData(postData, responseType));
+                                
                                 statusCode = (int)postResponse.StatusCode;
                                 message = postResponse.ReasonPhrase;
 

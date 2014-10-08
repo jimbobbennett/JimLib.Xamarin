@@ -52,7 +52,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                     try
                     {
                         var image = UIImage.LoadFromData(NSData.FromUrl(new NSUrl(url)));
-                        return image != null ? ProcessImage(options, image) : new Tuple<string, ImageSource>(null, null);
+                        if (image == null)
+                            return new Tuple<string, ImageSource>(null, null);
+
+                        retVal = ProcessImage(options, image);
+                        _cachedImages[url] = retVal;
+
+                        return retVal;
                     }
                     catch
                     {
@@ -67,7 +73,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
         {
             Tuple<string, ImageSource> retVal;
             var uriBuilder = new UriBuilder(baseUrl) { Fragment = resource };
-            if (canCache && _cachedImages.TryGetValue(uriBuilder.Uri.ToString(), out retVal))
+            var key = uriBuilder.Uri.ToString();
+            if (canCache && _cachedImages.TryGetValue(key, out retVal))
                 return retVal;
 
             var bytes = await _restConnection.MakeRawGetRequestAsync(baseUrl, resource, username, password, 
@@ -76,8 +83,15 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             if (bytes == null)
                 return Tuple.Create((string)null, (ImageSource)null);
 
-            var image = GetUIImageFromBase64(Convert.ToBase64String(bytes)); 
-            return image != null ? ProcessImage(options, image) : new Tuple<string, ImageSource>(null, null);
+            var image = GetUIImageFromBase64(Convert.ToBase64String(bytes));
+
+            if (image == null)
+                return new Tuple<string, ImageSource>(null, null);
+
+            retVal = ProcessImage(options, image);
+            _cachedImages[key] = retVal;
+
+            return retVal;
         }
 
         public PhotoSource AvailablePhotoSources

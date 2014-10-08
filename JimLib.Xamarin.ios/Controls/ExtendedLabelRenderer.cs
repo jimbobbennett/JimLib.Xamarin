@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
+using MonoTouch.UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -32,6 +33,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         private void SetTextResize(ExtendedLabel view)
         {
             Control.AdjustsFontSizeToFitWidth = view.AdjustFontSizeToFitWidth;
+
+            if (view.AdjustFontSizeToFitWidth)
+            {
+                Control.LineBreakMode = UILineBreakMode.Clip;
+                Control.Lines = 1;
+            }
         }
     }
 }
