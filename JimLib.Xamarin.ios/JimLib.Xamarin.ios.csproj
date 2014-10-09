@@ -39,6 +39,9 @@
   <ItemGroup>
     <Compile Include="AppDelegateBase.cs" />
     <Compile Include="Contacts\Contacts.cs" />
+    <Compile Include="Controls\ToolBarRenderer.cs" />
+    <Compile Include="Extensions\ImageSourceExtensions.cs" />
+    <Compile Include="Extensions\SystemButtonItemExtensions.cs" />
     <Compile Include="Controls\ExtendedEntryRenderer.cs" />
     <Compile Include="Controls\ExtendedImageRenderer.cs" />
     <Compile Include="Controls\ExtendedLabelRenderer.cs" />
@@ -55,6 +58,7 @@
     <Compile Include="Controls\PullToRefreshGridViewRenderer.cs" />
     <Compile Include="Controls\PullToRefreshListViewRenderer.cs" />
     <Compile Include="Controls\PullToRefreshScrollViewRenderer.cs" />
+    <Compile Include="Extensions\ToolBarButtonExtensions.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Navigation\Navigation.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="Purchases\PurchasableProduct.cs" />
     <Compile Include="Purchases\SKProductExtension.cs" />
     <Compile Include="Purchases\TransactionObserver.cs" />
+    <Compile Include="Sharing\ShareUrl.cs" />
     <Compile Include="SocialMedia\SocialMediaConnections.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -81,9 +86,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.80.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.81.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\MobileApps\packages\JimBobBennett.JimLib.1.0.80\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <HintPath>..\..\MobileApps\packages\JimBobBennett.JimLib.1.0.81\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MonoTouch.FacebookConnect">
       <HintPath>..\Components\facebookios-3.17.1\lib\ios\MonoTouch.FacebookConnect.dll</HintPath>

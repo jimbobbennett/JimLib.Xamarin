@@ -146,5 +146,12 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
         }
 
         public PhotoSource AvailablePhotoSources { get { return PhotoSource.None; } }
+
+#pragma warning disable 1998
+        public async Task<ImageSource> GetProcessedImageSourceAsync(ImageSource imageSource, ImageOptions options)
+#pragma warning restore 1998
+        {
+            throw new NotImplementedException();
+        }
     }
 }

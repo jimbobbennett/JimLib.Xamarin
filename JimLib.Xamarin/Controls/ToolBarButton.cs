@@ -3,10 +3,10 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Controls
 {
-    public class EntryAccessoryButton : BindableObject
+    public class ToolBarButton : BindableObject
     {
         public static readonly BindableProperty ImageSourceProperty =
-            BindableProperty.Create<EntryAccessoryButton, ImageSource>(p => p.ImageSource, null);
+            BindableProperty.Create<ToolBarButton, ImageSource>(p => p.ImageSource, null);
 
         [TypeConverter(typeof(ImageSourceConverter))]
         public ImageSource ImageSource
@@ -16,17 +16,17 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty TextProperty =
-            BindableProperty.Create<EntryAccessoryButton, string>(p => p.Text, string.Empty);
+            BindableProperty.Create<ToolBarButton, string>(p => p.Text, string.Empty);
 
-        public static readonly BindableProperty EntryAccessoryButtonItemProperty =
-            BindableProperty.Create<EntryAccessoryButton, EntryAccessoryButtonItem>(p => p.EntryAccessoryButtonItem, 
-                EntryAccessoryButtonItem.None);
+        public static readonly BindableProperty SystemButtonItemProperty =
+            BindableProperty.Create<ToolBarButton, SystemButtonItem>(p => p.SystemButtonItem,
+                SystemButtonItem.None);
         
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create<EntryAccessoryButton, ICommand>(p => p.Command, null);
+            BindableProperty.Create<ToolBarButton, ICommand>(p => p.Command, null);
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create<EntryAccessoryButton, object>(p => p.CommandParameter, null);
+            BindableProperty.Create<ToolBarButton, object>(p => p.CommandParameter, null);
 
         public string Text
         {
@@ -46,10 +46,10 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             set { SetValue(CommandParameterProperty, value); }
         }
 
-        public EntryAccessoryButtonItem EntryAccessoryButtonItem
+        public SystemButtonItem SystemButtonItem
         {
-            get { return (EntryAccessoryButtonItem)GetValue(EntryAccessoryButtonItemProperty); }
-            set { SetValue(EntryAccessoryButtonItemProperty, value); }
+            get { return (SystemButtonItem)GetValue(SystemButtonItemProperty); }
+            set { SetValue(SystemButtonItemProperty, value); }
         }
     }
 }

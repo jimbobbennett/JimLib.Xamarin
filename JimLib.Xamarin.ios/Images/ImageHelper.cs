@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Images;
+using JimBobBennett.JimLib.Xamarin.ios.Extensions;
 using JimBobBennett.JimLib.Xamarin.Network;
 using MonoTouch.CoreGraphics;
 using MonoTouch.Foundation;
@@ -182,6 +183,23 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return Tuple.Create(data, GetImageSourceFromUIImage(image));
         }
 
+        private static ImageSource ProcessImageSource(ImageOptions options, UIImage image)
+        {
+            if (options != null)
+            {
+                if (options.HasSizeSet)
+                    image = MaxResizeImage(image, options.MaxWidth, options.MaxHeight);
+
+                if (options.Circle)
+                    image = CropToCircle(image);
+
+                if (options.FixOrientation)
+                    image = FixOrientation(image);
+            }
+            
+            return GetImageSourceFromUIImage(image);
+        }
+
         private static UIImage FixOrientation(UIImage image)
         {
             if (image.Orientation == UIImageOrientation.Up) return image;
@@ -280,6 +298,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             UIGraphics.EndImageContext();
 
             return newImage;
+        }
+
+        public async Task<ImageSource> GetProcessedImageSourceAsync(ImageSource imageSource, ImageOptions options)
+        {
+            var uiImage = await imageSource.GetImageAsync();
+
+            return ProcessImageSource(options, uiImage);
         }
     }
 }

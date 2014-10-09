@@ -28,9 +28,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                     if (Control.IndexPathForSelectedRow != null)
 		                Control.DeselectRow(Control.IndexPathForSelectedRow, false);
 		        };
+
+            SetAlwaysBounceVertical(extendedListView);
 		}
-       
-	    private void SetShowEmptyCells(ExtendedListView pullToRefreshListView)
+
+        private void SetAlwaysBounceVertical(ExtendedListView extendedListView)
+        {
+            Control.AlwaysBounceVertical = extendedListView.AlwaysBounceVertical;
+        }
+
+        private void SetShowEmptyCells(ExtendedListView pullToRefreshListView)
 	    {
 	        Control.TableFooterView = !pullToRefreshListView.ShowEmptyCells ? _footer : null;
 	    }
@@ -49,6 +56,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             if (e.PropertyNameMatches(() => extendedListView.ShowEmptyCells))
                 SetShowEmptyCells(extendedListView);
+
+            if (e.PropertyNameMatches(() => extendedListView.AlwaysBounceVertical))
+                SetAlwaysBounceVertical(extendedListView);
 	    }
 	}
 }

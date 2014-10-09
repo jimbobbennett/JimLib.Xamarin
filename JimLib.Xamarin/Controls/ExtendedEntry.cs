@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -8,7 +9,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
     {
         public ExtendedEntry()
         {
-            SetValue(AccessoryButtonsProperty, new List<EntryAccessoryButton>());
+            SetValue(AccessoryButtonsProperty, new ObservableCollection<ToolBarButton>());
 
             Completed += (s, e) =>
                 {
@@ -48,13 +49,13 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             BindableProperty.Create<ExtendedEntry, object>(p => p.CommandParameter, null);
 
         public static readonly BindableProperty AccessoryButtonsProperty =
-            BindableProperty.Create<ExtendedEntry, List<EntryAccessoryButton>>(p => p.AccessoryButtons, null,
+            BindableProperty.Create<ExtendedEntry, IList<ToolBarButton>>(p => p.AccessoryButtons, null,
             propertyChanging: AccessoryButtonsPropertyChanging);
 
         private static void AccessoryButtonsPropertyChanging(BindableObject bindable, object oldvalue, 
             object newvalue)
         {
-            var oldList = oldvalue as List<EntryAccessoryButton>;
+            var oldList = oldvalue as List<ToolBarButton>;
 
             if (oldList != null)
             {
@@ -62,7 +63,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
                     button.BindingContext = null;
             }
 
-            var newList = newvalue as List<EntryAccessoryButton>;
+            var newList = newvalue as List<ToolBarButton>;
 
             if (newList != null)
             {
@@ -142,9 +143,9 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             set { SetValue(PlaceholderColorProperty, value); }
         }
 
-        public List<EntryAccessoryButton> AccessoryButtons
+        public IList<ToolBarButton> AccessoryButtons
         {
-            get { return (List<EntryAccessoryButton>)GetValue(AccessoryButtonsProperty); }
+            get { return (IList<ToolBarButton>)GetValue(AccessoryButtonsProperty); }
             set { SetValue(AccessoryButtonsProperty, value); }
         }
     }

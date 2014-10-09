@@ -17,20 +17,29 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
                     }
                 };
         }
-        
+
         public static readonly BindableProperty ShowEmptyCellsProperty =
             BindableProperty.Create<ExtendedListView, bool>(p => p.ShowEmptyCells, true);
+
+        public static readonly BindableProperty AlwaysBounceVerticalProperty =
+            BindableProperty.Create<ExtendedListView, bool>(p => p.AlwaysBounceVertical, true);
 
         public static readonly BindableProperty CommandProperty =
             BindableProperty.Create<ExtendedListView, ICommand>(p => p.Command, null);
 
         public static readonly BindableProperty CommandParameterProperty =
             BindableProperty.Create<ExtendedListView, object>(p => p.CommandParameter, null);
-        
+
         public bool ShowEmptyCells
         {
             get { return (bool)GetValue(ShowEmptyCellsProperty); }
             set { SetValue(ShowEmptyCellsProperty, value); }
+        }
+
+        public bool AlwaysBounceVertical
+        {
+            get { return (bool)GetValue(AlwaysBounceVerticalProperty); }
+            set { SetValue(AlwaysBounceVerticalProperty, value); }
         }
 
         public ICommand Command

@@ -16,5 +16,7 @@ namespace JimBobBennett.JimLib.Xamarin.Images
             Dictionary<string, string> headers = null, ImageOptions options = null, bool canCache = false);
 
         PhotoSource AvailablePhotoSources { get; }
+
+        Task<ImageSource> GetProcessedImageSourceAsync(ImageSource imageSource, ImageOptions options);
     }
 }

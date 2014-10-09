@@ -1,6 +1,6 @@
 ﻿namespace JimBobBennett.JimLib.Xamarin.Controls
 {
-    public enum EntryAccessoryButtonItem
+    public enum SystemButtonItem
     {
         None,
         Done,
@@ -27,9 +27,15 @@
         Undo,
         Redo,
         PageCurl
-    };
+    }
 
     public enum KeyboardStyle
+    {
+        Light,
+        Dark
+    }
+
+    public enum BarStyle
     {
         Light,
         Dark
