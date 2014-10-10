@@ -13,7 +13,7 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
             _navigationStackManager = navigationStackManager;
         }
 
-        public async Task ShowImageViewer(ImageSource source, string title, string text)
+        public async Task ShowImageViewer(ImageSource source, string title = null, string text = null)
         {
             await _navigationStackManager.PushModalAsync<ImageViewerPage>(v => v.SetImage(source, title, text));
         }
