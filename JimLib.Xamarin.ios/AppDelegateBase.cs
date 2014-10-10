@@ -1,7 +1,9 @@
 using Autofac;
+using JimBobBennett.JimLib.Xamarin.Application;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.Images;
+using JimBobBennett.JimLib.Xamarin.ios.Application;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Network;
@@ -22,6 +24,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
     {
         // class-level declarations
         UIWindow _window;
+        private ApplicationEvents _applicationEvents = new ApplicationEvents();
 
         protected AppBase AppBase { get; private set; }
 
@@ -54,6 +57,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
                 builder.RegisterType<ShareUrl>().As<IShareUrl>().SingleInstance();
                 builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>().SingleInstance();
                 builder.RegisterInstance(navigation).As<Navigation.INavigation>().SingleInstance();
+                builder.RegisterInstance(_applicationEvents).As<IApplicationEvents>().SingleInstance();
 
                 OnInitializeContainer(builder);
             });
@@ -63,6 +67,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios
 
             _window.MakeKeyAndVisible();
 
+           _applicationEvents.OnStart();
+
             return true;
         }
 
@@ -71,5 +77,20 @@ namespace JimBobBennett.JimLib.Xamarin.ios
         }
 
         protected abstract AppBase CreateApp();
+
+        public override void WillEnterForeground(UIApplication application)
+        {
+            _applicationEvents.OnAppear();
+        }
+
+        public override void DidEnterBackground(UIApplication application)
+        {
+            _applicationEvents.OnDisappear();
+        }
+
+        public override void WillTerminate(UIApplication application)
+        {
+            _applicationEvents.OnClosing();
+        }
     }
 }

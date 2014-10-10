@@ -8,5 +8,7 @@ namespace JimBobBennett.JimLib.Xamarin.Mvvm
         IView View { get; set; }
 
         event EventHandler NeedClose;
+
+        void OnOrientationChanged(Orientation orientation);
     }
 }

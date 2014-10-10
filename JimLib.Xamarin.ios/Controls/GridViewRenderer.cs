@@ -182,10 +182,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             return collectionCell;
         }
-        
+
         private void ShowOrHideLabel(GridView view)
         {
-            _label.Hidden = view.ItemsSource != null && view.ItemsSource.OfType<object>().Any();
+            _label.Hidden = view != null && view.ItemsSource != null && view.ItemsSource.OfType<object>().Any();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

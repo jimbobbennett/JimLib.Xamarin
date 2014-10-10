@@ -38,6 +38,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AppDelegateBase.cs" />
+    <Compile Include="Application\ApplicationEvents.cs" />
     <Compile Include="Contacts\Contacts.cs" />
     <Compile Include="Controls\ToolBarRenderer.cs" />
     <Compile Include="Extensions\ImageSourceExtensions.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Controls\PullToRefreshListViewRenderer.cs" />
     <Compile Include="Controls\PullToRefreshScrollViewRenderer.cs" />
     <Compile Include="Extensions\ToolBarButtonExtensions.cs" />
+    <Compile Include="Extensions\UIInterfaceOrientationExtensions.cs" />
+    <Compile Include="Extensions\UIViewControllerExtensions.cs" />
     <Compile Include="Images\ImageHelper.cs" />
     <Compile Include="Navigation\INavigation.cs" />
     <Compile Include="Navigation\Navigation.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Purchases\TransactionObserver.cs" />
     <Compile Include="Sharing\ShareUrl.cs" />
     <Compile Include="SocialMedia\SocialMediaConnections.cs" />
+    <Compile Include="Views\BaseContentPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

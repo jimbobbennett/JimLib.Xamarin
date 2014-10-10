@@ -25,7 +25,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
 		    extendedListView.ItemSelected += (s, e1) =>
 		        {
-                    if (Control.IndexPathForSelectedRow != null)
+                    if (Control != null && Control.IndexPathForSelectedRow != null)
 		                Control.DeselectRow(Control.IndexPathForSelectedRow, false);
 		        };
 

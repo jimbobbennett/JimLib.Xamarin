@@ -1,10 +1,10 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
+using JimBobBennett.JimLib.Xamarin.ios.Extensions;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using Xamarin.Forms;
@@ -38,12 +38,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void ShowActivitySheet()
         {
-            if (((ExtendedImage)Element).IsSharable)
+            if (Element is ExtendedImage && ((ExtendedImage)Element).IsSharable)
             {
                 var items = new NSObject[] { new NSString(((ExtendedImage)Element).ShareText), Control.Image };
 
                 var controller = new UIActivityViewController(items, null);
-                TopViewController.PresentViewController(controller, true, null);
+
+                UIApplication.SharedApplication.KeyWindow.RootViewController.GetTopViewController()
+                    .PresentViewController(controller, true, null);
             }
         }
 
@@ -81,33 +83,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
         }
 
-        private static UIViewController TopViewController
-        {
-            get { return GetTopViewController(UIApplication.SharedApplication.KeyWindow.RootViewController); }
-        }
-
-        private static UIViewController GetTopViewController(UIViewController rootViewController)
-        {
-            while (true)
-            {
-                if (rootViewController.PresentedViewController == null)
-                    return rootViewController;
-
-                var navigationController = rootViewController.PresentedViewController as UINavigationController;
-
-                if (navigationController != null)
-                {
-                    var lastViewController = navigationController.ViewControllers.Last();
-                    rootViewController = lastViewController;
-                }
-                else
-                {
-                    var presentedViewController = rootViewController.PresentedViewController;
-                    rootViewController = presentedViewController;
-                }
-            }
-        }
-        
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();

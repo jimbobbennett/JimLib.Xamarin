@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
 using JimBobBennett.JimLib.Xamarin.Sharing;
 using MonoTouch.Foundation;
@@ -26,34 +25,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Sharing
             };
 
             var controller = new UIActivityViewController(items, null);
-            TopViewController.PresentViewController(controller, true, null);
-        }
 
-        private static UIViewController TopViewController
-        {
-            get { return GetTopViewController(UIApplication.SharedApplication.KeyWindow.RootViewController); }
-        }
-
-        private static UIViewController GetTopViewController(UIViewController rootViewController)
-        {
-            while (true)
-            {
-                if (rootViewController.PresentedViewController == null)
-                    return rootViewController;
-
-                var navigationController = rootViewController.PresentedViewController as UINavigationController;
-
-                if (navigationController != null)
-                {
-                    var lastViewController = navigationController.ViewControllers.Last();
-                    rootViewController = lastViewController;
-                }
-                else
-                {
-                    var presentedViewController = rootViewController.PresentedViewController;
-                    rootViewController = presentedViewController;
-                }
-            }
+            UIApplication.SharedApplication.KeyWindow.RootViewController.GetTopViewController()
+                .PresentViewController(controller, true, null);
         }
     }
 }

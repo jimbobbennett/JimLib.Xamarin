@@ -8,6 +8,7 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Views
 {
+    [ContentProperty("PortraitContent")]
     public class BaseContentPage : ContentPage, IView
     {
         public static readonly BindableProperty OpacityBackgroundColorProperty =
@@ -171,7 +172,14 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             if (child != _mainGrid)
             {
                 Content = _mainGrid;
-                _contentGrid.Children.Add(child as View);
+                _contentGrid.Children.Clear();
+
+                var childView = child as View;
+                if (childView != null)
+                {
+                    _contentGrid.Children.Add(childView);
+                    _portraitContent = childView;
+                }
             }
         }
 
@@ -207,6 +215,100 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                                 Device.BeginInvokeOnMainThread(async () => await NavigationStackManager.PopAsync());
                         };
             }
+        }
+
+        private View _portraitContent;
+        private View _landscapeContent;
+
+        public View PortraitContent
+        {
+            get { return _portraitContent; }
+            set
+            {
+                if (_portraitContent == value) return;
+
+                OnPropertyChanging();
+                _portraitContent = value;
+                OnPropertyChanged();
+
+                SetContent();
+            }
+        }
+
+        public View LandscapeContent
+        {
+            get { return _landscapeContent; }
+            set
+            {
+                if (_landscapeContent == value) return;
+
+                OnPropertyChanging();
+                _landscapeContent = value;
+                OnPropertyChanged();
+
+                SetContent();
+            }
+        }
+
+        private void SetContent()
+        {
+            if (_portraitContent == null && _landscapeContent == null)
+            {
+                // do nothing
+            }
+            else if (_portraitContent != null && _landscapeContent == null)
+            {
+                _contentGrid.Children.Clear();
+                _contentGrid.Children.Add(_portraitContent);
+            }
+            else if (_portraitContent == null && _landscapeContent != null)
+            {
+                _contentGrid.Children.Clear();
+                _contentGrid.Children.Add(_landscapeContent);
+            }
+            else
+            {
+                _contentGrid.Children.Clear();
+                _contentGrid.Children.Add(Orientation == Orientation.Landscape ? _landscapeContent : _portraitContent);
+            }
+        }
+
+        protected Orientation Orientation { get; private set; }
+
+        internal void OrientationChanged(Orientation orientation)
+        {
+            if (Orientation == orientation) return;
+
+            Orientation = orientation;
+
+            SetContent();
+            OnOrientationChanged();
+            RaiseOrientationChanged();
+        }
+
+        private void RaiseOrientationChanged()
+        {
+            var vm = BindingContext as IContentPageViewModelBase;
+
+            if (vm != null)
+                vm.OnOrientationChanged(Orientation);
+        }
+
+        protected virtual void OnOrientationChanged()
+        {
+            
+        }
+
+        protected internal virtual void OrientationChanging()
+        {
+            _contentGrid.Children.Clear();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            RaiseOrientationChanged();
         }
     }
 }

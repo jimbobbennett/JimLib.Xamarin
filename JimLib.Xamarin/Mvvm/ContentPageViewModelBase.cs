@@ -40,6 +40,11 @@ namespace JimBobBennett.JimLib.Xamarin.Mvvm
         {
             WeakEventManager.GetWeakEventManager(this).RaiseEvent(this, EventArgs.Empty, "NeedClose");
         }
+
+        public virtual void OnOrientationChanged(Orientation orientation)
+        {
+            RaisePropertyChangedForAll();
+        }
     }
 
     public abstract class ContentPageViewModelBase : ContentPageViewModelBase<object>

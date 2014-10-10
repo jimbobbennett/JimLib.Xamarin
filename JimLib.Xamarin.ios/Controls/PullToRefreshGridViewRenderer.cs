@@ -34,7 +34,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            var pullToRefreshGridView = (PullToRefreshGridView)Element;
+            var pullToRefreshGridView = Element as PullToRefreshGridView;
+
+            if (pullToRefreshGridView == null) return;
 
             if (e.PropertyNameMatches(() => pullToRefreshGridView.IsRefreshing))
                 _refreshControl.IsRefreshing = pullToRefreshGridView.IsRefreshing;
