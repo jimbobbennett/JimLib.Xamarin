@@ -1,64 +1,65 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Diagnostics;
+using System.Drawing;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
-    public class GridCollectionView : UICollectionView
+    public sealed class GridCollectionView : UICollectionView
     {
-        public bool SelectionEnable {
-            get;
-            set;
-        }
-        public GridCollectionView () : this (default(RectangleF))
+        public bool SelectionEnable { get; set; }
+
+        public GridCollectionView() : this(default(RectangleF))
         {
         }
 
-        public GridCollectionView (RectangleF frm) : base (default(RectangleF), new UICollectionViewFlowLayout () { })
+        public GridCollectionView(RectangleF frm) : base(default(RectangleF), new UICollectionViewFlowLayout())
         {
-            this.AutoresizingMask = UIViewAutoresizing.All;
-            this.ContentMode = UIViewContentMode.ScaleToFill;
-            RegisterClassForCell (typeof(GridViewCell), new NSString (GridViewCell.Key));
+            AutoresizingMask = UIViewAutoresizing.All;
+            ContentMode = UIViewContentMode.ScaleToFill;
+            RegisterClassForCell(typeof (GridViewCell), new NSString(GridViewCell.Key));
 
         }
 
         public override UICollectionViewCell CellForItem(NSIndexPath indexPath)
         {
-            return base.CellForItem(indexPath);
+            if (indexPath == null) return null;
+
+            try
+            {
+                return base.CellForItem(indexPath);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to get cell: " + ex.Message);
+                return null;
+            }
         }
 
-        public override void Draw (RectangleF rect)
+        public override void Draw(RectangleF rect)
         {
-            this.CollectionViewLayout.InvalidateLayout ();
+            CollectionViewLayout.InvalidateLayout();
 
-            base.Draw (rect);
+            base.Draw(rect);
         }
 
-        public double RowSpacing {
-            get { 
-                return (double)(this.CollectionViewLayout as UICollectionViewFlowLayout).MinimumLineSpacing;
-            }
-            set {
-                (this.CollectionViewLayout as UICollectionViewFlowLayout).MinimumLineSpacing = (float)value;
-            }
+        public double RowSpacing
+        {
+            get { return ((UICollectionViewFlowLayout) CollectionViewLayout).MinimumLineSpacing; }
+            set { ((UICollectionViewFlowLayout) CollectionViewLayout).MinimumLineSpacing = (float) value; }
         }
 
-        public double ColumnSpacing {
-            get { 
-                return (double)(this.CollectionViewLayout as UICollectionViewFlowLayout).MinimumInteritemSpacing;
-            }
-            set {
-                (this.CollectionViewLayout as UICollectionViewFlowLayout).MinimumInteritemSpacing = (float)value;
-            }
+        public double ColumnSpacing
+        {
+            get { return ((UICollectionViewFlowLayout) CollectionViewLayout).MinimumInteritemSpacing; }
+            set { ((UICollectionViewFlowLayout) CollectionViewLayout).MinimumInteritemSpacing = (float) value; }
         }
 
-        public SizeF ItemSize {
-            get { 
-                return (this.CollectionViewLayout as UICollectionViewFlowLayout).ItemSize;
-            }
-            set {
-                (this.CollectionViewLayout as UICollectionViewFlowLayout).ItemSize = value;
-            }
+        public SizeF ItemSize
+        {
+            get { return ((UICollectionViewFlowLayout) CollectionViewLayout).ItemSize; }
+            set { ((UICollectionViewFlowLayout) CollectionViewLayout).ItemSize = value; }
         }
     }
 }
