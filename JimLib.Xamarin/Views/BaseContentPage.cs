@@ -185,6 +185,9 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
         public async Task<string> GetOptionFromUserAsync(string title, string cancel, string destruction, params string[] buttons)
         {
+            if (DisplayAlertFunc != null)
+                return await DisplayAlertFunc(title, cancel, destruction, buttons);
+
             return await DisplayActionSheet(title, cancel, destruction, buttons);
         }
 
@@ -310,5 +313,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             RaiseOrientationChanged();
         }
+
+        internal Func<string, string, string, string[], Task<string>> DisplayAlertFunc { get; set; }
     }
 }

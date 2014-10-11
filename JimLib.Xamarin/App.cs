@@ -44,7 +44,11 @@ namespace JimBobBennett.JimLib.Xamarin
         {
             var mainPage = Container.Resolve<T>();
 
-            if (!needNavigation) return mainPage;
+            if (!needNavigation)
+            {
+                Container.Resolve<INavigationStackManager>().SetPages(mainPage, null);
+                return mainPage;
+            }
 
             var navigationPage = new NavigationPage(mainPage);
 

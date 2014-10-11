@@ -176,3 +176,4 @@ FakesAssemblies/
 /JimBobBennett.JimLib.Xamarin.1.0.2.nupkg
 /JimBobBennett.JimLib.Xamarin.1.0.2.symbols.nupkg
 /BuildNugetPackage.ps1
+/BuildNuget.ps1

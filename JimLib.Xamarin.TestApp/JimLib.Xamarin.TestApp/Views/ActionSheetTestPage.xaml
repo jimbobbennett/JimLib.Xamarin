@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  x:Class="TestApp.Views.ActionSheetTestPage" Title="Action Sheet Test">
+  
+	<Button Text="Show Action Sheet" Command="{Binding Path=ShowActionSheetCommand}"
+          HorizontalOptions="Center" VerticalOptions="Center"/>
+  
+</jimlibView:BaseContentPage>

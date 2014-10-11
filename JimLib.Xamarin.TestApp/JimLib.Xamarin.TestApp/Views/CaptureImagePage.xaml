@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  x:Class="TestApp.Views.CaptureImagePage">
+  
+  <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Button Text="Get Image" HorizontalOptions="Fill" Command="{Binding Path=GetImageCommand}"/>
+    <Image Grid.Row="1" HorizontalOptions="Fill" VerticalOptions="Fill" Source="{Binding Path=ImageSource}"/>
+    
+  </Grid>
+  
+</jimlibView:BaseContentPage>

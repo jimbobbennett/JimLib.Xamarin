@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MonoTouch.UIKit;
 
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
-
-namespace JimLib.Xamarin.TestApp.iOS
+namespace TestApp.iOS
 {
     public class Application
     {

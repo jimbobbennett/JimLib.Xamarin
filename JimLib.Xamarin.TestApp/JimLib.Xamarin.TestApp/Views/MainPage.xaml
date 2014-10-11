@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  x:Class="TestApp.Views.MainPage" Title="Test App">
+
+  <ScrollView>
+    <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
+      <Button Text="Action Sheet Test" Clicked="ActionSheetClicked"/>
+      <Button Text="Image Capture Test" Clicked="ImageCaptureClicked"/>
+    </StackLayout>
+  </ScrollView>
+  
+</jimlibView:BaseContentPage>
