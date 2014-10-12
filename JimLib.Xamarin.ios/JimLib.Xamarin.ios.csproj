@@ -40,6 +40,8 @@
     <Compile Include="AppDelegateBase.cs" />
     <Compile Include="Application\ApplicationEvents.cs" />
     <Compile Include="Contacts\Contacts.cs" />
+    <Compile Include="Controls\ExtendedSwitchRenderer.cs" />
+    <Compile Include="Controls\ExtendedTimePickerRenderer.cs" />
     <Compile Include="Controls\ToolBarRenderer.cs" />
     <Compile Include="Extensions\ImageSourceExtensions.cs" />
     <Compile Include="Extensions\SystemButtonItemExtensions.cs" />

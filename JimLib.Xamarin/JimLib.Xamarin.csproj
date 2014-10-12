@@ -48,6 +48,8 @@
     <Compile Include="Contacts\Phone.cs" />
     <Compile Include="Contacts\Website.cs" />
     <Compile Include="Controls\CardView.cs" />
+    <Compile Include="Controls\ExtendedSwitch.cs" />
+    <Compile Include="Controls\ExtendedTimePicker.cs" />
     <Compile Include="Controls\ToolBar.cs" />
     <Compile Include="Controls\ToolBarButton.cs" />
     <Compile Include="Controls\Enums.cs" />
