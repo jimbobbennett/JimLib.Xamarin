@@ -96,6 +96,15 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public static readonly BindableProperty LabelColorProperty =
             BindableProperty.Create<ExtendedImage, Color>(p => p.LabelColor, Color.Black);
 
+        public static readonly BindableProperty CircularProperty =
+            BindableProperty.Create<ExtendedImage, bool>(p => p.Circular, false);
+
+        public static readonly BindableProperty CircleBorderColorProperty =
+            BindableProperty.Create<ExtendedImage, Color>(p => p.CircleBorderColor, Color.Black);
+
+        public static readonly BindableProperty CircleBorderWidthProperty =
+            BindableProperty.Create<ExtendedImage, int>(p => p.CircleBorderWidth, 0);
+
         public ICommand Command
         {
             get { return (ICommand)GetValue(CommandProperty); }
@@ -142,6 +151,24 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (Color)GetValue(LabelColorProperty); }
             set { SetValue(LabelColorProperty, value); }
+        }
+
+        public bool Circular
+        {
+            get { return (bool)GetValue(CircularProperty); }
+            set { SetValue(CircularProperty, value); }
+        }
+
+        public Color CircleBorderColor
+        {
+            get { return (Color)GetValue(CircleBorderColorProperty); }
+            set { SetValue(CircleBorderColorProperty, value); }
+        }
+
+        public int CircleBorderWidth
+        {
+            get { return (int)GetValue(CircleBorderWidthProperty); }
+            set { SetValue(CircleBorderWidthProperty, value); }
         }
 
         public event EventHandler Clicked;

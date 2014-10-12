@@ -23,9 +23,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             base.OnElementChanged(e);
 
-            SetTintColor(((ExtendedImage)Element).TintColor);
+            var imageElement = (ExtendedImage)Element;
+            SetTintColor(imageElement.TintColor);
 
-            ((ExtendedImage)Element).Clicked += (s, e1) => ShowActivitySheet();
+            imageElement.Clicked += (s, e1) => ShowActivitySheet();
 
             if (_imageView == null)
             {
@@ -34,6 +35,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
 
             BuildFallbackImage();
+            SetCircular(imageElement);
         }
 
         private void ShowActivitySheet()
@@ -53,16 +55,20 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyNameMatches(() => ((ExtendedImage)Element).TintColor) ||
-                e.PropertyNameMatches(() => Element.Source))
-                SetTintColor(((ExtendedImage)Element).TintColor);
+            var imageElement = (ExtendedImage)Element;
 
-            if (e.PropertyNameMatches(() => ((ExtendedImage) Element).ImageLabelText) ||
-                e.PropertyNameMatches(() => ((ExtendedImage) Element).LabelColor))
+            if (e.PropertyNameMatches(() => imageElement.TintColor) ||
+                e.PropertyNameMatches(() => Element.Source))
+                SetTintColor(imageElement.TintColor);
+
+            if (e.PropertyNameMatches(() => imageElement.ImageLabelText) ||
+                e.PropertyNameMatches(() => imageElement.LabelColor))
             {
-                SetLabelDetails(((ExtendedImage)Element));
+                SetLabelDetails(imageElement);
                 BuildFallbackImage();
             }
+            if (e.PropertyNameMatches(() => imageElement.Circular))
+                SetCircular(imageElement);
         }
 
         private void SetTintColor(Color tintColor)
@@ -83,12 +89,33 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
         }
 
+        private void SetCircular(ExtendedImage element)
+        {
+            if (element.Circular)
+            {
+                Control.Layer.CornerRadius = Control.Frame.Size.Width / 2;
+                Control.Layer.MasksToBounds = true;
+                Control.Layer.BorderWidth = element.CircleBorderWidth;
+                Control.Layer.BorderColor = element.CircleBorderColor.ToCGColor();
+            }
+            else
+            {
+                Control.Layer.CornerRadius = 0;
+                Control.Layer.MasksToBounds = false;
+                Control.Layer.BorderWidth = 0;
+                Control.Layer.BorderColor = UIColor.Clear.CGColor;
+            }
+        }
+
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             _imageView.Frame = Control.Frame;
 
             BuildFallbackImage();
+
+            var imageElement = ((ExtendedImage)Element);
+            SetCircular(imageElement);
         }
 
         private void BuildFallbackImage()

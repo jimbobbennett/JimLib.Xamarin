@@ -234,7 +234,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
         private static ContactOverview CreateContact(Contact c)
         {
             var thumb = c.GetThumbnail();
-            var scaled = ImageHelper.CropToCircle(ImageHelper.MaxResizeImage(thumb, 128, 128));
+            var scaled = ImageHelper.MaxResizeImage(thumb, 128, 128);
 
             var contactOverview = new ContactOverview
             {

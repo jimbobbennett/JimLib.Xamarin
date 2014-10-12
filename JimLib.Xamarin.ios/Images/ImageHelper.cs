@@ -119,7 +119,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             {
                 try
                 {
+                    var style = UIApplication.SharedApplication.StatusBarStyle;
                     var file = await mediaPicker.TakePhotoAsync(new StoreCameraMediaOptions());
+                    UIApplication.SharedApplication.StatusBarStyle = style;
 
                     options = options ?? new ImageOptions();
                     options.FixOrientation = true;
@@ -142,7 +144,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             {
                 try
                 {
+                    var style = UIApplication.SharedApplication.StatusBarStyle;
                     var file = await mediaPicker.PickPhotoAsync();
+                    UIApplication.SharedApplication.StatusBarStyle = style;
+
                     return ProcessImageFile(options, file);
                 }
                 catch (Exception)
@@ -171,9 +176,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                 if (options.HasSizeSet)
                     image = MaxResizeImage(image, options.MaxWidth, options.MaxHeight);
 
-                if (options.Circle)
-                    image = CropToCircle(image);
-
                 if (options.FixOrientation)
                     image = FixOrientation(image);
             }
@@ -189,10 +191,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             {
                 if (options.HasSizeSet)
                     image = MaxResizeImage(image, options.MaxWidth, options.MaxHeight);
-
-                if (options.Circle)
-                    image = CropToCircle(image);
-
+                
                 if (options.FixOrientation)
                     image = FixOrientation(image);
             }
@@ -261,45 +260,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 
             return newImage;
         }
-
-        internal static UIImage CropToCircle(UIImage sourceImage)
-        {
-            if (sourceImage == null) return null;
-
-            var imageWidth = sourceImage.Size.Width;
-            var imageHeight = sourceImage.Size.Height;
-
-            UIGraphics.BeginImageContextWithOptions(new SizeF(imageWidth, imageHeight), false, 1f);
-            var context = UIGraphics.GetCurrentContext();
-            
-            //Calculate the centre of the circle
-            var imageCentreX = imageWidth/2;
-            var imageCentreY = imageHeight/2;
-
-            // Create and CLIP to a CIRCULAR Path
-            // (This could be replaced with any closed path if you want a different shaped clip)
-            var radius = imageWidth/2;
-            context.BeginPath();
-            context.AddArc(imageCentreX, imageCentreY, radius, 0, Convert.ToSingle(2*Math.PI), false);
-            context.ClosePath();
-            context.Clip();
-            
-            // Draw the IMAGE
-            sourceImage.Draw(new RectangleF(0, 0, imageWidth, imageHeight));
-
-            // add a black circle around the image
-            context.SetLineWidth(1);
-            context.SetStrokeColor(new CGColor(0, 0, 0));
-            context.BeginPath();
-            context.AddEllipseInRect(new RectangleF(1, 1, imageWidth-2, imageHeight-2));
-            context.DrawPath(CGPathDrawingMode.Stroke);
-
-            var newImage = UIGraphics.GetImageFromCurrentImageContext();
-            UIGraphics.EndImageContext();
-
-            return newImage;
-        }
-
+        
         public async Task<ImageSource> GetProcessedImageSourceAsync(ImageSource imageSource, ImageOptions options)
         {
             var uiImage = await imageSource.GetImageAsync();

@@ -96,9 +96,6 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             {
                 if (options.HasSizeSet)
                     bitmap = MaxResizeImage(bitmap, options.MaxWidth, options.MaxHeight);
-
-                if (options.Circle)
-                    bitmap = ClipToCircle(bitmap);
             }
 
             using (var ms = new MemoryStream())
@@ -126,23 +123,6 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             var height = Convert.ToInt32(maxResizeFactor * sourceSize.Height);
 
             return new Bitmap(sourceImage, new System.Drawing.Size(width, height));
-        }
-
-        private static Bitmap ClipToCircle(Image original)
-        {
-            var copy = new Bitmap(original);
-
-            using (var g = Graphics.FromImage(copy))
-            {
-                var center = new Point(original.Width / 2, original.Height / 2);
-                var radius = Math.Min(center.X, center.Y);
-                var r = new RectangleF(center.X - radius, center.Y - radius, radius*2, radius*2);
-                var path = new GraphicsPath();
-                path.AddEllipse(r);
-                g.Clip = new Region(path);
-                g.DrawImage(original, 0, 0);
-                return copy;
-            }
         }
 
         public PhotoSource AvailablePhotoSources { get { return PhotoSource.None; } }
