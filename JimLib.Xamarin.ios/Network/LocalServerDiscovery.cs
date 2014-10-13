@@ -22,11 +22,10 @@ namespace JimBobBennett.JimLib.Xamarin.Network
             }
 
             _foundServer.Remove(port);
-            serverDiscovery.Discover();
+            if (!serverDiscovery.Discover()) return null;
+
             string firstServer = null;
-
             await this.WaitForAsync(() => _foundServer.TryGetValue(port, out firstServer), 10000);
-
             return firstServer;
         }
 

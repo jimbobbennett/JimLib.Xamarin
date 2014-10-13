@@ -84,15 +84,25 @@ namespace JimBobBennett.JimLib.Xamarin.Network
             }
         }
 
-        public void Discover()
+        public bool Discover()
         {
-            using (var client = new UdpClient())
+            try
             {
-                var ip = new IPEndPoint(IPAddress.Parse(_ipAddress), Port);
-                var bytes = Encoding.ASCII.GetBytes("M-SEARCH * HTTP/1.0");
-                client.Send(bytes, bytes.Length, ip);
-                client.Close();
+                using (var client = new UdpClient())
+                {
+                    var ip = new IPEndPoint(IPAddress.Parse(_ipAddress), Port);
+                    var bytes = Encoding.ASCII.GetBytes("M-SEARCH * HTTP/1.0");
+                    client.Send(bytes, bytes.Length, ip);
+                    client.Close();
+                    return true;
+                }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Failed to discover upd clients: " + ex.Message);
+            }
+
+            return false;
         }
 
         public event EventHandler<EventArgs<string>> ServerDiscovered;
