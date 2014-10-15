@@ -28,11 +28,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
                 UIGraphics.BeginImageContext(image.Size);
                 image.Draw(new RectangleF(0, 0, image.Size.Width, image.Size.Height));
                 return UIGraphics.GetImageFromCurrentImageContext();
-                //{
-                //    UIGraphics.EndImageContext();
-                //    using (var resizableImage = resultImage.CreateResizableImage(new UIEdgeInsets(0, 0, image.Size.Width, image.Size.Height)))
-                //        return resizableImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal);
-                //}
             }
         }
     }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
@@ -11,13 +10,12 @@ using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.Network;
 using Xamarin.Forms;
 using Image = System.Drawing.Image;
-using Point = System.Drawing.Point;
 
 namespace JimBobBennett.JimLib.Xamarin.Net45.Images
 {
     public class ImageHelper : IImageHelper
     {
-        private readonly Dictionary<string, Tuple<string, ImageSource>> _cachedImages = new Dictionary<string, Tuple<string, ImageSource>>();
+        private readonly Dictionary<string, ImageSource> _cachedImages = new Dictionary<string, ImageSource>();
  
         private readonly IRestConnection _restConnection;
 
@@ -26,22 +24,27 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             _restConnection = restConnection;
         }
 
-        public ImageSource GetImageSource(string base64)
+        public ImageSource GetImageSourceFromBase64(string base64)
         {
             var bytes = Convert.FromBase64String(base64);
             return ImageSource.FromStream(() => new MemoryStream(bytes));
         }
 
+        public Task<string> GetBase64FromImageSource(ImageSource imageSource)
+        {
+            return null;
+        }
+
 #pragma warning disable 1998
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(PhotoSource source, ImageOptions options = null)
+        public async Task<ImageSource> GetImageAsync(PhotoSource source, ImageOptions options = null)
 #pragma warning restore 1998
         {
             return null;
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
+        public async Task<ImageSource> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
         {
-            Tuple<string, ImageSource> retVal;
+            ImageSource retVal;
             if (canCache && _cachedImages.TryGetValue(url, out retVal))
                 return retVal;
 
@@ -65,15 +68,15 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                         Debug.WriteLine("Failed to get image: " + ex.Message);
                     }
 
-                    return Tuple.Create((string) null, (ImageSource) null);
+                    return null;
                 });
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string baseUrl, string resource = "/", 
+        public async Task<ImageSource> GetImageAsync(string baseUrl, string resource = "/", 
             string username = null, string password = null, int timeout = 10000,
             Dictionary<string, string> headers = null, ImageOptions options = null, bool canCache = false)
         {
-            Tuple<string, ImageSource> retVal;
+            ImageSource retVal;
             var uriBuilder = new UriBuilder(baseUrl) {Fragment = resource};
             if (canCache && _cachedImages.TryGetValue(uriBuilder.Uri.ToString(), out retVal))
                 return retVal;
@@ -82,13 +85,13 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                 headers);
 
             if (bytes == null)
-                return Tuple.Create((string)null, (ImageSource)null);
+                return null;
 
             using (var ms = new MemoryStream(bytes))
                 return ProcessImageStream(options, ms);
         }
 
-        private Tuple<string, ImageSource> ProcessImageStream(ImageOptions options, Stream stream)
+        private ImageSource ProcessImageStream(ImageOptions options, Stream stream)
         {
             var bitmap = Image.FromStream(stream);
 
@@ -107,8 +110,7 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                 var bytes = new byte[numBytesToRead];
                 ms.Read(bytes, 0, numBytesToRead);
 
-                return Tuple.Create(Convert.ToBase64String(bytes),
-                    ImageSource.FromStream(() => new MemoryStream(bytes)));
+                return ImageSource.FromStream(() => new MemoryStream(bytes));
             }
         }
 

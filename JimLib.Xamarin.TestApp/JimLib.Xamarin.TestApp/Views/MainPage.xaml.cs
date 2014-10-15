@@ -27,5 +27,10 @@ namespace TestApp.Views
         {
             await NavigationStackManager.PushAsync<CaptureImagePage>();
         }
+
+        public async void ExtendedListViewClicked(object sender, EventArgs e)
+        {
+            await NavigationStackManager.PushAsync<ExtendedListViewPage>();
+        }
     }
 }

@@ -112,7 +112,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="facebookios">
       <Visible>False</Visible>
-      <Version>3.19.0</Version>
+      <Version>3.19.0.1</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.mobile">
       <Visible>False</Visible>
@@ -165,6 +165,7 @@
     <Content Include="Properties\_SettingsStarted.txt" />
     <BundleResource Include="Resources\Default-568h%402x.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

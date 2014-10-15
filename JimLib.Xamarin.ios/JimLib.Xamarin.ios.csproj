@@ -140,7 +140,7 @@
   <ItemGroup>
     <XamarinComponentReference Include="facebookios">
       <Visible>False</Visible>
-      <Version>3.19.0</Version>
+      <Version>3.19.0.1</Version>
     </XamarinComponentReference>
     <XamarinComponentReference Include="xamarin.mobile">
       <Visible>False</Visible>

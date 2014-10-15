@@ -8,6 +8,7 @@
     <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
       <Button Text="Action Sheet Test" Clicked="ActionSheetClicked"/>
       <Button Text="Image Capture Test" Clicked="ImageCaptureClicked"/>
+      <Button Text="Extended List View Test" Clicked="ExtendedListViewClicked"/>
     </StackLayout>
   </ScrollView>
   

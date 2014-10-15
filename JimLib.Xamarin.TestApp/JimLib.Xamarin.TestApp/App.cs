@@ -14,12 +14,15 @@ namespace TestApp
             builder.RegisterType<ActionSheetTestViewModel>();
             builder.RegisterType<MainPageViewModel>();
             builder.RegisterType<CaptureImageViewModel>();
+            builder.RegisterType<ExtendedListViewPageViewModel>();
 
             builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),
                 typeof(INavigationStackManager));
             builder.RegisterType<MainPage>().UsingConstructor(typeof(MainPageViewModel),
                 typeof(INavigationStackManager));
             builder.RegisterType<CaptureImagePage>().UsingConstructor(typeof(CaptureImageViewModel),
+                typeof(INavigationStackManager));
+            builder.RegisterType<ExtendedListViewPage>().UsingConstructor(typeof(ExtendedListViewPageViewModel),
                 typeof(INavigationStackManager));
         }
 

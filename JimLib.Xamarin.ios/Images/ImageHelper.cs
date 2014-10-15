@@ -16,7 +16,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
 {
     public class ImageHelper : IImageHelper
     {
-        private readonly Dictionary<string, Tuple<string, ImageSource>> _cachedImages = new Dictionary<string, Tuple<string, ImageSource>>();
+        private readonly Dictionary<string,  ImageSource> _cachedImages = new Dictionary<string, ImageSource>();
         private readonly IRestConnection _restConnection;
 
         public ImageHelper(IRestConnection restConnection)
@@ -24,13 +24,13 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             _restConnection = restConnection;
         }
 
-        public ImageSource GetImageSource(string base64)
+        public ImageSource GetImageSourceFromBase64(string base64)
         {
             if (base64.IsNullOrEmpty()) return null;
             return GetImageSourceFromUIImage(GetUIImageFromBase64(base64));
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(PhotoSource source,
+        public async Task<ImageSource> GetImageAsync(PhotoSource source,
             ImageOptions options = null)
         {
             switch (source)
@@ -42,9 +42,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             }
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
+        public async Task<ImageSource> GetImageAsync(string url, ImageOptions options = null, bool canCache = false)
         {
-            Tuple<string, ImageSource> retVal;
+            ImageSource retVal;
             if (canCache && _cachedImages.TryGetValue(url, out retVal))
                 return retVal;
 
@@ -54,7 +54,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                     {
                         var image = UIImage.LoadFromData(NSData.FromUrl(new NSUrl(url)));
                         if (image == null)
-                            return new Tuple<string, ImageSource>(null, null);
+                            return null;
 
                         retVal = ProcessImage(options, image);
                         _cachedImages[url] = retVal;
@@ -63,16 +63,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                     }
                     catch
                     {
-                        return new Tuple<string, ImageSource>(null, null);
+                        return null;
                     }
                 });
         }
 
-        public async Task<Tuple<string, ImageSource>> GetImageAsync(string baseUrl, string resource = "/",
+        public async Task<ImageSource> GetImageAsync(string baseUrl, string resource = "/",
             string username = null, string password = null, int timeout = 10000,
             Dictionary<string, string> headers = null, ImageOptions options = null, bool canCache = false)
         {
-            Tuple<string, ImageSource> retVal;
+            ImageSource retVal;
             var uriBuilder = new UriBuilder(baseUrl) { Fragment = resource };
             var key = uriBuilder.Uri.ToString();
             if (canCache && _cachedImages.TryGetValue(key, out retVal))
@@ -82,12 +82,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                 timeout, headers);
 
             if (bytes == null)
-                return Tuple.Create((string)null, (ImageSource)null);
+                return null;
 
             var image = GetUIImageFromBase64(Convert.ToBase64String(bytes));
 
             if (image == null)
-                return new Tuple<string, ImageSource>(null, null);
+                return null;
 
             retVal = ProcessImage(options, image);
             _cachedImages[key] = retVal;
@@ -112,7 +112,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             }
         }
 
-        private static async Task<Tuple<string, ImageSource>> GetImageFromCameraAsync(ImageOptions options = null)
+        private static async Task<ImageSource> GetImageFromCameraAsync(ImageOptions options = null)
         {
             var mediaPicker = new MediaPicker();
             if (mediaPicker.IsCameraAvailable)
@@ -137,7 +137,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return null;
         }
 
-        private static async Task<Tuple<string, ImageSource>> GetImageFromExistingAsync(ImageOptions options = null)
+        private static async Task<ImageSource> GetImageFromExistingAsync(ImageOptions options = null)
         {
             var mediaPicker = new MediaPicker();
             if (mediaPicker.PhotosSupported)
@@ -159,7 +159,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return null;
         }
 
-        private static Tuple<string, ImageSource> ProcessImageFile(ImageOptions options, MediaFile file)
+        private static ImageSource ProcessImageFile(ImageOptions options, MediaFile file)
         {
             if (file == null)
                 return null;
@@ -169,7 +169,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return ProcessImage(options, image);
         }
 
-        private static Tuple<string, ImageSource> ProcessImage(ImageOptions options, UIImage image)
+        private static ImageSource ProcessImage(ImageOptions options, UIImage image)
         {
             if (options != null)
             {
@@ -179,10 +179,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                 if (options.FixOrientation)
                     image = FixOrientation(image);
             }
-
-            var data = image.AsJPEG(0.75f).GetBase64EncodedString(NSDataBase64EncodingOptions.None);
-
-            return Tuple.Create(data, GetImageSourceFromUIImage(image));
+            
+            return GetImageSourceFromUIImage(image);
         }
 
         private static ImageSource ProcessImageSource(ImageOptions options, UIImage image)
@@ -266,6 +264,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             var uiImage = await imageSource.GetImageAsync();
 
             return ProcessImageSource(options, uiImage);
+        }
+
+        public async Task<string> GetBase64FromImageSource(ImageSource imageSource)
+        {
+            var image = await imageSource.GetImageAsync();
+            return image.AsJPEG(0.75f).GetBase64EncodedString(NSDataBase64EncodingOptions.None);
         }
     }
 }

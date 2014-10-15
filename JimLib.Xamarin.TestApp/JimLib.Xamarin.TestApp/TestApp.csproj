@@ -40,12 +40,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ActionSheetTestViewModel.cs" />
     <Compile Include="ViewModels\CaptureImageViewModel.cs" />
+    <Compile Include="ViewModels\ExtendedListViewPageViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="Views\ActionSheetTestPage.xaml.cs">
       <DependentUpon>ActionSheetTestPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CaptureImagePage.xaml.cs">
       <DependentUpon>CaptureImagePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExtendedListViewPage.xaml.cs">
+      <DependentUpon>ExtendedListViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -102,6 +106,13 @@
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ExtendedListViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  xmlns:jimlibControls="clr-namespace:JimBobBennett.JimLib.Xamarin.Controls;assembly=JimBobBennett.JimLib.Xamarin"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  x:Class="TestApp.Views.ExtendedListViewPage">
+  
+  <jimlibControls:ExtendedListView ItemsSource="{Binding Path=Items}" ShowEmptyCells="false"
+                                   Command="{Binding Path=ItemTouchedCommand}">
+    <jimlibControls:ExtendedListView.ItemTemplate>
+      <DataTemplate>
+        <jimlibControls:ExtendedViewCell ShowDisclosure="True" HighlightSelection="false">
+          <jimlibControls:ExtendedViewCell.View>
+            <StackLayout Orientation="Horizontal" Spacing="20">
+              <ContentView Padding="10">
+                <Label Text="{Binding}" HorizontalOptions="Start" VerticalOptions="CenterAndExpand"/>
+              </ContentView>
+            </StackLayout>
+          </jimlibControls:ExtendedViewCell.View>
+        </jimlibControls:ExtendedViewCell>
+      </DataTemplate>
+    </jimlibControls:ExtendedListView.ItemTemplate>
+  </jimlibControls:ExtendedListView>
+  
+</jimlibView:BaseContentPage>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using JimBobBennett.JimLib.Commands;
 using JimBobBennett.JimLib.Xamarin.Images;
@@ -25,7 +24,7 @@ namespace TestApp.ViewModels
 
                     var result = await View.GetOptionFromUserAsync(null, "Cancel", null, options.ToArray());
 
-                    Tuple<string, ImageSource> image = null;
+                    ImageSource image = null;
                     switch (result)
                     {
                         case "Take photo":
@@ -36,8 +35,8 @@ namespace TestApp.ViewModels
                             break;
                     }
 
-                    if (image != null && image.Item2 != null)
-                        ImageSource = image.Item2;
+                    if (image != null)
+                        ImageSource = image;
                 });
         }
 
