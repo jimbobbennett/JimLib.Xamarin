@@ -15,6 +15,7 @@ namespace TestApp
             builder.RegisterType<MainPageViewModel>();
             builder.RegisterType<CaptureImageViewModel>();
             builder.RegisterType<ExtendedListViewPageViewModel>();
+            builder.RegisterType<ViewImagePageViewModel>();
 
             builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),
                 typeof(INavigationStackManager));
@@ -23,6 +24,8 @@ namespace TestApp
             builder.RegisterType<CaptureImagePage>().UsingConstructor(typeof(CaptureImageViewModel),
                 typeof(INavigationStackManager));
             builder.RegisterType<ExtendedListViewPage>().UsingConstructor(typeof(ExtendedListViewPageViewModel),
+                typeof(INavigationStackManager));
+            builder.RegisterType<ViewImagePage>().UsingConstructor(typeof(ViewImagePageViewModel),
                 typeof(INavigationStackManager));
         }
 

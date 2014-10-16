@@ -36,6 +36,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             grid.AddStarRowDefinition();
             grid.AddAutoRowDefinition();
             grid.AddAutoRowDefinition();
+            grid.AddAutoRowDefinition();
             grid.AddStarColumnDefinition();
 
             var doneButton = new Button
@@ -50,8 +51,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             
             var image = new ExtendedImage
             {
-                Aspect = Aspect.AspectFit,
-                IsSharable = true
+                Aspect = Aspect.AspectFit
             };
 
             image.SetBinding(Image.SourceProperty, new Binding("ImageSource"));
@@ -78,15 +78,33 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             textLabel.SetBinding(Label.TextProperty, new Binding("ImageText"));
 
+            var toolBar = new ToolBar
+            {
+                Translucent = true,
+                BarStyle = BarStyle.Dark
+            };
+
+            toolBar.ToolBarButtons.Add(new ToolBarButton { SystemButtonItem = SystemButtonItem.FlexibleSpace });
+
+            var shareButton = new ToolBarButton
+            {
+                ImageSource = ImageSource.FromFile("Images/imageviewerpageupload.png")
+            };
+            shareButton.SetBinding(ToolBarButton.CommandProperty, "ShareImageCommand");
+
+            toolBar.ToolBarButtons.Add(shareButton);
+
             Grid.SetRow(doneButton, 0);
             Grid.SetRow(image, 1);
             Grid.SetRow(titleLabel, 2);
             Grid.SetRow(textLabel, 3);
+            Grid.SetRow(toolBar, 4);
 
             grid.Children.Add(doneButton);
             grid.Children.Add(image);
             grid.Children.Add(titleLabel);
             grid.Children.Add(textLabel);
+            grid.Children.Add(toolBar);
             
             Content = grid;
         }

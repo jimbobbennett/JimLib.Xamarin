@@ -266,10 +266,19 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             return ProcessImageSource(options, uiImage);
         }
 
-        public async Task<string> GetBase64FromImageSource(ImageSource imageSource)
+        public async Task<string> GetBase64FromImageSource(ImageSource imageSource, ImageType imageType = ImageType.Jpeg)
         {
             var image = await imageSource.GetImageAsync();
-            return image.AsJPEG(0.75f).GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+
+            switch (imageType)
+            {
+                case ImageType.Jpeg:
+                    return image.AsJPEG(0.75f).GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+                case ImageType.Png:
+                    return image.AsPNG().GetBase64EncodedString(NSDataBase64EncodingOptions.None);
+            }
+
+            return null;
         }
     }
 }

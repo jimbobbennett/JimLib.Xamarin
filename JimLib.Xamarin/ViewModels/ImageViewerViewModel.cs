@@ -1,6 +1,9 @@
-﻿using JimBobBennett.JimLib.Extensions;
+﻿using System.Windows.Input;
+using JimBobBennett.JimLib.Commands;
+using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Mvvm;
 using JimBobBennett.JimLib.Xamarin.Mvvm;
+using JimBobBennett.JimLib.Xamarin.Sharing;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ViewModels
@@ -10,6 +13,11 @@ namespace JimBobBennett.JimLib.Xamarin.ViewModels
         private ImageSource _imageSource;
         private string _imageText;
         private string _imageTitleText;
+
+        public ImageViewerViewModel(IShare share)
+        {
+            ShareImageCommand = new AsyncCommand(async () => await share.ShareAsync(ImageSource, ImageTitleText));
+        }
 
         public ImageSource ImageSource
         {
@@ -60,5 +68,7 @@ namespace JimBobBennett.JimLib.Xamarin.ViewModels
             ImageText = imageText;
             ImageTitleText = imageTitleText;
         }
+
+        public ICommand ShareImageCommand { get; private set; }
     }
 }

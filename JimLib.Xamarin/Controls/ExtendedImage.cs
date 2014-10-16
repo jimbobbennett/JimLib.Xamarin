@@ -38,7 +38,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty CommandProperty =
-            BindableProperty.Create("Command", typeof(ICommand), typeof(ExtendedImage), null,
+            BindableProperty.Create<ExtendedImage, ICommand>(p => p.Command, null,
             propertyChanged: CommandPropertyChanged);
 
         private static void CommandPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -61,7 +61,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty CommandParameterProperty =
-            BindableProperty.Create("CommandParameter", typeof(object), typeof(ExtendedImage), null,
+            BindableProperty.Create<ExtendedImage, object>(p => p.CommandParameter, null,
              propertyChanged: CommandParameterPropertyChanged);
         
         private static void CommandParameterPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
@@ -73,19 +73,19 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         public static readonly BindableProperty TintColorProperty =
-            BindableProperty.Create("TintColor", typeof(Color), typeof(ExtendedImage), Color.Default);
+            BindableProperty.Create<ExtendedImage, Color>(p => p.TintColor, Color.Default);
 
         public static readonly BindableProperty IsSharableProperty =
-            BindableProperty.Create("IsSharable", typeof(bool), typeof(ExtendedImage), false,
+            BindableProperty.Create<ExtendedImage, bool>(p => p.IsSharable, false,
             propertyChanged: IsSharablePropertyChanged);
 
-        private static void IsSharablePropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void IsSharablePropertyChanged(BindableObject bindable, bool oldvalue, bool newvalue)
         {
             ((ExtendedImage)bindable).CreateOrRemoveGestureRecognizer();
         }
 
         public static readonly BindableProperty ShareTextProperty =
-            BindableProperty.Create("ShareText", typeof(string), typeof(ExtendedImage), string.Empty);
+            BindableProperty.Create<ExtendedImage, string>(p => p.ShareText, string.Empty);
 
         public static readonly BindableProperty ImageLabelTextProperty =
             BindableProperty.Create<ExtendedImage, string>(p => p.ImageLabelText, string.Empty);

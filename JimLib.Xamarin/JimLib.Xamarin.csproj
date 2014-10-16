@@ -89,7 +89,7 @@
     <Compile Include="Purchases\IPurchasableProduct.cs" />
     <Compile Include="Settings\ApplicationSettingsBase.cs" />
     <Compile Include="Settings\IApplicationSettingsBase.cs" />
-    <Compile Include="Sharing\IShareUrl.cs" />
+    <Compile Include="Sharing\IShare.cs" />
     <Compile Include="SocialMedia\Account.cs" />
     <Compile Include="SocialMedia\Enums.cs" />
     <Compile Include="SocialMedia\ISocialMediaConnections.cs" />

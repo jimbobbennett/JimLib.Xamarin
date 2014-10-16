@@ -54,7 +54,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
                 builder.RegisterType<KeyboardHelper>().As<IKeyboardHelper>().SingleInstance();
                 builder.RegisterType<SocialMediaConnections>().As<ISocialMediaConnections>().SingleInstance();
                 builder.RegisterType<InAppPurchase>().As<IInAppPurchase>().SingleInstance();
-                builder.RegisterType<ShareUrl>().As<IShareUrl>().SingleInstance();
+                builder.RegisterType<Share>().As<IShare>().SingleInstance();
                 builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>().SingleInstance();
                 builder.RegisterInstance(navigation).As<Navigation.INavigation>().SingleInstance();
                 builder.RegisterInstance(_applicationEvents).As<IApplicationEvents>().SingleInstance();

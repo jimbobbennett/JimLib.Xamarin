@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.Navigation;
 using JimBobBennett.JimLib.Xamarin.Timers;
 using JimBobBennett.JimLib.Xamarin.ViewModels;
@@ -25,7 +26,8 @@ namespace JimBobBennett.JimLib.Xamarin
             builder.RegisterType<UtilityViewNavigation>().As<IUtilityViewNavigation>().SingleInstance();
             builder.RegisterType<ImageViewerViewModel>();
             builder.RegisterType<Timer>().As<ITimer>();
-            builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel), typeof(INavigationStackManager));
+            builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel), 
+                typeof(INavigationStackManager));
             
             OnInitialize(builder);
             

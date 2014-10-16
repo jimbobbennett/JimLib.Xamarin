@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  xmlns:jimlibControls="clr-namespace:JimBobBennett.JimLib.Xamarin.Controls;assembly=JimBobBennett.JimLib.Xamarin"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  x:Class="TestApp.Views.ViewImagePage" Padding="20">
+
+  <jimlibControls:ExtendedImage Source="{Binding Path=ImageSource}" Command="{Binding Path=OpenImageCommand}" />
+  
+</jimlibView:BaseContentPage>

@@ -9,6 +9,7 @@
       <Button Text="Action Sheet Test" Clicked="ActionSheetClicked"/>
       <Button Text="Image Capture Test" Clicked="ImageCaptureClicked"/>
       <Button Text="Extended List View Test" Clicked="ExtendedListViewClicked"/>
+      <Button Text="View Image Test" Clicked="ViewImagePageClicked"/>
     </StackLayout>
   </ScrollView>
   

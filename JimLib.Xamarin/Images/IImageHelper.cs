@@ -7,7 +7,7 @@ namespace JimBobBennett.JimLib.Xamarin.Images
     public interface IImageHelper
     {
         ImageSource GetImageSourceFromBase64(string base64);
-        Task<string> GetBase64FromImageSource(ImageSource imageSource);
+        Task<string> GetBase64FromImageSource(ImageSource imageSource, ImageType imageType = ImageType.Jpeg);
 
         Task<ImageSource> GetImageAsync(PhotoSource source, ImageOptions options = null);
         Task<ImageSource> GetImageAsync(string url, ImageOptions options = null, bool canCache = false);

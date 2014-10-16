@@ -15,7 +15,17 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
 
         public async Task ShowImageViewer(ImageSource source, string title = null, string text = null)
         {
-            await _navigationStackManager.PushModalAsync<ImageViewerPage>(v => v.SetImage(source, title, text));
+            await ShowImageViewer(source, Color.Default, title, text);
+        }
+
+        public async Task ShowImageViewer(ImageSource source, Color backgroundColor, string title = null, string text = null)
+        {
+            await _navigationStackManager.PushModalAsync<ImageViewerPage>(v =>
+                {
+                    if (backgroundColor != Color.Default)
+                        v.BackgroundColor = backgroundColor;
+                    v.SetImage(source, title, text);
+                });
         }
     }
 }

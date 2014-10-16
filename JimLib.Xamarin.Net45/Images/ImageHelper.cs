@@ -30,7 +30,7 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             return ImageSource.FromStream(() => new MemoryStream(bytes));
         }
 
-        public Task<string> GetBase64FromImageSource(ImageSource imageSource)
+        public Task<string> GetBase64FromImageSource(ImageSource imageSource, ImageType imageType = ImageType.Jpeg)
         {
             return null;
         }

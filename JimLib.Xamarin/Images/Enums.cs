@@ -9,4 +9,10 @@ namespace JimBobBennett.JimLib.Xamarin.Images
         Camera = 1,
         Existing = 2
     }
+
+    public enum ImageType
+    {
+        Jpeg,
+        Png
+    }
 }

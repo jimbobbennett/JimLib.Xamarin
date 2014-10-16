@@ -25,6 +25,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
             var handler = source.GetHandler();
             using (var image = await handler.LoadImageAsync(source))
             {
+                if (image == null) return null;
+
                 UIGraphics.BeginImageContext(image.Size);
                 image.Draw(new RectangleF(0, 0, image.Size.Width, image.Size.Height));
                 return UIGraphics.GetImageFromCurrentImageContext();

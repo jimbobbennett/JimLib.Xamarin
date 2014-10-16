@@ -61,6 +61,8 @@
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.pdb" />
     <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\JimBobBennett.JimLib.Xamarin.ios.dll" target="lib\MonoTouch10\JimBobBennett.JimLib.Xamarin.ios.dll" />
     <file src="JimLib.Xamarin.ios\**\*.cs" target="src\JimLib.Xamarin.ios" />
+    
+    <file src="JimLib.Xamarin.ios\Resources\Images\*.*" target="content\MonoTouch10\Resources\Images"/>
 
     <!-- Win -->
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.dll" />
