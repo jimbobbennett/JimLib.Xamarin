@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autofac;
 using JimBobBennett.JimLib.Events;
+using JimBobBennett.JimLib.Xamarin.Mvvm;
+using JimBobBennett.JimLib.Xamarin.Views;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.Navigation
@@ -19,10 +21,12 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
 
         private Stack<Tuple<Page, PageState>> _pages;
         private readonly IComponentContext _componentContext;
+        private readonly IViewFactory _viewFactory;
 
-        public NavigationStackManager(IComponentContext componentContext)
+        public NavigationStackManager(IComponentContext componentContext, IViewFactory viewFactory)
         {
             _componentContext = componentContext;
+            _viewFactory = viewFactory;
         }
 
         public void SetPages(Page rootPage, NavigationPage navigationPage)
@@ -104,6 +108,30 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
                 startupAction(page);
 
             await PushAsync(page);
+        }
+
+        public async Task PushViewModelModalAsync<TViewModel>(Action<TViewModel> startupAction = null)
+            where TViewModel : class, IContentPageViewModelBase
+        {
+            await PushModalAsync(GetPage(startupAction));
+        }
+
+        public async Task PushViewModelAsync<TViewModel>(Action<TViewModel> startupAction = null)
+            where TViewModel : class, IContentPageViewModelBase
+        {
+            await PushAsync(GetPage(startupAction));
+        }
+
+        private BaseContentPage GetPage<TViewModel>(Action<TViewModel> startupAction) 
+            where TViewModel : class, IContentPageViewModelBase
+        {
+            var page = _viewFactory.ResolveView<TViewModel>();
+            var viewModel = page.BindingContext as TViewModel;
+
+            if (viewModel != null && startupAction != null)
+                startupAction(viewModel);
+
+            return page;
         }
 
         public async Task PopAsync()

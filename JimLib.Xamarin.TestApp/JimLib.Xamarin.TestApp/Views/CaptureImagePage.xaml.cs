@@ -11,7 +11,7 @@ namespace TestApp.Views
             InitializeComponent();
         }
 
-        public CaptureImagePage(CaptureImageViewModel viewModel, INavigationStackManager navigationStackManager)
+        public CaptureImagePage(CaptureImagePageViewModel viewModel, INavigationStackManager navigationStackManager)
             : base(viewModel, navigationStackManager)
         {
             InitializeComponent();

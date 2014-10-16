@@ -1,8 +1,23 @@
-﻿using JimBobBennett.JimLib.Xamarin.Mvvm;
+﻿using System.Windows.Input;
+using JimBobBennett.JimLib.Commands;
+using JimBobBennett.JimLib.Xamarin.Mvvm;
+using JimBobBennett.JimLib.Xamarin.Navigation;
 
 namespace TestApp.ViewModels
 {
     public class MainPageViewModel : ContentPageViewModelBase
     {
+        public MainPageViewModel(INavigationStackManager navigationStackManager)
+        {
+            ShowActionSheetTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ActionSheetTestViewModel>());
+            ImageCaptureTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<CaptureImagePageViewModel>());
+            ExtendedListViewTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ExtendedListViewPageViewModel>());
+            ViewImagePageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ViewImagePageViewModel>());
+        }
+
+        public ICommand ShowActionSheetTestCommand { get; private set; }
+        public ICommand ImageCaptureTestCommand { get; private set; }
+        public ICommand ExtendedListViewTestCommand { get; private set; }
+        public ICommand ViewImagePageTestCommand { get; private set; }
     }
 }

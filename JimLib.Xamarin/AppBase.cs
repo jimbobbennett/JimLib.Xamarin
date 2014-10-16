@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.Navigation;
 using JimBobBennett.JimLib.Xamarin.Timers;
 using JimBobBennett.JimLib.Xamarin.ViewModels;
@@ -23,6 +22,7 @@ namespace JimBobBennett.JimLib.Xamarin
 
             builder.RegisterInstance(CrossSettings.Current).As<ISettings>();
             builder.RegisterType<NavigationStackManager>().As<INavigationStackManager>().SingleInstance();
+            builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();
             builder.RegisterType<UtilityViewNavigation>().As<IUtilityViewNavigation>().SingleInstance();
             builder.RegisterType<ImageViewerViewModel>();
             builder.RegisterType<Timer>().As<ITimer>();
@@ -34,9 +34,19 @@ namespace JimBobBennett.JimLib.Xamarin
             customRegistration(builder);
 
             Container = builder.Build();
+
+            var viewFactory = Container.Resolve<IViewFactory>();
+            viewFactory.Register<ImageViewerPage, ImageViewerViewModel>();
+
+            InitializeViewFactory(viewFactory);
         }
 
         protected abstract void OnInitialize(ContainerBuilder builder);
+
+        protected virtual void InitializeViewFactory(IViewFactory viewFactory)
+        {
+            
+        }
 
         public abstract Page GetMainPage();
 

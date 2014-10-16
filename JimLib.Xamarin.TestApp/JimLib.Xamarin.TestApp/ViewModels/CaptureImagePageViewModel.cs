@@ -7,9 +7,9 @@ using Xamarin.Forms;
 
 namespace TestApp.ViewModels
 {
-    public class CaptureImageViewModel : ContentPageViewModelBase
+    public class CaptureImagePageViewModel : ContentPageViewModelBase
     {
-        public CaptureImageViewModel(IImageHelper imageHelper)
+        public CaptureImagePageViewModel(IImageHelper imageHelper)
         {
             GetImageCommand = new AsyncCommand(async () =>
                 {

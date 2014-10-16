@@ -6,10 +6,10 @@
 
   <ScrollView>
     <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
-      <Button Text="Action Sheet Test" Clicked="ActionSheetClicked"/>
-      <Button Text="Image Capture Test" Clicked="ImageCaptureClicked"/>
-      <Button Text="Extended List View Test" Clicked="ExtendedListViewClicked"/>
-      <Button Text="View Image Test" Clicked="ViewImagePageClicked"/>
+      <Button Text="Action Sheet Test" Command="{Binding Path=ShowActionSheetTestCommand}"/>
+      <Button Text="Image Capture Test" Command="{Binding Path=ImageCaptureTestCommand}"/>
+      <Button Text="Extended List View Test" Command="{Binding Path=ExtendedListViewTestCommand}"/>
+      <Button Text="View Image Test" Command="{Binding Path=ViewImagePageTestCommand}"/>
     </StackLayout>
   </ScrollView>
   

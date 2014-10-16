@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="App.cs" />
+    <Compile Include="AppBase.cs" />
     <Compile Include="Application\IApplicationEvents.cs" />
     <Compile Include="Contacts\Address.cs" />
     <Compile Include="Contacts\ContactOverview.cs" />
@@ -102,6 +102,9 @@
     <Compile Include="Views\Enums.cs" />
     <Compile Include="Views\ImageViewerPage.cs" />
     <Compile Include="Views\IView.cs" />
+    <Compile Include="Views\IViewFactory.cs" />
+    <Compile Include="Views\ViewFactory.cs" />
+    <Compile Include="Views\ViewFactoryException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Autofac">
