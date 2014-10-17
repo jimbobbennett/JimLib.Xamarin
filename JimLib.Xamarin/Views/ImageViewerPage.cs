@@ -48,13 +48,24 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             };
 
             doneButton.SetBinding(Button.CommandProperty, new Binding("CloseCommand"));
-            
+
+            var doneButtonContentView = new ContentView
+            {
+                Padding = new Thickness(0, 0, 20, 0),
+                Content = doneButton
+            };
+
             var image = new ExtendedImage
             {
                 Aspect = Aspect.AspectFit
             };
 
             image.SetBinding(Image.SourceProperty, new Binding("ImageSource"));
+            var imageContentView = new ContentView
+            {
+                Padding = new Thickness(10, 0, 10, 0),
+                Content = image
+            };
 
             var titleLabel = new ExtendedLabel
             {
@@ -94,14 +105,14 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             toolBar.ToolBarButtons.Add(shareButton);
 
-            Grid.SetRow(doneButton, 0);
-            Grid.SetRow(image, 1);
+            Grid.SetRow(doneButtonContentView, 0);
+            Grid.SetRow(imageContentView, 1);
             Grid.SetRow(titleLabel, 2);
             Grid.SetRow(textLabel, 3);
             Grid.SetRow(toolBar, 4);
 
-            grid.Children.Add(doneButton);
-            grid.Children.Add(image);
+            grid.Children.Add(doneButtonContentView);
+            grid.Children.Add(imageContentView);
             grid.Children.Add(titleLabel);
             grid.Children.Add(textLabel);
             grid.Children.Add(toolBar);

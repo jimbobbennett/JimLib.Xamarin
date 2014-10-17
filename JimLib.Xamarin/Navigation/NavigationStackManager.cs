@@ -33,10 +33,10 @@ namespace JimBobBennett.JimLib.Xamarin.Navigation
         {
             // handle the back navigation
             navigationPage.Popped += (s, e) =>
-            {
-                if (_pages.Peek().Item1 == e.Page)
-                    OnPagePopped(_pages.Pop().Item1);
-            };
+                {
+                    if (_pages.Peek().Item1 == e.Page)
+                        OnPagePopped(_pages.Pop().Item1);
+                };
 
             _pages = new Stack<Tuple<Page, PageState>>();
             _pages.Push(Tuple.Create(rootPage, PageState.Root));

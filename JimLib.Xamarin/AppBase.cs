@@ -35,7 +35,7 @@ namespace JimBobBennett.JimLib.Xamarin
 
             Container = builder.Build();
 
-            var viewFactory = Container.Resolve<IViewFactory>();
+            var viewFactory = ComponentContext.Resolve<IViewFactory>();
             viewFactory.Register<ImageViewerPage, ImageViewerViewModel>();
 
             InitializeViewFactory(viewFactory);
@@ -54,11 +54,11 @@ namespace JimBobBennett.JimLib.Xamarin
             Color barTextColor = default(Color)) 
             where T : Page
         {
-            var mainPage = Container.Resolve<T>();
+            var mainPage = ComponentContext.Resolve<T>();
 
             if (!needNavigation)
             {
-                Container.Resolve<INavigationStackManager>().SetPages(mainPage, null);
+                ComponentContext.Resolve<INavigationStackManager>().SetPages(mainPage, null);
                 return mainPage;
             }
 
@@ -70,7 +70,7 @@ namespace JimBobBennett.JimLib.Xamarin
             if (barTextColor != default(Color) && barTextColor != Color.Default)
                 navigationPage.BarTextColor = barTextColor;
 
-            Container.Resolve<INavigationStackManager>().SetPages(mainPage, navigationPage);
+            ComponentContext.Resolve<INavigationStackManager>().SetPages(mainPage, navigationPage);
 
             return navigationPage;
         }

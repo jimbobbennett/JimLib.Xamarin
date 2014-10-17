@@ -13,11 +13,13 @@ namespace TestApp.ViewModels
             ImageCaptureTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<CaptureImagePageViewModel>());
             ExtendedListViewTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ExtendedListViewPageViewModel>());
             ViewImagePageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ViewImagePageViewModel>());
+            BackgroundImagePageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<BackgroundImagePageViewModel>());
         }
 
         public ICommand ShowActionSheetTestCommand { get; private set; }
         public ICommand ImageCaptureTestCommand { get; private set; }
         public ICommand ExtendedListViewTestCommand { get; private set; }
         public ICommand ViewImagePageTestCommand { get; private set; }
+        public ICommand BackgroundImagePageTestCommand { get; private set; }
     }
 }

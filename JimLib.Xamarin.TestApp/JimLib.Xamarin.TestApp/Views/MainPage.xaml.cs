@@ -1,4 +1,5 @@
-﻿using JimBobBennett.JimLib.Xamarin.Navigation;
+﻿using System;
+using JimBobBennett.JimLib.Xamarin.Navigation;
 using JimBobBennett.JimLib.Xamarin.Views;
 using TestApp.ViewModels;
 
@@ -15,6 +16,11 @@ namespace TestApp.Views
             : base(viewModel, navigationStackManager)
         {
             InitializeComponent();
+        }
+
+        public async void BackgroundImagePageTestCommand(object sender, EventArgs args)
+        {
+            await NavigationStackManager.PushAsync<BackgroundImagePage>();
         }
     }
 }

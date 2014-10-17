@@ -2,7 +2,8 @@
 <jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
 					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
-					                  x:Class="TestApp.Views.MainPage" Title="Test App">
+					                  x:Class="TestApp.Views.MainPage" Title="Test App"
+                            ShowSeperator="true">
 
   <ScrollView>
     <StackLayout Orientation="Vertical" HorizontalOptions="Fill">
@@ -10,6 +11,7 @@
       <Button Text="Image Capture Test" Command="{Binding Path=ImageCaptureTestCommand}"/>
       <Button Text="Extended List View Test" Command="{Binding Path=ExtendedListViewTestCommand}"/>
       <Button Text="View Image Test" Command="{Binding Path=ViewImagePageTestCommand}"/>
+      <Button Text="Background Image Test" Clicked="BackgroundImagePageTestCommand"/>
     </StackLayout>
   </ScrollView>
   

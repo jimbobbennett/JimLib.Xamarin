@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+					                  xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+					                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+					                  x:Class="TestApp.Views.BackgroundImagePage"
+                            BackgroundColor="#202020" OpacityBackgroundColor="#202020"
+                            BusyIndicatorBackgroundColor="#40FFFFFF" ShowSeperator="true"
+                            BackgroundImageSource="Images/r2d2.jpg" BackgroundImageOpacity="0.1">
+  
+	<Label Text="HelloWorld" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White"/>
+
+</jimlibView:BaseContentPage>

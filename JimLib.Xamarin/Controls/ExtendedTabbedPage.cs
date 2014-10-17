@@ -43,8 +43,8 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
                 p => p.BackgroundColor, Color.White);
 
         public static readonly BindableProperty BadgesProperty =
-           BindableProperty.Create<ExtendedTabbedPage, List<string>>(
-               p => p.Badges, null);
+            BindableProperty.Create<ExtendedTabbedPage, List<string>>(
+                p => p.Badges, null);
 
         public static readonly BindableProperty TabBarSelectedImageProperty =
             BindableProperty.Create<ExtendedTabbedPage, string>(
@@ -56,74 +56,38 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 
         public Color TintColor
         {
-            get
-            {
-                return (Color)GetValue(TintColorProperty);
-            }
-            set
-            {
-                SetValue(TintColorProperty, value);
-            }
+            get { return (Color) GetValue(TintColorProperty); }
+            set { SetValue(TintColorProperty, value); }
         }
 
         public Color BarTintColor
         {
-            get
-            {
-                return (Color)GetValue(BarTintColorProperty);
-            }
-            set
-            {
-                SetValue(BarTintColorProperty, value);
-            }
+            get { return (Color) GetValue(BarTintColorProperty); }
+            set { SetValue(BarTintColorProperty, value); }
         }
 
         public Color BackgroundColor
         {
-            get
-            {
-                return (Color)GetValue(BackgroundColorProperty);
-            }
-            set
-            {
-                SetValue(BackgroundColorProperty, value);
-            }
+            get { return (Color) GetValue(BackgroundColorProperty); }
+            set { SetValue(BackgroundColorProperty, value); }
         }
 
         public List<string> Badges
         {
-            get
-            {
-                return (List<string>)GetValue(BadgesProperty);
-            }
-            set
-            {
-                SetValue(BadgesProperty, value);
-            }
+            get { return (List<string>) GetValue(BadgesProperty); }
+            set { SetValue(BadgesProperty, value); }
         }
 
         public string TabBarSelectedImage
         {
-            get
-            {
-                return (string)GetValue(TabBarSelectedImageProperty);
-            }
-            set
-            {
-                SetValue(TabBarSelectedImageProperty, value);
-            }
+            get { return (string) GetValue(TabBarSelectedImageProperty); }
+            set { SetValue(TabBarSelectedImageProperty, value); }
         }
 
         public string TabBarBackgroundImage
         {
-            get
-            {
-                return (string)GetValue(TabBarBackgroundImageProperty);
-            }
-            set
-            {
-                SetValue(TabBarBackgroundImageProperty, value);
-            }
+            get { return (string) GetValue(TabBarBackgroundImageProperty); }
+            set { SetValue(TabBarBackgroundImageProperty, value); }
         }
 
         public bool SwipeEnabled;
@@ -171,9 +135,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public void InvokeSwipeRightEvent(object sender, object item)
         {
             if (OnSwipeRight != null)
-            {
                 OnSwipeRight.Invoke(sender, new EventArgs());
-            }
         }
 
         /// <summary>
@@ -184,22 +146,18 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public void InvokeSwipeLeftEvent(object sender, object item)
         {
             if (OnSwipeLeft != null)
-            {
                 OnSwipeLeft.Invoke(sender, new EventArgs());
-            }
         }
 
         /// <summary>
         ///     Handles the <see cref="E:PropertyChanging" /> event.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangingEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="PropertyChangingEventArgs" /> instance containing the event data.</param>
         private void OnPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
             if (e.PropertyName == "CurrentPage")
-            {
                 RaiseCurrentPageChanging();
-            }
         }
 
         /// <summary>
@@ -210,9 +168,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == "CurrentPage")
-            {
                 RaiseCurrentPageChanged();
-            }
         }
 
         /// <summary>
@@ -223,9 +179,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         private void SwipeLeft(object a, EventArgs e)
         {
             if (SwipeEnabled)
-            {
                 PreviousPage();
-            }
         }
 
         /// <summary>
@@ -236,10 +190,9 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         private void SwipeRight(object a, EventArgs e)
         {
             if (SwipeEnabled)
-            {
                 NextPage();
-            }
         }
+
         /// <summary>
         ///     Raises the current page changing.
         /// </summary>
@@ -248,9 +201,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             var handler = CurrentPageChanging;
 
             if (handler != null)
-            {
                 handler();
-            }
         }
 
         /// <summary>
@@ -261,9 +212,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             var handler = CurrentPageChanged;
 
             if (handler != null)
-            {
-                handler();
-            }
+               handler();
         }
 
         /// <summary>
@@ -278,9 +227,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             currentPage++;
 
             if (currentPage > Children.Count - 1)
-            {
                 currentPage = 0;
-            }
 
             CurrentPage = Children[currentPage];
         }
@@ -297,9 +244,7 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             currentPage--;
 
             if (currentPage < 0)
-            {
                 currentPage = Children.Count - 1;
-            }
 
             CurrentPage = Children[currentPage];
         }

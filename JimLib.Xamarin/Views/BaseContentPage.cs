@@ -23,6 +23,22 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             BindableProperty.Create<BaseContentPage, bool>(p => p.ShowSeperator, false,
             propertyChanged: (s, o, n) => ((BaseContentPage)s)._seperator.IsVisible = n);
 
+        public static readonly BindableProperty BackgroundImageSourceProperty =
+            BindableProperty.Create<BaseContentPage, ImageSource>(p => p.BackgroundImageSource, null,
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._backgroundImage.Source = n);
+
+        public static readonly BindableProperty BackgroundImageOpacityProperty =
+            BindableProperty.Create<BaseContentPage, double>(p => p.BackgroundImageOpacity, 1,
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._backgroundImage.Opacity = n);
+
+        public static readonly BindableProperty BackgroundImageAspectProperty =
+            BindableProperty.Create<BaseContentPage, Aspect>(p => p.BackgroundImageAspect, Aspect.AspectFill,
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._backgroundImage.Aspect = n);
+
+        public static readonly BindableProperty ContentPaddingProperty =
+            BindableProperty.Create<BaseContentPage, Thickness>(p => p.ContentPadding, new Thickness(0),
+            propertyChanged: (s, o, n) => ((BaseContentPage)s)._contentView.Padding = n);
+        
         public Color OpacityBackgroundColor
         {
             get { return (Color)GetValue(OpacityBackgroundColorProperty); }
@@ -41,19 +57,55 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             set { SetValue(ShowSeperatorProperty, value); }
         }
 
+        public ImageSource BackgroundImageSource
+        {
+            get { return (ImageSource)GetValue(BackgroundImageSourceProperty); }
+            set { SetValue(BackgroundImageSourceProperty, value); }
+        }
+
+        public double BackgroundImageOpacity
+        {
+            get { return (double)GetValue(BackgroundImageOpacityProperty); }
+            set { SetValue(BackgroundImageOpacityProperty, value); }
+        }
+
+        public Aspect BackgroundImageAspect
+        {
+            get { return (Aspect)GetValue(BackgroundImageAspectProperty); }
+            set { SetValue(BackgroundImageAspectProperty, value); }
+        }
+
+        public Thickness ContentPadding
+        {
+            get { return (Thickness)GetValue(ContentPaddingProperty); }
+            set { SetValue(ContentPaddingProperty, value); }
+        }
+
         public INavigationStackManager NavigationStackManager { get; protected set; }
 
-        private readonly Grid _contentGrid;
+        private readonly ContentView _contentView;
         private readonly Grid _opacityGrid;
         private readonly Grid _mainGrid;
         private readonly ActivityIndicator _activityIndicator;
         private readonly Label _activityLabel;
         private readonly Frame _activityFrame;
         private readonly ProgressBar _seperator;
+        private readonly Image _backgroundImage;
 
         protected BaseContentPage()
         {
-            _contentGrid = CreateFillGrid();
+            _contentView = new ContentView
+            {
+                HorizontalOptions = LayoutOptions.Fill,
+                VerticalOptions = LayoutOptions.Fill
+            };
+
+            _backgroundImage = new Image
+            {
+                Source = BackgroundImageSource,
+                Opacity = BackgroundImageOpacity,
+                Aspect = BackgroundImageAspect
+            };
 
             _opacityGrid = CreateFillGrid();
             _opacityGrid.IsVisible = false;
@@ -108,25 +160,29 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             _mainGrid = new Grid
             {
                 HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill
+                VerticalOptions = LayoutOptions.Fill,
+                RowSpacing = 0
             };
 
             _mainGrid.AddStarColumnDefinition();
             _mainGrid.AddAutoRowDefinition();
             _mainGrid.AddStarRowDefinition();
 
-            _mainGrid.Children.Add(_contentGrid);
+            _mainGrid.Children.Add(_backgroundImage);
+            _mainGrid.Children.Add(_contentView);
             _mainGrid.Children.Add(_opacityGrid);
             _mainGrid.Children.Add(_activityFrame);
             _mainGrid.Children.Add(_seperator);
             
-            Grid.SetRow(_contentGrid, 1);
+            Grid.SetRow(_contentView, 1);
             Grid.SetRow(_opacityGrid, 1);
             Grid.SetRow(_activityFrame, 1);
+            Grid.SetRow(_backgroundImage, 1);
             Grid.SetRow(_seperator, 0);
             
             Content = _mainGrid;
-            Padding = new Thickness(10, Device.OnPlatform(20, 0, 0), 10, 5);
+            _mainGrid.IsVisible = false;
+            Padding = new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0);
         }
 
         protected BaseContentPage(object viewModel, INavigationStackManager navigationStackManager)
@@ -172,12 +228,12 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             if (child != _mainGrid)
             {
                 Content = _mainGrid;
-                _contentGrid.Children.Clear();
+                _contentView.Content = null;
 
                 var childView = child as View;
                 if (childView != null)
                 {
-                    _contentGrid.Children.Add(childView);
+                    _contentView.Content = childView;
                     _portraitContent = childView;
                 }
             }
@@ -260,20 +316,11 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 // do nothing
             }
             else if (_portraitContent != null && _landscapeContent == null)
-            {
-                _contentGrid.Children.Clear();
-                _contentGrid.Children.Add(_portraitContent);
-            }
+                _contentView.Content = _portraitContent;
             else if (_portraitContent == null && _landscapeContent != null)
-            {
-                _contentGrid.Children.Clear();
-                _contentGrid.Children.Add(_landscapeContent);
-            }
+                _contentView.Content = _landscapeContent;
             else
-            {
-                _contentGrid.Children.Clear();
-                _contentGrid.Children.Add(Orientation == Orientation.Landscape ? _landscapeContent : _portraitContent);
-            }
+                _contentView.Content = Orientation == Orientation.Landscape ? _landscapeContent : _portraitContent;
         }
 
         protected Orientation Orientation { get; private set; }
@@ -304,14 +351,34 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
         protected internal virtual void OrientationChanging()
         {
-            _contentGrid.Children.Clear();
+            _contentView.Content = null;
+        }
+        
+        private void SetPadding()
+        {
+            if (ParentIsNavigationPage(Parent) && Padding == new Thickness(0, Device.OnPlatform(20, 0, 0), 0, 0))
+                Padding = new Thickness(0, 0, 0, 0);
+        }
+
+        private static bool ParentIsNavigationPage(Element parent)
+        {
+            while (true)
+            {
+                if (parent == null) return false;
+                if (parent is NavigationPage) return true;
+                if (parent.Parent == null) return false;
+
+                parent = parent.Parent;
+            }
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+            SetPadding();
 
             RaiseOrientationChanged();
+            _mainGrid.IsVisible = true;
         }
 
         internal Func<string, string, string, string[], Task<string>> DisplayAlertFunc { get; set; }

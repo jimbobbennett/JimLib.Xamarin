@@ -17,6 +17,7 @@ namespace TestApp
             builder.RegisterType<CaptureImagePageViewModel>();
             builder.RegisterType<ExtendedListViewPageViewModel>();
             builder.RegisterType<ViewImagePageViewModel>();
+            builder.RegisterType<BackgroundImagePageViewModel>();
 
             builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),
                 typeof(INavigationStackManager));
@@ -28,6 +29,9 @@ namespace TestApp
                 typeof(INavigationStackManager));
             builder.RegisterType<ViewImagePage>().UsingConstructor(typeof(ViewImagePageViewModel),
                 typeof(INavigationStackManager));
+            builder.RegisterType<BackgroundImagePage>().UsingConstructor(typeof(BackgroundImagePageViewModel),
+                typeof(INavigationStackManager));
+            builder.RegisterType<MainTabPage>();
         }
 
         protected override void InitializeViewFactory(IViewFactory viewFactory)
@@ -38,11 +42,12 @@ namespace TestApp
             viewFactory.Register<CaptureImagePage, CaptureImagePageViewModel>();
             viewFactory.Register<ExtendedListViewPage, ExtendedListViewPageViewModel>();
             viewFactory.Register<ViewImagePage, ViewImagePageViewModel>();
+            viewFactory.Register<BackgroundImagePage, BackgroundImagePageViewModel>();
         }
 
         public override Page GetMainPage()
         {
-            return CreateMainPage<MainPage>(true);
+            return CreateMainPage<MainTabPage>(true);
         }
     }
 }
