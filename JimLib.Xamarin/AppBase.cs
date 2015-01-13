@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin
 {
-    public abstract class AppBase
+    public abstract class AppBase : global::Xamarin.Forms.Application
     {
         protected static IContainer Container { get; private set; }
 

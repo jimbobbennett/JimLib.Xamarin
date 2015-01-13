@@ -17,10 +17,11 @@ using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using Foundation;
 using UIKit;
 using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 namespace JimBobBennett.JimLib.Xamarin.ios
 {
-    public abstract class AppDelegateBase : UIApplicationDelegate
+    public abstract class AppDelegateBase : FormsApplicationDelegate
     {
         // class-level declarations
         UIWindow _window;
@@ -44,6 +45,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios
             var navigation = new Navigation.Navigation();
 
             AppBase = CreateApp();
+
+            LoadApplication(AppBase);
 
             AppBase.InitializeContainer(builder =>
             {
