@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Drawing;
+using System.ComponentModel;
+using CoreGraphics;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -13,7 +13,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
     public class ExtendedListViewRenderer : ListViewRenderer
 	{
-	    private readonly UIView _footer = new UIView(RectangleF.Empty);
+	    private readonly UIView _footer = new UIView(CGRect.Empty);
 	
 		protected override void OnElementChanged (ElementChangedEventArgs<ListView> e)
 		{

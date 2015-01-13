@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
 using JimBobBennett.JimLib.Xamarin.Sharing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Sharing

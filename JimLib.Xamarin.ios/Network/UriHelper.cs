@@ -1,6 +1,6 @@
 using JimBobBennett.JimLib.Xamarin.Network;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Network

@@ -1,8 +1,7 @@
-﻿using System.ComponentModel;
-using System.Drawing;
-using MonoTouch.CoreGraphics;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using System.ComponentModel;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -28,7 +27,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         }
 
         [Export ("initWithFrame:")]
-        public GridViewCell (RectangleF frame) : base (frame)
+        public GridViewCell (CGRect frame) : base (frame)
         {
             // SelectedBackgroundView = new GridItemSelectedViewOverlay (frame);
             // BringSubviewToFront (SelectedBackgroundView);
@@ -81,12 +80,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
     public class GridItemSelectedViewOverlay : UIView
     {
 
-        public GridItemSelectedViewOverlay(RectangleF frame) : base(frame)
+        public GridItemSelectedViewOverlay(CGRect frame) : base(frame)
         {
             BackgroundColor = UIColor.Clear;
         }
 
-        public override void Draw(RectangleF rect)
+        public override void Draw(CGRect rect)
         {
             using (var g = UIGraphics.GetCurrentContext())
             {

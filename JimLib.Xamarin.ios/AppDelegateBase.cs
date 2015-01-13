@@ -14,8 +14,8 @@ using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.Purchases;
 using JimBobBennett.JimLib.Xamarin.Sharing;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ios

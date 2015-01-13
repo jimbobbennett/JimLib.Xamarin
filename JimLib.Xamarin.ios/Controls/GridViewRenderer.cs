@@ -1,16 +1,16 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
+using CoreGraphics;
 using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.Extensions;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 using PropertyChangingEventArgs = Xamarin.Forms.PropertyChangingEventArgs;
@@ -33,7 +33,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 SelectionEnable = e.NewElement.SelectionEnabled,
                 ContentInset = new UIEdgeInsets((float) Element.Padding.Top, (float) Element.Padding.Left, (float) Element.Padding.Bottom, (float) Element.Padding.Right),
                 BackgroundColor = Element.BackgroundColor.ToUIColor(),
-                ItemSize = new SizeF((float) Element.ItemWidth, (float) Element.ItemHeight),
+                ItemSize = new CGSize((float) Element.ItemWidth, (float) Element.ItemHeight),
                 RowSpacing = Element.RowSpacing,
                 ColumnSpacing = Element.ColumnSpacing
             };
@@ -137,7 +137,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             get { return _gridViewDelegate ?? (_gridViewDelegate = new GridViewDelegate(ItemSelected)); }
         }
 
-        public int RowsInSection(UICollectionView collectionView, int section)
+        public int RowsInSection(UICollectionView collectionView, nint section)
         {
             var collection = Element.ItemsSource as ICollection;
             return collection != null ? collection.Count : 0;
@@ -207,14 +207,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void SetLabelSizeAndPosition()
         {
-            _label.Frame = new RectangleF(Control.Frame.Width / 10,
+            _label.Frame = new CGRect(Control.Frame.Width / 10,
                 Control.Frame.Height / 10,
                 Control.Frame.Width * 0.8f,
                 _label.Frame.Height * 0.8f);
 
             _label.SizeToFit();
 
-            var newFrame = new RectangleF((Control.Frame.Width - _label.Frame.Width) / 2,
+            var newFrame = new CGRect((Control.Frame.Width - _label.Frame.Width) / 2,
                 (Control.Frame.Height - _label.Frame.Height) / 2,
                 _label.Frame.Width,
                 _label.Frame.Height);

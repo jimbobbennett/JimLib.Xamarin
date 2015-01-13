@@ -9,10 +9,10 @@ using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Navigation;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
-using MonoTouch.AddressBook;
-using MonoTouch.AddressBookUI;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using AddressBook;
+using AddressBookUI;
+using Foundation;
+using UIKit;
 using Newtonsoft.Json;
 using Xamarin.Contacts;
 using Address = Xamarin.Contacts.Address;
@@ -139,10 +139,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
                 switch (socialMediaUser.Type)
                 {
                     case Account.Twitter:
-                        socialProfile.Service = ABPersonSocialProfileService.Twitter;
+                        socialProfile.ServiceName = ABPersonSocialProfileService.Twitter;
                         break;
                     case Account.Facebook:
-                        socialProfile.Service = ABPersonSocialProfileService.Facebook;
+                        socialProfile.ServiceName = ABPersonSocialProfileService.Facebook;
                         break;
                 }
 
@@ -321,9 +321,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Contacts
             };
         }
 
-        private async Task<AddressBook> GetAddressBookAsync()
+		private async Task<global::Xamarin.Contacts.AddressBook> GetAddressBookAsync()
         {
-            var addressBook = new AddressBook();
+			var addressBook = new global::Xamarin.Contacts.AddressBook();
 
             var t = addressBook.RequestPermission();
 

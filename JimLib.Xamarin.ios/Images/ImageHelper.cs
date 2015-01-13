@@ -1,14 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using CoreGraphics;
 using System.Threading.Tasks;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
 using JimBobBennett.JimLib.Xamarin.Network;
-using MonoTouch.CoreGraphics;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Media;
 
@@ -202,7 +201,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             if (image.Orientation == UIImageOrientation.Up) return image;
 
             UIGraphics.BeginImageContextWithOptions(image.Size, false, image.CurrentScale);
-            image.Draw(new RectangleF(new PointF(0, 0), image.Size));
+            image.Draw(new CGRect(new CGPoint(0, 0), image.Size));
             var normalizedImage = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();
             return normalizedImage;
@@ -220,19 +219,19 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
         }
         
         // resize the image to be contained within a maximum width and height, keeping aspect ratio
-        internal static UIImage MaxResizeImage(UIImage sourceImage, float maxWidth, float maxHeight)
+        internal static UIImage MaxResizeImage(UIImage sourceImage, nfloat maxWidth, nfloat maxHeight)
         {
             if (sourceImage == null || maxWidth <= 0 || maxHeight <= 0) return null;
 
             var sourceSize = sourceImage.Size;
-            var maxResizeFactor = Math.Max(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
+			var maxResizeFactor = (nfloat)Math.Max(maxWidth / sourceSize.Width, maxHeight / sourceSize.Height);
             if (maxResizeFactor > 1) return sourceImage;
             var width = maxResizeFactor * sourceSize.Width;
             var height = maxResizeFactor * sourceSize.Height;
 
-            UIGraphics.BeginImageContext(new SizeF(width, height));
+            UIGraphics.BeginImageContext(new CGSize(width, height));
 
-            sourceImage.Draw(new RectangleF(0, 0, width, height));
+            sourceImage.Draw(new CGRect(0, 0, width, height));
 
             var resultImage = UIGraphics.GetImageFromCurrentImageContext();
             UIGraphics.EndImageContext();
@@ -244,7 +243,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
             UIGraphics.BeginImageContextWithOptions(image.Size, false, 0.0f);
 
             var ctx = UIGraphics.GetCurrentContext();
-            var area = new RectangleF(0, 0, image.Size.Width, image.Size.Height);
+            var area = new CGRect(0, 0, image.Size.Width, image.Size.Height);
 
             ctx.ScaleCTM(1, -1);
             ctx.TranslateCTM(0, -area.Height);

@@ -1,4 +1,4 @@
-﻿using JimBobBennett.JimLib.Xamarin.Network;
+using JimBobBennett.JimLib.Xamarin.Network;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Network
 {

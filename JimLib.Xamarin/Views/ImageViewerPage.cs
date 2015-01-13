@@ -84,7 +84,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                 TextColor = Color.White,
                 XAlign = TextAlignment.Center,
                 LineBreakMode = LineBreakMode.WordWrap,
-                Font = Font.SystemFontOfSize(NamedSize.Small)
+				FontSize = Font.SystemFontOfSize(NamedSize.Small).FontSize
             };
 
             textLabel.SetBinding(Label.TextProperty, new Binding("ImageText"));

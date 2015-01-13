@@ -1,12 +1,12 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
+using CoreGraphics;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -155,10 +155,10 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var pathFrameWidth = Math.Min(Control.Frame.Width, _label.Frame.Width * 1.2f);
             var pathFrameHeight = Math.Min(Control.Frame.Height, _label.Frame.Height * 1.2f);
-            var pathFrame = new RectangleF((Control.Frame.Width - pathFrameWidth) / 2f,
-                (Control.Frame.Height - pathFrameHeight) / 2f,
-                pathFrameWidth,
-                pathFrameHeight);
+			var pathFrame = new CGRect((nfloat)((Control.Frame.Width - pathFrameWidth) / 2f),
+				(nfloat)((Control.Frame.Height - pathFrameHeight) / 2f),
+				(nfloat)pathFrameWidth,
+				(nfloat)pathFrameHeight);
 
             var path = UIBezierPath.FromRoundedRect(pathFrame, 5f);
             path.Fill();
@@ -172,14 +172,14 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void SetLabelSizeAndPosition()
         {
-            _label.Frame = new RectangleF(Control.Frame.Width / 10,
+            _label.Frame = new CGRect(Control.Frame.Width / 10,
                 Control.Frame.Height / 10,
                 Control.Frame.Width * 0.8f,
                 _label.Frame.Height * 0.8f);
 
             _label.SizeToFit();
 
-            var newFrame = new RectangleF((Control.Frame.Width - _label.Frame.Width) / 2,
+            var newFrame = new CGRect((Control.Frame.Width - _label.Frame.Width) / 2,
                 (Control.Frame.Height - _label.Frame.Height) / 2,
                 _label.Frame.Width,
                 _label.Frame.Height);

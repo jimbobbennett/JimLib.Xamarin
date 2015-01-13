@@ -1,5 +1,5 @@
-﻿using JimBobBennett.JimLib.Xamarin.Views;
-using MonoTouch.UIKit;
+using JimBobBennett.JimLib.Xamarin.Views;
+using UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
 {

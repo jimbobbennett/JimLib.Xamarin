@@ -6,8 +6,9 @@ using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
-using MonoTouch.Accounts;
+using Accounts;
 using MonoTouch.FacebookConnect;
+using Foundation;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 {
@@ -27,7 +28,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
             var options = new AccountStoreOptions {FacebookAppId = FBSettings.DefaultAppID};
 
-            var allowed = false;
+			Tuple<bool, NSError> allowed = null;
 
             try
             {
@@ -35,7 +36,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
             }
             catch { }
 
-            if (allowed)
+            if (allowed.Item1)
             {
                 var accounts = store.FindAccounts(accountType).ToList();
 
@@ -115,7 +116,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
             var accountType = store.FindAccountType(ACAccountType.Twitter);
             var allowed = await store.RequestAccessAsync(accountType, null);
 
-            return !allowed ? null : store.FindAccounts(accountType).Select(CreateTwitterUser).ToList();
+            return !allowed.Item1 ? null : store.FindAccounts(accountType).Select(CreateTwitterUser).ToList();
         }
 
         private static Account CreateTwitterUser(ACAccount a)

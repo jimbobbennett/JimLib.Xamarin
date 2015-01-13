@@ -1,6 +1,6 @@
-﻿using JimBobBennett.JimLib.Xamarin;
+using JimBobBennett.JimLib.Xamarin;
 using JimBobBennett.JimLib.Xamarin.ios;
-using MonoTouch.Foundation;
+using Foundation;
 
 namespace TestApp.iOS
 {

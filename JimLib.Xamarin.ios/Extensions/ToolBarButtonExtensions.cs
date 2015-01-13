@@ -1,8 +1,8 @@
-﻿using System.Drawing;
+using CoreGraphics;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
@@ -48,7 +48,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
 
             var uiButton = new UIButton(UIButtonType.Custom);
             SetImage(uiButton, toolBarButton.ImageSource);
-            uiButton.Frame = new RectangleF (0, 0, 24, 24);
+            uiButton.Frame = new CGRect (0, 0, 24, 24);
 
             var barButtonItem = new UIBarButtonItem (uiButton);
 
