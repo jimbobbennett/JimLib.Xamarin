@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<component format="1" id="facebookios">
+  <name>Facebook iOS SDK</name>
+  <publisher>Xamarin Inc</publisher>
+  <publisher-url>https://xamarin.com/</publisher-url>
+  <src-url>https://developers.facebook.com/docs/ios</src-url>
+  <version>3.22.0</version>
+  <summary>Build great social experiences and get more installs by adding Facebook to your app.</summary>
+  <screenshots>
+    <img src="screenshots/screenshot1.png" title="screenshot1" />
+  </screenshots>
+  <samples>
+    <sample id="FacebookiOSSample">
+      <name>iOS Unified Sample</name>
+      <summary>iOS Unified Sample</summary>
+    </sample>
+    <sample id="FacebookiOSSample-Classic">
+      <name>iOS Classic Sample</name>
+      <summary>iOS Classic Sample</summary>
+    </sample>
+  </samples>
+</component>
