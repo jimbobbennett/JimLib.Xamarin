@@ -19,8 +19,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var element = (ExtendedTimePicker) Element;
 
-            Set24Hours(element);
-            SetTextColor(element);
+			if (element != null)
+			{
+	            Set24Hours(element);
+	            SetTextColor(element);
+			}
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

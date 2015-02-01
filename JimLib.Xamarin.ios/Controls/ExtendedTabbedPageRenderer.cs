@@ -17,40 +17,42 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var page = (ExtendedTabbedPage)Element;
 
-            TabBar.TintColor = page.TintColor.ToUIColor();
-            TabBar.BarTintColor = page.BarTintColor.ToUIColor();
-            TabBar.BackgroundColor = page.BackgroundColor.ToUIColor();
-            
+			if (page != null)
+			{
+	            TabBar.TintColor = page.TintColor.ToUIColor();
+	            TabBar.BarTintColor = page.BarTintColor.ToUIColor();
+	            TabBar.BackgroundColor = page.BackgroundColor.ToUIColor();
+	            
+	            if (!page.SwipeEnabled)
+	            {
+	                return;
+	            }
 
-            if (!page.SwipeEnabled)
-            {
-                return;
-            }
+	            var gesture1 = new UISwipeGestureRecognizer(sw =>
+	            {
+	                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
 
-            var gesture1 = new UISwipeGestureRecognizer(sw =>
-            {
-                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+	                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
+	                {
+	                    page.InvokeSwipeLeftEvent(null, null);
+	                }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Right)
-                {
-                    page.InvokeSwipeLeftEvent(null, null);
-                }
+	            }) { Direction = UISwipeGestureRecognizerDirection.Right };
 
-            }) { Direction = UISwipeGestureRecognizerDirection.Right };
+	            var gesture2 = new UISwipeGestureRecognizer(sw =>
+	            {
+	                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
 
-            var gesture2 = new UISwipeGestureRecognizer(sw =>
-            {
-                sw.ShouldReceiveTouch += (recognizer, touch) => !(touch.View is UITableView) && !(touch.View is UITableViewCell);
+	                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
+	                {
+	                    page.InvokeSwipeRightEvent(null, null);
+	                }
 
-                if (sw.Direction == UISwipeGestureRecognizerDirection.Left)
-                {
-                    page.InvokeSwipeRightEvent(null, null);
-                }
+	            }) { Direction = UISwipeGestureRecognizerDirection.Left };
 
-            }) { Direction = UISwipeGestureRecognizerDirection.Left };
-
-            View.AddGestureRecognizer(gesture1);
-            View.AddGestureRecognizer(gesture2);
+	            View.AddGestureRecognizer(gesture1);
+	            View.AddGestureRecognizer(gesture2);
+			}
         }
 
         public override void ViewWillAppear(bool animated)

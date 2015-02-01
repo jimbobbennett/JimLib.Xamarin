@@ -17,7 +17,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var view = (ExtendedLabel)Element;
 
-            SetTextResize(view);
+			if (view != null)
+            	SetTextResize(view);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -23,6 +23,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var view = (ExtendedEntry)Element;
 
+			if (view == null) return;
+
             SetFont(view);
             SetTextAlignment(view);
             SetBorder(view);

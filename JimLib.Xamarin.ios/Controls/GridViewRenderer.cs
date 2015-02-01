@@ -60,7 +60,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 Control.AddSubview(_label);
             }
 
-            ShowOrHideLabel(Element);
+			if (Element != null)
+            	ShowOrHideLabel(Element);
         }
 
         private void Unbind(GridView oldElement)

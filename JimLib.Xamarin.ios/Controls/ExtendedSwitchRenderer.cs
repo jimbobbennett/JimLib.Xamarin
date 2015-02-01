@@ -15,7 +15,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             base.OnElementChanged(e);
 
-            SetTint((ExtendedSwitch)Element);
+			var extendedSwitch = (ExtendedSwitch)Element;
+			if (extendedSwitch != null)
+            	SetTint((ExtendedSwitch)Element);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)

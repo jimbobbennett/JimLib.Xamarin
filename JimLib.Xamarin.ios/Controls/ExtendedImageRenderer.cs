@@ -23,22 +23,31 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             base.OnElementChanged(e);
 
+			var oldImageElement = e.OldElement as ExtendedImage;
+			if (oldImageElement != null)
+				oldImageElement.Clicked -= ShowActivitySheet;
+
+
             var imageElement = (ExtendedImage)Element;
-            SetTintColor(imageElement.TintColor);
 
-            imageElement.Clicked += (s, e1) => ShowActivitySheet();
+			if (imageElement != null)
+			{
+	            SetTintColor(imageElement.TintColor);
 
-            if (_imageView == null)
-            {
-                _imageView = new UIImageView(Control.Frame);
-                Control.AddSubview(_imageView);
-            }
+	            imageElement.Clicked += ShowActivitySheet;
 
-            BuildFallbackImage();
-            SetCircular(imageElement);
+	            if (_imageView == null)
+	            {
+	                _imageView = new UIImageView(Control.Frame);
+	                Control.AddSubview(_imageView);
+	            }
+
+	            BuildFallbackImage();
+	            SetCircular(imageElement);
+			}
         }
 
-        private void ShowActivitySheet()
+		private void ShowActivitySheet(object sender, EventArgs e)
         {
             if (Element is ExtendedImage && ((ExtendedImage)Element).IsSharable)
             {

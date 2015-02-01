@@ -19,17 +19,21 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 return;
 
             var pullToRefreshScrollView = (PullToRefreshScrollView)Element;
-            pullToRefreshScrollView.PropertyChanged += OnElementPropertyChanged;
 
-            _refreshControl = new FormsUIRefreshControl
-            {
-                RefreshCommand = pullToRefreshScrollView.RefreshCommand,
-                Message = pullToRefreshScrollView.Message
-            };
+			if (pullToRefreshScrollView != null)
+			{
+	            pullToRefreshScrollView.PropertyChanged += OnElementPropertyChanged;
 
-            AlwaysBounceVertical = true;
+	            _refreshControl = new FormsUIRefreshControl
+	            {
+	                RefreshCommand = pullToRefreshScrollView.RefreshCommand,
+	                Message = pullToRefreshScrollView.Message
+	            };
 
-            AddSubview(_refreshControl);
+	            AlwaysBounceVertical = true;
+
+	            AddSubview(_refreshControl);
+			}
         }
 
         private void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
