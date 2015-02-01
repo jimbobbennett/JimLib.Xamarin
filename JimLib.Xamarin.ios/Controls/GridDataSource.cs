@@ -1,5 +1,6 @@
-﻿using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
+using System;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
@@ -7,7 +8,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
     {
         public delegate UICollectionViewCell OnGetCell(UICollectionView collectionView, NSIndexPath indexPath);
 
-        public delegate int OnRowsInSection(UICollectionView collectionView, int section);
+        public delegate int OnRowsInSection(UICollectionView collectionView, nint section);
 
         public delegate void OnItemSelected(UICollectionView collectionView, NSIndexPath indexPath);
 
@@ -24,7 +25,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         #region implemented abstract members of UICollectionViewDataSource
 
-        public override int GetItemsCount(UICollectionView collectionView, int section)
+		public override nint GetItemsCount(UICollectionView collectionView, nint section)
         {
             return _onRowsInSection(collectionView, section);
         }

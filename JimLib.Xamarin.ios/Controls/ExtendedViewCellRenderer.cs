@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
+using CoreGraphics;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -20,12 +20,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         private readonly Dictionary<ExtendedViewCell, UITableViewCell> _cellMappings = new Dictionary<ExtendedViewCell, UITableViewCell>();
         private UITableView _tableView;
 
-        public override UITableViewCell GetCell(Cell item, UITableView tv)
-        {
+		public override UITableViewCell GetCell (Cell item, UITableViewCell reusableCell, UITableView tv)
+		{
             var extendedCell = (ExtendedViewCell) item;
             _tableView = _tableView ?? tv;
 
-            var cell = base.GetCell(item, tv);
+			var cell = base.GetCell(item, reusableCell, tv);
             if (cell != null)
             {
                 cell.SelectionStyle = extendedCell.HighlightSelection ? UITableViewCellSelectionStyle.Default : UITableViewCellSelectionStyle.None;
@@ -56,7 +56,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                     var detailDisclosureButton = UIButton.FromType(UIButtonType.Custom);
                     detailDisclosureButton.SetImage(UIImage.FromBundle(extendedCell.DisclosureImage), UIControlState.Normal);
                     detailDisclosureButton.SetImage(UIImage.FromBundle(extendedCell.DisclosureImage), UIControlState.Selected);
-                    detailDisclosureButton.Frame = new RectangleF(0f, 0f, 30f, 30f);
+                    detailDisclosureButton.Frame = new CGRect(0f, 0f, 30f, 30f);
                     detailDisclosureButton.TouchUpInside += (sender, e) =>
                         {
                             try

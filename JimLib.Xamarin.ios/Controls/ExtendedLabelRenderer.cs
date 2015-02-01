@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -17,7 +17,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var view = (ExtendedLabel)Element;
 
-            SetTextResize(view);
+			if (view != null)
+            	SetTextResize(view);
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -32,6 +33,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void SetTextResize(ExtendedLabel view)
         {
+			if (view == null) return;
+
             Control.AdjustsFontSizeToFitWidth = view.AdjustFontSizeToFitWidth;
 
             if (view.AdjustFontSizeToFitWidth)

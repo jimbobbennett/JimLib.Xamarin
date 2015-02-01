@@ -1,10 +1,9 @@
 ﻿using JimBobBennett.JimLib.Xamarin.Navigation;
-using JimBobBennett.JimLib.Xamarin.Views;
 using TestApp.ViewModels;
 
 namespace TestApp.Views
 {
-    public partial class ViewImagePage : BaseContentPage
+    public partial class ViewImagePage
     {
         public ViewImagePage()
         {

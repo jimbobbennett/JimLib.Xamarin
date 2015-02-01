@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Diagnostics;
-using System.Drawing;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using CoreGraphics;
+using Foundation;
+using UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
@@ -10,11 +10,11 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
     {
         public bool SelectionEnable { get; set; }
 
-        public GridCollectionView() : this(default(RectangleF))
+        public GridCollectionView() : this(default(CGRect))
         {
         }
 
-        public GridCollectionView(RectangleF frm) : base(default(RectangleF), new UICollectionViewFlowLayout())
+        public GridCollectionView(CGRect frm) : base(default(CGRect), new UICollectionViewFlowLayout())
         {
             AutoresizingMask = UIViewAutoresizing.All;
             ContentMode = UIViewContentMode.ScaleToFill;
@@ -37,7 +37,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
         }
 
-        public override void Draw(RectangleF rect)
+        public override void Draw(CGRect rect)
         {
             CollectionViewLayout.InvalidateLayout();
 
@@ -56,7 +56,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             set { ((UICollectionViewFlowLayout) CollectionViewLayout).MinimumInteritemSpacing = (float) value; }
         }
 
-        public SizeF ItemSize
+        public CGSize ItemSize
         {
             get { return ((UICollectionViewFlowLayout) CollectionViewLayout).ItemSize; }
             set { ((UICollectionViewFlowLayout) CollectionViewLayout).ItemSize = value; }

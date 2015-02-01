@@ -38,10 +38,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
             BindableProperty.Create<ExtendedTabbedPage, Color>(
                 p => p.BarTintColor, Color.White);
 
-        public static readonly BindableProperty BackgroundColorProperty =
-            BindableProperty.Create<ExtendedTabbedPage, Color>(
-                p => p.BackgroundColor, Color.White);
-
         public static readonly BindableProperty BadgesProperty =
             BindableProperty.Create<ExtendedTabbedPage, List<string>>(
                 p => p.Badges, null);
@@ -64,12 +60,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         {
             get { return (Color) GetValue(BarTintColorProperty); }
             set { SetValue(BarTintColorProperty, value); }
-        }
-
-        public Color BackgroundColor
-        {
-            get { return (Color) GetValue(BackgroundColorProperty); }
-            set { SetValue(BackgroundColorProperty, value); }
         }
 
         public List<string> Badges
@@ -98,7 +88,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         public ExtendedTabbedPage()
         {
             PropertyChanging += OnPropertyChanging;
-            PropertyChanged += OnPropertyChanged;
             OnSwipeLeft += SwipeLeft;
             OnSwipeRight += SwipeRight;
 
@@ -111,11 +100,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         ///     Occurs when [current page changing].
         /// </summary>
         public event CurrentPageChangingEventHandler CurrentPageChanging;
-
-        /// <summary>
-        ///     Occurs when [current page changed].
-        /// </summary>
-        public event CurrentPageChangedEventHandler CurrentPageChanged;
 
         /// <summary>
         /// Occurs when the TabbedPage is swipped Right
@@ -161,17 +145,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
         }
 
         /// <summary>
-        ///     Handles the <see cref="E:PropertyChanged" /> event.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="PropertyChangedEventArgs" /> instance containing the event data.</param>
-        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == "CurrentPage")
-                RaiseCurrentPageChanged();
-        }
-
-        /// <summary>
         /// Move to the previous Tabbed Page
         /// </summary>
         /// <param name="a"></param>
@@ -202,17 +175,6 @@ namespace JimBobBennett.JimLib.Xamarin.Controls
 
             if (handler != null)
                 handler();
-        }
-
-        /// <summary>
-        ///     Raises the current page changed.
-        /// </summary>
-        private void RaiseCurrentPageChanged()
-        {
-            var handler = CurrentPageChanged;
-
-            if (handler != null)
-               handler();
         }
 
         /// <summary>

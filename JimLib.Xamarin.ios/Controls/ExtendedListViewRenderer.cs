@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
-using System.Drawing;
+using System.ComponentModel;
+using CoreGraphics;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -13,23 +13,30 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
     public class ExtendedListViewRenderer : ListViewRenderer
 	{
-	    private readonly UIView _footer = new UIView(RectangleF.Empty);
+	    private readonly UIView _footer = new UIView(CGRect.Empty);
 	
 		protected override void OnElementChanged (ElementChangedEventArgs<ListView> e)
 		{
 			base.OnElementChanged (e);
 
-            var extendedListView = (ExtendedListView)Element; 
+			var oldExtendedListView = e.OldElement as ExtendedListView;
+			if (oldExtendedListView != null)
+				oldExtendedListView.ItemSelected -= OnElementItemSelected;
 
-		    SetShowEmptyCells(extendedListView);
+			var extendedListView = (ExtendedListView)e.NewElement; 
+			if (extendedListView != null)
+			{
+				extendedListView.ItemSelected += OnElementItemSelected;
 
-		    extendedListView.ItemSelected += (s, e1) =>
-		        {
-                    if (Control != null && Control.IndexPathForSelectedRow != null)
-		                Control.DeselectRow(Control.IndexPathForSelectedRow, false);
-		        };
-
-            SetAlwaysBounceVertical(extendedListView);
+			    SetShowEmptyCells(extendedListView);
+	            SetAlwaysBounceVertical(extendedListView);
+			}
+		}
+			
+		private void OnElementItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			if (Control != null && Control.IndexPathForSelectedRow != null)
+				Control.DeselectRow(Control.IndexPathForSelectedRow, false);
 		}
 
         private void SetAlwaysBounceVertical(ExtendedListView extendedListView)
@@ -37,9 +44,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             Control.AlwaysBounceVertical = extendedListView.AlwaysBounceVertical;
         }
 
-        private void SetShowEmptyCells(ExtendedListView pullToRefreshListView)
+		private void SetShowEmptyCells(ExtendedListView extendedListView)
 	    {
-	        Control.TableFooterView = !pullToRefreshListView.ShowEmptyCells ? _footer : null;
+			Control.TableFooterView = !extendedListView.ShowEmptyCells ? _footer : null;
 	    }
 
 	    /// <summary>

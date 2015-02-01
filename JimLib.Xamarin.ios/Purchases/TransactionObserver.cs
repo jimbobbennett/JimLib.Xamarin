@@ -1,6 +1,6 @@
 using System;
 using JimBobBennett.JimLib.Events;
-using MonoTouch.StoreKit;
+using StoreKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
 {

@@ -1,5 +1,5 @@
 using JimBobBennett.JimLib.Xamarin.Purchases;
-using MonoTouch.StoreKit;
+using StoreKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
 {

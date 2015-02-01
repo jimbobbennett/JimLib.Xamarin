@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
@@ -22,13 +22,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
 			var pullToRefreshListView = (PullToRefreshListView)Element; 
 
-			_refreshControl = new FormsUIRefreshControl
+			if (pullToRefreshListView != null)
 			{
-			    RefreshCommand = pullToRefreshListView.RefreshCommand, 
-                Message = pullToRefreshListView.Message
-			};
+				_refreshControl = new FormsUIRefreshControl
+				{
+				    RefreshCommand = pullToRefreshListView.RefreshCommand, 
+	                Message = pullToRefreshListView.Message
+				};
 
-		    Control.AddSubview (_refreshControl);
+			    Control.AddSubview (_refreshControl);
+			}
 		}
 
 	    /// <summary>

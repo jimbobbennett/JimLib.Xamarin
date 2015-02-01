@@ -1,5 +1,5 @@
-﻿using MonoTouch.Foundation;
-using MonoTouch.StoreKit;
+using Foundation;
+using StoreKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
 {

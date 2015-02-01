@@ -1,13 +1,13 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
+using CoreGraphics;
 using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
-using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -22,6 +22,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             base.OnElementChanged(e);
 
             var view = (ExtendedEntry)Element;
+
+			if (view == null) return;
 
             SetFont(view);
             SetTextAlignment(view);
@@ -85,7 +87,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 return;
             }
 
-            var toolbar = new UIToolbar(new RectangleF(0.0f, 0.0f, Control.Frame.Size.Width, 44.0f))
+            var toolbar = new UIToolbar(new CGRect(0.0f, 0.0f, Control.Frame.Size.Width, 44.0f))
             {
                 Translucent = true, 
                 Items = view.AccessoryButtons.Select(b => b.CreateButton()).ToArray()
@@ -134,7 +136,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             var height = Math.Max(Bounds.Height,
                 new UITextField {Font = Control.Font}.IntrinsicContentSize.Height);
 
-            Control.Frame = new RectangleF(0.0f, 0.0f, (float) Element.Width, height);
+			Control.Frame = new CGRect((nfloat)0.0, (nfloat)0.0, (nfloat) Element.Width, (nfloat)height);
 
             Element.HeightRequest = height;
         }

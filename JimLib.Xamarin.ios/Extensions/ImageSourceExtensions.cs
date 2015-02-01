@@ -1,6 +1,6 @@
-﻿using System.Drawing;
+using CoreGraphics;
 using System.Threading.Tasks;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -28,7 +28,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
                 if (image == null) return null;
 
                 UIGraphics.BeginImageContext(image.Size);
-                image.Draw(new RectangleF(0, 0, image.Size.Width, image.Size.Height));
+                image.Draw(new CGRect(0, 0, image.Size.Width, image.Size.Height));
                 return UIGraphics.GetImageFromCurrentImageContext();
             }
         }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Xamarin.Application;
 

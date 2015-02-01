@@ -1,11 +1,11 @@
-﻿using System.Collections.Specialized;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Extensions;
-using MonoTouch.UIKit;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
@@ -20,6 +20,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         protected override void OnElementChanged(ElementChangedEventArgs<ToolBar> e)
         {
             base.OnElementChanged(e);
+
+			if (Element == null) return;
 
             BackgroundColor = Element.BackgroundColor.ToUIColor();
 

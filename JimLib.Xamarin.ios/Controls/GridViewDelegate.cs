@@ -1,5 +1,5 @@
-﻿using MonoTouch.Foundation;
-using MonoTouch.UIKit;
+using Foundation;
+using UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {

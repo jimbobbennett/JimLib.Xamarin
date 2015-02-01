@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using JimBobBennett.JimLib.Events;
 using JimBobBennett.JimLib.Xamarin.Purchases;
-using MonoTouch.Foundation;
-using MonoTouch.StoreKit;
+using Foundation;
+using StoreKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Purchases
 {

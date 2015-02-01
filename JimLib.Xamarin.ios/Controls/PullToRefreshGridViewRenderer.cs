@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
@@ -19,17 +19,20 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
             var pullToRefreshGridView = (PullToRefreshGridView) Element;
 
-            if (_refreshControl == null)
-            {
-                _refreshControl = new FormsUIRefreshControl
-                {
-                    RefreshCommand = pullToRefreshGridView.RefreshCommand,
-                    Message = pullToRefreshGridView.Message
-                };
+			if (pullToRefreshGridView != null)
+			{
+	            if (_refreshControl == null)
+	            {
+	                _refreshControl = new FormsUIRefreshControl
+	                {
+	                    RefreshCommand = pullToRefreshGridView.RefreshCommand,
+	                    Message = pullToRefreshGridView.Message
+	                };
 
-                Control.AlwaysBounceVertical = true;
-                Control.AddSubview(_refreshControl);
-            }
+	                Control.AlwaysBounceVertical = true;
+	                Control.AddSubview(_refreshControl);
+	            }
+			}
         }
 
         protected override void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)

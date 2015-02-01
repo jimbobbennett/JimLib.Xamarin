@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using MonoTouch.UIKit;
+using System.Linq;
+using UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Extensions
 {

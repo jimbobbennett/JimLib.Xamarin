@@ -1,5 +1,5 @@
-﻿using System.Windows.Input;
-using MonoTouch.UIKit;
+using System.Windows.Input;
+using UIKit;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 {
@@ -28,7 +28,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 				if (string.IsNullOrWhiteSpace (_message))
 					return;
 
-				AttributedTitle = new MonoTouch.Foundation.NSAttributedString(_message);
+				AttributedTitle = new Foundation.NSAttributedString(_message);
 			}
 		}
 
