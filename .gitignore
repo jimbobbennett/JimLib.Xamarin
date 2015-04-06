@@ -179,3 +179,5 @@ FakesAssemblies/
 /BuildNuget.ps1
 
 *.userprefs
+
+*.userprefs

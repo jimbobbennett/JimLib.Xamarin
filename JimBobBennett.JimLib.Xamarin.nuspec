@@ -36,7 +36,7 @@
         <dependency id="Xamarin.Forms" version="1.2.3.6257" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
-      <group targetFramework="MonoTouch10">
+      <group targetFramework="Xamarin.iOS10">
         <dependency id="Newtonsoft.Json" version="6.0.5" />
         <dependency id="JimBobBennett.JimLib" version="1.0.81" />
         <dependency id="Xamarin.Forms" version="1.2.3.6257" />
