@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using JimBobBennett.JimLib.Xamarin.Application;
 using JimBobBennett.JimLib.Xamarin.Navigation;
 using JimBobBennett.JimLib.Xamarin.Timers;
 using JimBobBennett.JimLib.Xamarin.ViewModels;
@@ -12,6 +13,7 @@ namespace JimBobBennett.JimLib.Xamarin
 {
     public abstract class AppBase : global::Xamarin.Forms.Application
     {
+        private readonly ApplicationEvents _applicationEvents = new ApplicationEvents();
         protected static IContainer Container { get; private set; }
 
         public IComponentContext ComponentContext { get { return Container.Resolve<IComponentContext>(); } }
@@ -26,8 +28,9 @@ namespace JimBobBennett.JimLib.Xamarin
             builder.RegisterType<UtilityViewNavigation>().As<IUtilityViewNavigation>().SingleInstance();
             builder.RegisterType<ImageViewerViewModel>();
             builder.RegisterType<Timer>().As<ITimer>();
-            builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel), 
+            builder.RegisterType<ImageViewerPage>().UsingConstructor(typeof(ImageViewerViewModel),
                 typeof(INavigationStackManager));
+            builder.RegisterInstance(_applicationEvents).As<IApplicationEvents>().SingleInstance();
             
             OnInitialize(builder);
             
@@ -73,6 +76,21 @@ namespace JimBobBennett.JimLib.Xamarin
             ComponentContext.Resolve<INavigationStackManager>().SetPages(mainPage, navigationPage);
 
             return navigationPage;
+        }
+
+        protected override void OnSleep()
+        {
+            _applicationEvents.OnDisappear();
+        }
+
+        protected override void OnStart()
+        {
+            _applicationEvents.OnStart();
+        }
+
+        protected override void OnResume()
+        {
+            _applicationEvents.OnAppear();
         }
     }
 }

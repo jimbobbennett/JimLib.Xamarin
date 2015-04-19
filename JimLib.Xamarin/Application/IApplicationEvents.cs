@@ -8,5 +8,9 @@ namespace JimBobBennett.JimLib.Xamarin.Application
         event EventHandler Appear;
         event EventHandler Disappear;
         event EventHandler Closing;
+        void OnStart();
+        void OnAppear();
+        void OnDisappear();
+        void OnClosing();
     }
 }

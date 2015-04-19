@@ -3,7 +3,6 @@ using JimBobBennett.JimLib.Xamarin.Application;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Controls;
 using JimBobBennett.JimLib.Xamarin.Images;
-using JimBobBennett.JimLib.Xamarin.ios.Application;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Network;
@@ -15,6 +14,7 @@ using JimBobBennett.JimLib.Xamarin.Purchases;
 using JimBobBennett.JimLib.Xamarin.Sharing;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using Foundation;
+using JimBobBennett.JimLib.Network;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -24,8 +24,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios
     public abstract class AppDelegateBase : FormsApplicationDelegate
     {
         // class-level declarations
-        UIWindow _window;
-        private ApplicationEvents _applicationEvents = new ApplicationEvents();
+        private UIWindow _window;
+        private IApplicationEvents _applicationEvents;
 
         protected AppBase AppBase { get; private set; }
 
@@ -60,17 +60,16 @@ namespace JimBobBennett.JimLib.Xamarin.ios
                 builder.RegisterType<Share>().As<IShare>().SingleInstance();
                 builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>().SingleInstance();
                 builder.RegisterInstance(navigation).As<Navigation.INavigation>().SingleInstance();
-                builder.RegisterInstance(_applicationEvents).As<IApplicationEvents>().SingleInstance();
 
                 OnInitializeContainer(builder);
             });
+
+            _applicationEvents = AppBase.ComponentContext.Resolve<IApplicationEvents>();
 
             _window.RootViewController = AppBase.GetMainPage().CreateViewController();
             navigation.RootViewController = _window.RootViewController;
 
             _window.MakeKeyAndVisible();
-
-           _applicationEvents.OnStart();
 
             return true;
         }
@@ -80,16 +79,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios
         }
 
         protected abstract AppBase CreateApp();
-
-        public override void WillEnterForeground(UIApplication application)
-        {
-            _applicationEvents.OnAppear();
-        }
-
-        public override void DidEnterBackground(UIApplication application)
-        {
-            _applicationEvents.OnDisappear();
-        }
 
         public override void WillTerminate(UIApplication application)
         {

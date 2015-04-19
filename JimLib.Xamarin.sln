@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4AD4ED
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin.Win", "JimLib.Xamarin.Win\JimLib.Xamarin.Win.csproj", "{967808C0-3D82-4BA0-90B9-A0211379B2AD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin.ios", "JimLib.Xamarin.ios\JimLib.Xamarin.ios.csproj", "{24CAB362-A4DA-4068-95DF-C51A6D5DBC3C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin", "JimLib.Xamarin\JimLib.Xamarin.csproj", "{395A6831-DE72-4B65-B3C2-72A4CC248726}"
@@ -20,7 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JimLib.Xamarin.nuspec", "Ji
 	ProjectSection(ProjectDependencies) = postProject
 		{395A6831-DE72-4B65-B3C2-72A4CC248726} = {395A6831-DE72-4B65-B3C2-72A4CC248726}
 		{24CAB362-A4DA-4068-95DF-C51A6D5DBC3C} = {24CAB362-A4DA-4068-95DF-C51A6D5DBC3C}
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD} = {967808C0-3D82-4BA0-90B9-A0211379B2AD}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{CFE55F6B-2194-45D2-8333-34EB7B6EF761}"
@@ -61,39 +58,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Ad-Hoc|x86.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|Any CPU.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|ARM.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|iPhone.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.AppStore|x86.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|ARM.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{967808C0-3D82-4BA0-90B9-A0211379B2AD}.Release|x86.ActiveCfg = Release|Any CPU
 		{24CAB362-A4DA-4068-95DF-C51A6D5DBC3C}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
 		{24CAB362-A4DA-4068-95DF-C51A6D5DBC3C}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
 		{24CAB362-A4DA-4068-95DF-C51A6D5DBC3C}.Ad-Hoc|ARM.ActiveCfg = Release|Any CPU

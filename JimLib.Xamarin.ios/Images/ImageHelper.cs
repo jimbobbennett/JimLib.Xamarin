@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using CoreGraphics;
 using System.Threading.Tasks;
-using JimBobBennett.JimLib.Extensions;
-using JimBobBennett.JimLib.Xamarin.Images;
-using JimBobBennett.JimLib.Xamarin.ios.Extensions;
-using JimBobBennett.JimLib.Xamarin.Network;
+using CoreGraphics;
 using Foundation;
+using JimBobBennett.JimLib.Extensions;
+using JimBobBennett.JimLib.Network;
+using JimBobBennett.JimLib.Xamarin.ios.Extensions;
+using JimBobBennett.JimLib.Xamarin.Images;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Media;

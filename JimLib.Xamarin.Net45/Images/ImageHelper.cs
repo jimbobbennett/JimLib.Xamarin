@@ -6,10 +6,11 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Network;
 using JimBobBennett.JimLib.Xamarin.Images;
-using JimBobBennett.JimLib.Xamarin.Network;
 using Xamarin.Forms;
 using Image = System.Drawing.Image;
+using Size = System.Drawing.Size;
 
 namespace JimBobBennett.JimLib.Xamarin.Net45.Images
 {
@@ -59,7 +60,7 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                             using (var stream = response.GetResponseStream())
                             {
                                 if (stream != null)
-                                    return ProcessImageStream(options, stream);
+                                    return ProcessImageStream(options, stream, url);
                             }
                         }
                     }
@@ -78,7 +79,9 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
         {
             ImageSource retVal;
             var uriBuilder = new UriBuilder(baseUrl) {Fragment = resource};
-            if (canCache && _cachedImages.TryGetValue(uriBuilder.Uri.ToString(), out retVal))
+            var url = uriBuilder.Uri.ToString();
+
+            if (canCache && _cachedImages.TryGetValue(url, out retVal))
                 return retVal;
 
             var bytes = await _restConnection.MakeRawGetRequestAsync(baseUrl, resource, username, password, timeout,
@@ -88,10 +91,10 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                 return null;
 
             using (var ms = new MemoryStream(bytes))
-                return ProcessImageStream(options, ms);
+                return ProcessImageStream(options, ms, url);
         }
 
-        private ImageSource ProcessImageStream(ImageOptions options, Stream stream)
+        private ImageSource ProcessImageStream(ImageOptions options, Stream stream, string url)
         {
             var bitmap = Image.FromStream(stream);
 
@@ -110,7 +113,10 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
                 var bytes = new byte[numBytesToRead];
                 ms.Read(bytes, 0, numBytesToRead);
 
-                return ImageSource.FromStream(() => new MemoryStream(bytes));
+                var imageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
+                _cachedImages[url] = imageSource;
+
+                return imageSource;
             }
         }
 
@@ -124,7 +130,7 @@ namespace JimBobBennett.JimLib.Xamarin.Net45.Images
             var width = Convert.ToInt32(maxResizeFactor * sourceSize.Width);
             var height = Convert.ToInt32(maxResizeFactor * sourceSize.Height);
 
-            return new Bitmap(sourceImage, new System.Drawing.Size(width, height));
+            return new Bitmap(sourceImage, new Size(width, height));
         }
 
         public PhotoSource AvailablePhotoSources { get { return PhotoSource.None; } }
