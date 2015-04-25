@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Accounts;
 using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
-using Accounts;
-using Foundation;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 {
@@ -22,68 +21,70 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
         public async Task<IEnumerable<Account>> GetFacebookUserAsync()
         {
-            var store = new ACAccountStore();
-            var accountType = store.FindAccountType(ACAccountType.Facebook);
+            throw new NotSupportedException();
 
-            var options = new AccountStoreOptions {FacebookAppId = FBSettings.DefaultAppID};
+            //var store = new ACAccountStore();
+            //var accountType = store.FindAccountType(ACAccountType.Facebook);
 
-			Tuple<bool, NSError> allowed = null;
+            //var options = new AccountStoreOptions {FacebookAppId = Facebook.CoreKit.Settings.AppID};
 
-            try
-            {
-                allowed = await store.RequestAccessAsync(accountType, options);
-            }
-            catch { }
+            //Tuple<bool, NSError> allowed = null;
 
-            if (allowed.Item1)
-            {
-                var accounts = store.FindAccounts(accountType).ToList();
+            //try
+            //{
+            //    allowed = await store.RequestAccessAsync(accountType, options);
+            //}
+            //catch { }
 
-                if (accounts.Any())
-                    return accounts.Select(CreateFacebookUser);
-            }
+            //if (allowed.Item1)
+            //{
+            //    var accounts = store.FindAccounts(accountType).ToList();
+
+            //    if (accounts.Any())
+            //        return accounts.Select(CreateFacebookUser);
+            //}
             
-            // try the old fashioned way
-            var done = false;
+            //// try the old fashioned way
+            //var done = false;
 
-            if (FBSession.ActiveSession.State != FBSessionState.CreatedTokenLoaded)
-            {
-                FBSessionStateHandler handler = (session, status, error) =>
-                    {
-                        done = true;
-                    };
+            //if (FBSession.ActiveSession.State != FBSessionState.CreatedTokenLoaded)
+            //{
+            //    FBSessionStateHandler handler = (session, status, error) =>
+            //        {
+            //            done = true;
+            //        };
 
-                if (!FBSession.OpenActiveSession(false))
-                {
-                    FBSession.OpenActiveSession(new[] {"public_profile"}, true, handler);
-                    await this.WaitForAsync(() => done, int.MaxValue);
+            //    if (!FBSession.OpenActiveSession(false))
+            //    {
+            //        FBSession.OpenActiveSession(new[] {"public_profile"}, true, handler);
+            //        await this.WaitForAsync(() => done, int.MaxValue);
 
-                    if (!done)
-                        throw new Exception("Failed to connect to facebook");
-                }
-            }
-            else
-                FBSession.OpenActiveSession(false);
+            //        if (!done)
+            //            throw new Exception("Failed to connect to facebook");
+            //    }
+            //}
+            //else
+            //    FBSession.OpenActiveSession(false);
 
-            if (!FBSession.ActiveSession.IsOpen) return new List<Account>();
+            //if (!FBSession.ActiveSession.IsOpen) return new List<Account>();
 
-            var me = await FBRequestConnection.GetMeAsync();
+            //var me = await FBRequestConnection.GetMeAsync();
                 
-            if (me == null || me.Result == null)
-                throw new Exception("Failed to connect to facebook");
+            //if (me == null || me.Result == null)
+            //    throw new Exception("Failed to connect to facebook");
 
-            return CreateFacebokUser((FBGraphObject) me.Result).AsList();
+            //return CreateFacebokUser((FBGraphObject) me.Result).AsList();
         }
 
-        private static Account CreateFacebokUser(FBGraphObject graphObject)
-        {
-            return new Account
-            {
-                Type = Account.Facebook, 
-                Name = graphObject.ObjectForKey("name").ToString(), 
-                UserId = graphObject.ObjectForKey("id").ToString()
-            };
-        }
+        //private static Account CreateFacebokUser(FBGraphObject graphObject)
+        //{
+        //    return new Account
+        //    {
+        //        Type = Account.Facebook, 
+        //        Name = graphObject.ObjectForKey("name").ToString(), 
+        //        UserId = graphObject.ObjectForKey("id").ToString()
+        //    };
+        //}
 
         private static Account CreateFacebookUser(ACAccount arg)
         {
@@ -101,7 +102,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
             try
             {
-                _uriHelper.OpenSchemeUri(new System.Uri("http://facebook.com/" + facebookUser.UserId));
+                _uriHelper.OpenSchemeUri(new Uri("http://facebook.com/" + facebookUser.UserId));
             }
             catch
             {
@@ -135,8 +136,8 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
             try
             {
                 var userId = twitterUser.UserId.Replace("@", "");
-                var schemeUri = new System.Uri("twitter://user?screen_name=" + userId);
-                var fallbackUri = new System.Uri("https://twitter.com/" + userId);
+                var schemeUri = new Uri("twitter://user?screen_name=" + userId);
+                var fallbackUri = new Uri("https://twitter.com/" + userId);
 
                 _uriHelper.OpenSchemeUri(schemeUri, fallbackUri);
             }
@@ -153,7 +154,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
 
             try
             {
-                _uriHelper.OpenSchemeUri(new System.Uri("whatsapp://send?abid=" + contact.AddressBookId));
+                _uriHelper.OpenSchemeUri(new Uri("whatsapp://send?abid=" + contact.AddressBookId));
             }
             catch 
             {
