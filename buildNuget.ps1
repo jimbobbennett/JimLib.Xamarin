@@ -15,7 +15,7 @@ if ($copyTo)
 }
 
 
-#if ($push)
-#{
-#    nuget.exe push .\JimBobBennett.JimLib.Xamarin.$version.nupkg
-#}
+if ($push)
+{
+    nuget.exe push .\JimBobBennett.JimLib.Xamarin.$version.nupkg
+}

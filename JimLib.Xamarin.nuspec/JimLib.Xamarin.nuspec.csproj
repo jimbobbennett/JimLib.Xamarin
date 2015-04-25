@@ -74,6 +74,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\buildNuget.ps1">
+      <Link>buildNuget.ps1</Link>
+    </None>
     <None Include="..\JimBobBennett.JimLib.Xamarin.nuspec">
       <Link>JimBobBennett.JimLib.Xamarin.nuspec</Link>
       <SubType>Designer</SubType>
