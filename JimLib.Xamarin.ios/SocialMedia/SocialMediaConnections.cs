@@ -7,7 +7,6 @@ using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
 using Accounts;
-using MonoTouch.FacebookConnect;
 using Foundation;
 
 namespace JimBobBennett.JimLib.Xamarin.ios.SocialMedia
