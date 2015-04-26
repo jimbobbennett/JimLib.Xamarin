@@ -56,7 +56,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                             return null;
 
                         retVal = ProcessImage(options, image);
-                        _cachedImages[url] = retVal;
+
+                        if (canCache)
+                            _cachedImages[url] = retVal;
 
                         return retVal;
                     }
@@ -89,7 +91,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Images
                 return null;
 
             retVal = ProcessImage(options, image);
-            _cachedImages[key] = retVal;
+
+            if (canCache)
+                _cachedImages[key] = retVal;
 
             return retVal;
         }

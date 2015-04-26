@@ -70,8 +70,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             {
                 oldElement.PropertyChanging += ElementPropertyChanging;
                 oldElement.PropertyChanged -= ElementPropertyChanged;
-                if (oldElement.ItemsSource is INotifyCollectionChanged)
-                    (oldElement.ItemsSource as INotifyCollectionChanged).CollectionChanged -= DataCollectionChanged;
+                var notifyCollectionChanged = oldElement.ItemsSource as INotifyCollectionChanged;
+                if (notifyCollectionChanged != null)
+                    notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
             }
         }
 
@@ -81,8 +82,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             {
                 newElement.PropertyChanging += ElementPropertyChanging;
                 newElement.PropertyChanged += ElementPropertyChanged;
-                if (newElement.ItemsSource is INotifyCollectionChanged)
-                    (newElement.ItemsSource as INotifyCollectionChanged).CollectionChanged += DataCollectionChanged;
+                var notifyCollectionChanged = newElement.ItemsSource as INotifyCollectionChanged;
+                if (notifyCollectionChanged != null)
+                    notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
             }
         }
 
@@ -90,8 +92,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             if (e.PropertyNameMatches(() => Element.ItemsSource))
             {
-                if (Element.ItemsSource is INotifyCollectionChanged)
-                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged += DataCollectionChanged;
+                var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
+                if (notifyCollectionChanged != null)
+                    notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
             }
         }
 
@@ -99,8 +102,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             if (e.PropertyNameMatches(() => Element.ItemsSource))
             {
-                if (Element.ItemsSource is INotifyCollectionChanged)
-                    (Element.ItemsSource as INotifyCollectionChanged).CollectionChanged -= DataCollectionChanged;
+                var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
+                if (notifyCollectionChanged != null)
+                    notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
             }
         }
 
@@ -155,7 +159,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
                 }
                 catch (Exception)
                 {
-                    Debug.WriteLine("Failed to select item at path: " + indexPath.ToString());
+                    Debug.WriteLine("Failed to select item at path: " + indexPath);
                 }
             }
         }
@@ -169,7 +173,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             }
             catch (Exception)
             {
-                Debug.WriteLine("Failed to select item at path: " + indexPath.ToString());
+                Debug.WriteLine("Failed to select item at path: " + indexPath);
             }
 
             return GetCell(collectionView, viewCellBinded, indexPath);
@@ -208,17 +212,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void SetLabelSizeAndPosition()
         {
-            _label.Frame = new CGRect(Control.Frame.Width / 10,
-                Control.Frame.Height / 10,
-                Control.Frame.Width * 0.8f,
-                _label.Frame.Height * 0.8f);
-
-            _label.SizeToFit();
-
-            var newFrame = new CGRect((Control.Frame.Width - _label.Frame.Width) / 2,
-                (Control.Frame.Height - _label.Frame.Height) / 2,
-                _label.Frame.Width,
-                _label.Frame.Height);
+            var size = _label.SizeThatFits(new CGSize(Control.Frame.Width, float.MaxValue));
+            
+            var newFrame = new CGRect((Control.Frame.Width - size.Width) / 2,
+                (Control.Frame.Height - size.Height) / 2,
+                size.Width,
+                size.Height);
 
             _label.Frame = newFrame;
         }

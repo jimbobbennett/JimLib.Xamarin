@@ -1,23 +1,23 @@
 using Autofac;
+using Foundation;
 using JimBobBennett.JimLib.Xamarin.Application;
 using JimBobBennett.JimLib.Xamarin.Contacts;
 using JimBobBennett.JimLib.Xamarin.Controls;
-using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Controls;
 using JimBobBennett.JimLib.Xamarin.ios.Images;
 using JimBobBennett.JimLib.Xamarin.ios.Network;
 using JimBobBennett.JimLib.Xamarin.ios.Purchases;
 using JimBobBennett.JimLib.Xamarin.ios.Sharing;
 using JimBobBennett.JimLib.Xamarin.ios.SocialMedia;
+using JimBobBennett.JimLib.Xamarin.Images;
 using JimBobBennett.JimLib.Xamarin.Network;
 using JimBobBennett.JimLib.Xamarin.Purchases;
 using JimBobBennett.JimLib.Xamarin.Sharing;
 using JimBobBennett.JimLib.Xamarin.SocialMedia;
-using Foundation;
-using JimBobBennett.JimLib.Network;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
+using INavigation = JimBobBennett.JimLib.Xamarin.ios.Navigation.INavigation;
 
 namespace JimBobBennett.JimLib.Xamarin.ios
 {
@@ -50,7 +50,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios
 
             AppBase.InitializeContainer(builder =>
             {
-                builder.RegisterType<RestConnection>().As<IRestConnection>().SingleInstance();
                 builder.RegisterType<LocalServerDiscovery>().As<ILocalServerDiscovery>().SingleInstance();
                 builder.RegisterType<Contacts.Contacts>().As<IContacts>().SingleInstance();
                 builder.RegisterType<ImageHelper>().As<IImageHelper>().SingleInstance();
@@ -59,7 +58,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios
                 builder.RegisterType<InAppPurchase>().As<IInAppPurchase>().SingleInstance();
                 builder.RegisterType<Share>().As<IShare>().SingleInstance();
                 builder.RegisterInstance(new UriHelper(app)).As<IUriHelper>().SingleInstance();
-                builder.RegisterInstance(navigation).As<Navigation.INavigation>().SingleInstance();
+                builder.RegisterInstance(navigation).As<INavigation>().SingleInstance();
 
                 OnInitializeContainer(builder);
             });

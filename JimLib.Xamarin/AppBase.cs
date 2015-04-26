@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using JimBobBennett.JimLib.Network;
 using JimBobBennett.JimLib.Xamarin.Application;
 using JimBobBennett.JimLib.Xamarin.Navigation;
 using JimBobBennett.JimLib.Xamarin.Timers;
@@ -22,6 +23,7 @@ namespace JimBobBennett.JimLib.Xamarin
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterType<RestConnection>().As<IRestConnection>().SingleInstance();
             builder.RegisterInstance(CrossSettings.Current).As<ISettings>();
             builder.RegisterType<NavigationStackManager>().As<INavigationStackManager>().SingleInstance();
             builder.RegisterType<ViewFactory>().As<IViewFactory>().SingleInstance();

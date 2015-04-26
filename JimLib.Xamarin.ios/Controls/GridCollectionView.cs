@@ -19,7 +19,6 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             AutoresizingMask = UIViewAutoresizing.All;
             ContentMode = UIViewContentMode.ScaleToFill;
             RegisterClassForCell(typeof (GridViewCell), new NSString(GridViewCell.Key));
-
         }
 
         public override UICollectionViewCell CellForItem(NSIndexPath indexPath)

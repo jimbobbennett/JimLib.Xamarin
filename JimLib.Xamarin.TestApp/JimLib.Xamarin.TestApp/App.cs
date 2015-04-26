@@ -18,19 +18,15 @@ namespace TestApp
             builder.RegisterType<ExtendedListViewPageViewModel>();
             builder.RegisterType<ViewImagePageViewModel>();
             builder.RegisterType<BackgroundImagePageViewModel>();
+            builder.RegisterType<ActivityIndicatorTestViewModel>();
 
-            builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),
-                typeof(INavigationStackManager));
-            builder.RegisterType<MainPage>().UsingConstructor(typeof(MainPageViewModel),
-                typeof(INavigationStackManager));
-            builder.RegisterType<CaptureImagePage>().UsingConstructor(typeof(CaptureImagePageViewModel),
-                typeof(INavigationStackManager));
-            builder.RegisterType<ExtendedListViewPage>().UsingConstructor(typeof(ExtendedListViewPageViewModel),
-                typeof(INavigationStackManager));
-            builder.RegisterType<ViewImagePage>().UsingConstructor(typeof(ViewImagePageViewModel),
-                typeof(INavigationStackManager));
-            builder.RegisterType<BackgroundImagePage>().UsingConstructor(typeof(BackgroundImagePageViewModel),
-                typeof(INavigationStackManager));
+            builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),typeof(INavigationStackManager));
+            builder.RegisterType<MainPage>().UsingConstructor(typeof(MainPageViewModel),typeof(INavigationStackManager));
+            builder.RegisterType<CaptureImagePage>().UsingConstructor(typeof(CaptureImagePageViewModel),typeof(INavigationStackManager));
+            builder.RegisterType<ExtendedListViewPage>().UsingConstructor(typeof(ExtendedListViewPageViewModel),typeof(INavigationStackManager));
+            builder.RegisterType<ViewImagePage>().UsingConstructor(typeof(ViewImagePageViewModel), typeof(INavigationStackManager));
+            builder.RegisterType<BackgroundImagePage>().UsingConstructor(typeof(BackgroundImagePageViewModel), typeof(INavigationStackManager));
+            builder.RegisterType<ActivityIndicatorTestView>().UsingConstructor(typeof(ActivityIndicatorTestViewModel), typeof(INavigationStackManager));
             builder.RegisterType<MainTabPage>();
         }
 
@@ -43,6 +39,7 @@ namespace TestApp
             viewFactory.Register<ExtendedListViewPage, ExtendedListViewPageViewModel>();
             viewFactory.Register<ViewImagePage, ViewImagePageViewModel>();
             viewFactory.Register<BackgroundImagePage, BackgroundImagePageViewModel>();
+            viewFactory.Register<ActivityIndicatorTestView, ActivityIndicatorTestViewModel>();
         }
 
         public override Page GetMainPage()

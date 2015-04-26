@@ -1,9 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using JimBobBennett.JimLib.Xamarin.Views;
 
 namespace JimBobBennett.JimLib.Xamarin.Mvvm
 {
-    public interface IContentPageViewModelBase
+    public interface IContentPageViewModelBase : INotifyPropertyChanged
     {
         IView View { get; set; }
 

@@ -50,9 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.3.0\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib, Version=1.0.86.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.86\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.89.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.89\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ModernHttpClient">
       <HintPath>..\packages\modernhttpclient.2.3.0\lib\Portable-Net45+WinRT45+WP8+WPA81\ModernHttpClient.dll</HintPath>

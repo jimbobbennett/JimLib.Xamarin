@@ -1,17 +1,16 @@
 ﻿using JimBobBennett.JimLib.Xamarin.Navigation;
-using JimBobBennett.JimLib.Xamarin.Views;
 using TestApp.ViewModels;
 
 namespace TestApp.Views
 {
-    public partial class ExtendedListViewPage : BaseContentPage
+    public partial class ActivityIndicatorTestView
     {
-        public ExtendedListViewPage()
+        public ActivityIndicatorTestView()
         {
             InitializeComponent();
         }
-        
-        public ExtendedListViewPage(ExtendedListViewPageViewModel viewModel, INavigationStackManager navigationStackManager)
+
+        public ActivityIndicatorTestView(ActivityIndicatorTestViewModel viewModel, INavigationStackManager navigationStackManager)
             : base(viewModel, navigationStackManager)
         {
             InitializeComponent();

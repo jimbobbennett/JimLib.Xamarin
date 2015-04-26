@@ -5,6 +5,7 @@ using System.Resources;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 using System.Runtime.CompilerServices;
+using JimBobBennett.JimLib;
 
 [assembly: AssemblyTitle("JimLib.Xamarin")]
 [assembly: AssemblyDescription("")]
@@ -31,3 +32,4 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.ios")]
 [assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.Win")]
 [assembly: InternalsVisibleTo("JimBobBennett.JimLib.Xamarin.Net45")]
+[assembly: Preserve]

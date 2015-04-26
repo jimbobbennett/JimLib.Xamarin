@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
+using JimBobBennett.JimLib.Extensions;
 using JimBobBennett.JimLib.Mvvm;
 using JimBobBennett.JimLib.Xamarin.Extensions;
 using JimBobBennett.JimLib.Xamarin.Mvvm;
@@ -114,18 +116,18 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             var activityGrid = new Grid
             {
-                HorizontalOptions = LayoutOptions.Fill,
-                VerticalOptions = LayoutOptions.Fill,
+                HorizontalOptions = LayoutOptions.Center,
+                VerticalOptions = LayoutOptions.Center,
             };
 
             activityGrid.AddAutoRowDefinition();
             activityGrid.AddAutoRowDefinition();
-            activityGrid.AddStarColumnDefinition();
+            activityGrid.AddAutoColumnDefinition();
             
             _activityIndicator = new ActivityIndicator
             {
-                HorizontalOptions = LayoutOptions.Center,
-                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
                 Color = Color.White
             };
 
@@ -133,7 +135,8 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             {
                 HorizontalOptions = LayoutOptions.Center,
                 VerticalOptions = LayoutOptions.Center,
-                TextColor = Color.White
+                TextColor = Color.White,
+                LineBreakMode = LineBreakMode.WordWrap
             };
 
             Grid.SetRow(_activityIndicator, 0);
@@ -212,11 +215,6 @@ namespace JimBobBennett.JimLib.Xamarin.Views
 
             if (BindingContext is IBusy)
             {
-                _opacityGrid.SetBinding(IsVisibleProperty, new Binding("IsBusy"));
-                _activityFrame.SetBinding(IsVisibleProperty, new Binding("IsBusy"));
-                _activityIndicator.SetBinding(ActivityIndicator.IsRunningProperty, new Binding("IsBusy"));
-                _activityLabel.SetBinding(Label.TextProperty, new Binding("BusyMessage"));
-
                 SetBinding(IsBusyProperty, new Binding("IsBusy"));
             }
         }
@@ -266,6 +264,7 @@ namespace JimBobBennett.JimLib.Xamarin.Views
             if (vm != null)
             {
                 vm.View = this;
+                vm.PropertyChanged += ViewModelOnPropertyChanged;
 
                 if (NavigationStackManager != null)
                     vm.NeedClose += (s, e) =>
@@ -274,6 +273,22 @@ namespace JimBobBennett.JimLib.Xamarin.Views
                                 Device.BeginInvokeOnMainThread(async () => await NavigationStackManager.PopAsync());
                         };
             }
+        }
+
+        private void ViewModelOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            var busy = BindingContext as IBusy;
+
+            if (busy == null) return;
+            if (e.PropertyNameMatches(() => busy.IsBusy))
+            {
+                _opacityGrid.IsVisible = busy.IsBusy;
+                _activityFrame.IsVisible = busy.IsBusy;
+                _activityIndicator.IsRunning = busy.IsBusy;
+            }
+
+            if (e.PropertyNameMatches(() => busy.BusyMessage))
+                _activityLabel.Text = busy.BusyMessage;
         }
 
         private View _portraitContent;

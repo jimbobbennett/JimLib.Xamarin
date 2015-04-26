@@ -112,8 +112,8 @@
     <Reference Include="crypto">
       <HintPath>..\packages\Portable.BouncyCastle.1.7.0.2\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch10+MonoAndroid10+xamarinmac20+xamarinios10\crypto.dll</HintPath>
     </Reference>
-    <Reference Include="JimBobBennett.JimLib">
-      <HintPath>..\packages\JimBobBennett.JimLib.1.0.86\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
+    <Reference Include="JimBobBennett.JimLib, Version=1.0.89.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JimBobBennett.JimLib.1.0.89\lib\portable-net45+win+wpa81+wp80+MonoAndroid10+xamarinios10+MonoTouch10\JimBobBennett.JimLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ModernHttpClient">

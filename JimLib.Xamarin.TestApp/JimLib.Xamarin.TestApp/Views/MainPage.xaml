@@ -12,6 +12,7 @@
       <Button Text="Extended List View Test" Command="{Binding Path=ExtendedListViewTestCommand}"/>
       <Button Text="View Image Test" Command="{Binding Path=ViewImagePageTestCommand}"/>
       <Button Text="Background Image Test" Clicked="BackgroundImagePageTestCommand"/>
+      <Button Text="Activity Indicator Test" Command="{Binding Path=ActivityIndicatorPageTestCommand}"/>
     </StackLayout>
   </ScrollView>
   
