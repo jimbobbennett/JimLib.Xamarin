@@ -27,48 +27,55 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
         {
             base.OnElementChanged(e);
 
-            var collectionView = new GridCollectionView
+            try
             {
-                AllowsMultipleSelection = false,
-                SelectionEnable = e.NewElement.SelectionEnabled,
-                ContentInset = new UIEdgeInsets((float) Element.Padding.Top, (float) Element.Padding.Left, (float) Element.Padding.Bottom, (float) Element.Padding.Right),
-                BackgroundColor = Element.BackgroundColor.ToUIColor(),
-                ItemSize = new CGSize((float) Element.ItemWidth, (float) Element.ItemHeight),
-                RowSpacing = Element.RowSpacing,
-                ColumnSpacing = Element.ColumnSpacing
-            };
-
-            Unbind(e.OldElement);
-            Bind(e.NewElement);
-
-            collectionView.Source = DataSource;
-
-            SetNativeControl(collectionView);
-
-            if (_label == null)
-            {
-                _label = new UILabel
+                var collectionView = new GridCollectionView
                 {
-                    AdjustsFontSizeToFitWidth = true,
-                    TextAlignment = UITextAlignment.Center,
-                    LineBreakMode = UILineBreakMode.WordWrap,
-                    Lines = 0
+                    AllowsMultipleSelection = false,
+                    SelectionEnable = e.NewElement != null && e.NewElement.SelectionEnabled,
+                    ContentInset = new UIEdgeInsets((float) Element.Padding.Top, (float) Element.Padding.Left, (float) Element.Padding.Bottom, (float) Element.Padding.Right),
+                    BackgroundColor = Element.BackgroundColor.ToUIColor(),
+                    ItemSize = new CGSize((float) Element.ItemWidth, (float) Element.ItemHeight),
+                    RowSpacing = Element.RowSpacing,
+                    ColumnSpacing = Element.ColumnSpacing
                 };
 
-                SetLabelDetails();
-                SetLabelSizeAndPosition();
-                Control.AddSubview(_label);
-            }
+                Unbind(e.OldElement);
+                Bind(e.NewElement);
 
-			if (Element != null)
-            	ShowOrHideLabel(Element);
+                collectionView.Source = DataSource;
+
+                SetNativeControl(collectionView);
+
+                if (_label == null)
+                {
+                    _label = new UILabel
+                    {
+                        AdjustsFontSizeToFitWidth = true,
+                        TextAlignment = UITextAlignment.Center,
+                        LineBreakMode = UILineBreakMode.WordWrap,
+                        Lines = 0
+                    };
+
+                    SetLabelDetails();
+                    SetLabelSizeAndPosition();
+                    Control.AddSubview(_label);
+                }
+
+                if (Element != null)
+                    ShowOrHideLabel(Element);
+            }
+            catch
+            {
+                // do nothing as this should be called again
+            }
         }
 
         private void Unbind(GridView oldElement)
         {
             if (oldElement != null)
             {
-                oldElement.PropertyChanging += ElementPropertyChanging;
+                oldElement.PropertyChanging -= ElementPropertyChanging;
                 oldElement.PropertyChanged -= ElementPropertyChanged;
                 var notifyCollectionChanged = oldElement.ItemsSource as INotifyCollectionChanged;
                 if (notifyCollectionChanged != null)
