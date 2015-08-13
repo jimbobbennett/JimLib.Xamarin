@@ -1,6 +1,26 @@
 ﻿<Properties StartupItem="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp.iOS/TestApp.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone5s.8.4" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/App.cs">
+    <Files>
+      <File FileName="JimLib.Xamarin/Controls/GridView.cs" Line="46" Column="27" />
+      <File FileName="JimLib.Xamarin.ios/Controls/GridDataSource.cs" Line="16" Column="59" />
+      <File FileName="JimLib.Xamarin.ios/Controls/GridViewRenderer.cs" Line="235" Column="13" />
+      <File FileName="JimLib.Xamarin.ios/Controls/GridViewCell.cs" Line="1" Column="1" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/GridViewPage.xaml" Line="16" Column="24" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/GridViewPage.xaml.cs" Line="8" Column="18" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/ExtendedListViewPage.xaml" Line="5" Column="24" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/ViewModels/GridViewPageViewModel.cs" Line="18" Column="10" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/ViewModels/ActionSheetTestViewModel.cs" Line="7" Column="69" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/App.cs" Line="45" Column="69" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/ActionSheetTestPage.xaml.cs" Line="7" Column="63" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/MainTabPage.cs" Line="1" Column="1" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/MainPage.xaml" Line="16" Column="82" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/ViewModels/MainPageViewModel.cs" Line="18" Column="137" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp/Views/ActionSheetTestPage.xaml" Line="5" Column="24" />
+      <File FileName="JimLib.Xamarin.TestApp/JimLib.Xamarin.TestApp.iOS/Main.cs" Line="12" Column="1" />
+      <File FileName="JimLib.Xamarin/AppBase.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

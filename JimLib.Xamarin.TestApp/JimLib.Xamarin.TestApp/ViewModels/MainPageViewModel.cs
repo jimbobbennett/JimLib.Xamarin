@@ -15,6 +15,7 @@ namespace TestApp.ViewModels
             ViewImagePageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ViewImagePageViewModel>());
             BackgroundImagePageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<BackgroundImagePageViewModel>());
             ActivityIndicatorPageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<ActivityIndicatorTestViewModel>());
+            GridViewPageTestCommand = new AsyncCommand(async () => await navigationStackManager.PushViewModelAsync<GridViewPageViewModel>());
         }
 
         public ICommand ShowActionSheetTestCommand { get; private set; }
@@ -23,5 +24,6 @@ namespace TestApp.ViewModels
         public ICommand ViewImagePageTestCommand { get; private set; }
         public ICommand BackgroundImagePageTestCommand { get; private set; }
         public ICommand ActivityIndicatorPageTestCommand { get; private set; }
+        public ICommand GridViewPageTestCommand { get;private set;}
     }
 }

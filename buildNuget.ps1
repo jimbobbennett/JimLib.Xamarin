@@ -5,8 +5,8 @@ Param
     [string]$copyTo
 ) 
 
-& 'C:\Program Files (x86)\MSBuild\12.0\Bin\MSBuild.exe' .\JimLib.Xamarin.sln /property:Configuration=Release /Target:Rebuild
-& 'nuget.exe' pack .\JimBobBennett.JimLib.Xamarin.nuspec -Properties Configuration=Release -Version $version -Symbols
+& 'C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe' .\JimLib.Xamarin.sln /property:Configuration=Release /Target:Rebuild
+& '.\.nuget\nuget.exe' pack .\JimBobBennett.JimLib.Xamarin.nuspec -Properties Configuration=Release -Version $version -Symbols
 
 if ($copyTo)
 {
@@ -17,5 +17,5 @@ if ($copyTo)
 
 if ($push)
 {
-    nuget.exe push .\JimBobBennett.JimLib.Xamarin.$version.nupkg
+    .\.nuget\nuget.exe push .\JimBobBennett.JimLib.Xamarin.$version.nupkg
 }

@@ -43,7 +43,7 @@
         <dependency id="Autofac" version="3.5.2" />
         <dependency id="Xam.Plugins.Settings" version="1.5.1" />
       </group>
-      <group targetFramework="xamarinios10">
+      <group targetFramework="xamarin.ios10">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
         <dependency id="Xamarin.Forms" version="1.4.3.6376" />
@@ -79,12 +79,12 @@
 
     <file src="JimLib.Xamarin.ios\Resources\Images\*.*" target="content\MonoTouch10\Resources\Images"/>
     
-    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\xamarinios10\JimBobBennett.JimLib.Xamarin.dll" />
-    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\xamarinios10\JimBobBennett.JimLib.Xamarin.pdb" />
-    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\JimBobBennett.JimLib.Xamarin.ios.dll" target="lib\xamarinios10\JimBobBennett.JimLib.Xamarin.ios.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\xamarin.ios10\JimBobBennett.JimLib.Xamarin.dll" />
+    <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.pdb" target="lib\xamarin.ios10\JimBobBennett.JimLib.Xamarin.pdb" />
+    <file src="JimLib.Xamarin.ios\bin\iPhone\$Configuration$\JimBobBennett.JimLib.Xamarin.ios.dll" target="lib\xamarin.ios10\JimBobBennett.JimLib.Xamarin.ios.dll" />
     <file src="JimLib.Xamarin.ios\**\*.cs" target="src\JimLib.Xamarin.ios" />
 
-    <file src="JimLib.Xamarin.ios\Resources\Images\*.*" target="content\xamarinios10\Resources\Images"/>
+    <file src="JimLib.Xamarin.ios\Resources\Images\*.*" target="content\xamarin.ios10\Resources\Images"/>
 
     <!-- Win -->
     <file src="JimLib.Xamarin\bin\$Configuration$\JimBobBennett.JimLib.Xamarin.dll" target="lib\portable-net45+win+wp80\JimBobBennett.JimLib.Xamarin.dll" />

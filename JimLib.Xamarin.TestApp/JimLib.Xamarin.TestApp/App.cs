@@ -19,6 +19,7 @@ namespace TestApp
             builder.RegisterType<ViewImagePageViewModel>();
             builder.RegisterType<BackgroundImagePageViewModel>();
             builder.RegisterType<ActivityIndicatorTestViewModel>();
+            builder.RegisterType<GridViewPageViewModel>();
 
             builder.RegisterType<ActionSheetTestPage>().UsingConstructor(typeof(ActionSheetTestViewModel),typeof(INavigationStackManager));
             builder.RegisterType<MainPage>().UsingConstructor(typeof(MainPageViewModel),typeof(INavigationStackManager));
@@ -27,6 +28,7 @@ namespace TestApp
             builder.RegisterType<ViewImagePage>().UsingConstructor(typeof(ViewImagePageViewModel), typeof(INavigationStackManager));
             builder.RegisterType<BackgroundImagePage>().UsingConstructor(typeof(BackgroundImagePageViewModel), typeof(INavigationStackManager));
             builder.RegisterType<ActivityIndicatorTestView>().UsingConstructor(typeof(ActivityIndicatorTestViewModel), typeof(INavigationStackManager));
+            builder.RegisterType<GridViewPage>().UsingConstructor(typeof(GridViewPageViewModel), typeof(INavigationStackManager));
             builder.RegisterType<MainTabPage>();
         }
 
@@ -40,6 +42,7 @@ namespace TestApp
             viewFactory.Register<ViewImagePage, ViewImagePageViewModel>();
             viewFactory.Register<BackgroundImagePage, BackgroundImagePageViewModel>();
             viewFactory.Register<ActivityIndicatorTestView, ActivityIndicatorTestViewModel>();
+            viewFactory.Register<GridViewPage, GridViewPageViewModel>();
         }
 
         public override Page GetMainPage()

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<jimlibView:BaseContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 x:Class="TestApp.GridViewPage"
+			 xmlns:jimlibView="clr-namespace:JimBobBennett.JimLib.Xamarin.Views;assembly=JimBobBennett.JimLib.Xamarin"
+			 xmlns:jimlibControls="clr-namespace:JimBobBennett.JimLib.Xamarin.Controls;assembly=JimBobBennett.JimLib.Xamarin">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<jimlibControls:PullToRefreshGridView ItemsSource="{Binding Path=Items}" RowSpacing="5" Padding="5"
+                                      ColumnSpacing="5" ItemWidth="142" ItemHeight="200"
+                                      NoItemsText="Nothing playing" NoItemsTextColor="#80D8D8D8">
+	      <jimlibControls:PullToRefreshGridView.ItemTemplate>
+	        <DataTemplate>
+	          <ViewCell>
+	            <ViewCell.View>
+	              <Label Text="{Binding}"/>
+	            </ViewCell.View>
+	          </ViewCell>
+	        </DataTemplate>
+	      </jimlibControls:PullToRefreshGridView.ItemTemplate>
+	    </jimlibControls:PullToRefreshGridView>
+	    <Button Text="Add Item" Grid.Row="1" Command="{Binding Path=AddItemCommand}"/>
+	</Grid>
+</jimlibView:BaseContentPage>

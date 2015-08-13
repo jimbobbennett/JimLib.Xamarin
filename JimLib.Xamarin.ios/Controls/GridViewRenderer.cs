@@ -97,11 +97,18 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         protected virtual void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyNameMatches(() => Element.ItemsSource))
+            try
             {
-                var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
-                if (notifyCollectionChanged != null)
-                    notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
+                if (e.PropertyNameMatches(() => Element.ItemsSource))
+                {
+                    var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
+                    if (notifyCollectionChanged != null)
+                        notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
+                }
+            }
+            catch
+            {
+                // do nothing
             }
         }
 
@@ -117,6 +124,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         protected virtual void DataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
+            Console.WriteLine("Collection updated");
             InvokeOnMainThread(UpdateFromCollectionChange);
         }
 
@@ -149,10 +157,9 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
             get { return _gridViewDelegate ?? (_gridViewDelegate = new GridViewDelegate(ItemSelected)); }
         }
 
-        public int RowsInSection(UICollectionView collectionView, nint section)
+        public nint RowsInSection(UICollectionView collectionView, nint section)
         {
-            var collection = Element.ItemsSource as ICollection;
-            return collection != null ? collection.Count : 0;
+            return Element.ItemsSource != null ? Element.ItemsSource.Cast<object>().Count() : 0;
         }
 
         public void ItemSelected(UICollectionView tableView, NSIndexPath indexPath)

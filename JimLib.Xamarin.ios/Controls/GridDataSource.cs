@@ -8,7 +8,7 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
     {
         public delegate UICollectionViewCell OnGetCell(UICollectionView collectionView, NSIndexPath indexPath);
 
-        public delegate int OnRowsInSection(UICollectionView collectionView, nint section);
+        public delegate nint OnRowsInSection(UICollectionView collectionView, nint section);
 
         public delegate void OnItemSelected(UICollectionView collectionView, NSIndexPath indexPath);
 
