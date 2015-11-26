@@ -19,48 +19,48 @@
         <dependency id="Microsoft.Net.Http" version="2.2.29" />
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="win">
         <dependency id="Microsoft.Net.Http" version="2.2.29" />
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="wp80">
         <dependency id="Microsoft.Net.Http" version="2.2.29" />
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
       <group targetFramework="MonoTouch10">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
         <dependency id="Xam.Plugins.Settings" version="1.5.1" />
       </group>
       <group targetFramework="xamarin.ios10">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
         <dependency id="Xam.Plugins.Settings" version="1.5.1" />
       </group>
       <group targetFramework="MonoAndroid10">
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
         <dependency id="Xam.Plugins.Settings" version="1.5.1" />
       </group>
       <group>
         <dependency id="Newtonsoft.Json" version="7.0.1" />
         <dependency id="JimBobBennett.JimLib" version="1.0.90" />
-        <dependency id="Xamarin.Forms" version="1.4.3.6376" />
+        <dependency id="Xamarin.Forms" version="2.0.0.6484" />
         <dependency id="Autofac" version="3.5.2" />
       </group>
     </dependencies>

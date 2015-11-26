@@ -73,38 +73,36 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void Unbind(GridView oldElement)
         {
-            if (oldElement != null)
-            {
-                oldElement.PropertyChanging -= ElementPropertyChanging;
-                oldElement.PropertyChanged -= ElementPropertyChanged;
-                var notifyCollectionChanged = oldElement.ItemsSource as INotifyCollectionChanged;
-                if (notifyCollectionChanged != null)
-                    notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
-            }
+            if (oldElement == null) return;
+
+            oldElement.PropertyChanging -= ElementPropertyChanging;
+            oldElement.PropertyChanged -= ElementPropertyChanged;
+            var notifyCollectionChanged = oldElement.ItemsSource as INotifyCollectionChanged;
+            if (notifyCollectionChanged != null)
+                notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
         }
 
         private void Bind(GridView newElement)
         {
-            if (newElement != null)
-            {
-                newElement.PropertyChanging += ElementPropertyChanging;
-                newElement.PropertyChanged += ElementPropertyChanged;
-                var notifyCollectionChanged = newElement.ItemsSource as INotifyCollectionChanged;
-                if (notifyCollectionChanged != null)
-                    notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
-            }
+            if (newElement == null) return;
+
+            newElement.PropertyChanging += ElementPropertyChanging;
+            newElement.PropertyChanged += ElementPropertyChanged;
+            var notifyCollectionChanged = newElement.ItemsSource as INotifyCollectionChanged;
+            if (notifyCollectionChanged != null)
+                notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
         }
 
         protected virtual void ElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             try
             {
-                if (e.PropertyNameMatches(() => Element.ItemsSource))
-                {
-                    var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
-                    if (notifyCollectionChanged != null)
-                        notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
-                }
+                if (Element == null) return;
+                if (!e.PropertyNameMatches(() => Element.ItemsSource)) return;
+
+                var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
+                if (notifyCollectionChanged != null)
+                    notifyCollectionChanged.CollectionChanged += DataCollectionChanged;
             }
             catch
             {
@@ -114,12 +112,12 @@ namespace JimBobBennett.JimLib.Xamarin.ios.Controls
 
         private void ElementPropertyChanging(object sender, PropertyChangingEventArgs e)
         {
-            if (e.PropertyNameMatches(() => Element.ItemsSource))
-            {
-                var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
-                if (notifyCollectionChanged != null)
-                    notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
-            }
+            if (Element == null) return;
+            if (!e.PropertyNameMatches(() => Element.ItemsSource)) return;
+
+            var notifyCollectionChanged = Element.ItemsSource as INotifyCollectionChanged;
+            if (notifyCollectionChanged != null)
+                notifyCollectionChanged.CollectionChanged -= DataCollectionChanged;
         }
 
         protected virtual void DataCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
